@@ -1,7 +1,11 @@
 "use client"
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
-import { useState } from "react";
+import { useToast } from "@/hooks/useToast";
+import { loginUser, verifySession } from "@/store/features/auth/authSlice";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Login() {
   const [loginForm, setLoginForm] = useState({
@@ -9,12 +13,69 @@ export default function Login() {
     password: ""
   });
 
+    const [validationErrors, setValidationErrors] = useState({});
+
+
+    const toast = useToast()
+    const dispatch = useDispatch()
+    const router = useRouter()
+    const { user } = useSelector(state => state.auth)
+
+
+     useEffect(() => {
+    // Check session on page load
+      dispatch(verifySession());
+    }, [dispatch]);
+
+     useEffect(() => {
+    if (user) {
+      // Redirect based on role
+      if (user.role === 'etudiant') router.push('/etudiant/dashboard');
+      else if (user.role === 'encadrant') router.push('/encadrant/dashboard');
+      else if (user.role === 'entreprise') router.push('/entreprise/dashboard');
+      else if (user.role === 'admin') router.push('/admin/dashboard');
+    }
+  }, [user, router]);
+
+
   const handleChange = (e) => {
     setLoginForm(prev => ({
       ...prev,
       [e.target.id]: e.target.value
     }));
   };
+
+  const validateForm = () => {
+    const errors = {};
+    if (!loginForm.email.trim()) errors.email = "Email requis";
+    else if (!/^\S+@\S+\.\S+$/.test(loginForm.email)) {
+      errors.email = "Email invalide";
+    }
+
+    if (!loginForm.password.trim()) {
+      errors.password = "Mot de passe requis";
+    } else if (loginForm.password.length < 6 || loginForm.password.length > 15) {
+      errors.password = "Le mot de passe doit contenir 6 à 15 caractères";
+    }
+
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+
+
+
+  }
+  const handleLogin = async ()=>{
+    if (!validateForm()) return null
+
+    try {
+      await dispatch(loginUser(loginForm)).unwrap()
+      toast.success('Login successfully')
+    }
+    catch (err){
+      toast.error(err)
+    }
+  }
+
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
@@ -42,6 +103,9 @@ export default function Login() {
             onChange={handleChange}
             value={loginForm.email}
           />
+          {validationErrors.email && (
+            <p className="text-xs text-red-500">{validationErrors.email}</p>
+          )}
         </div>
 
         {/* Password */}
@@ -56,6 +120,9 @@ export default function Login() {
             onChange={handleChange}
             value={loginForm.password}
           />
+          {validationErrors.password && (
+            <p className="text-xs text-red-500">{validationErrors.password}</p>
+          )}
         </div>
 
         {/* Options */}
@@ -71,6 +138,7 @@ export default function Login() {
         </div>
 
         <Button
+          onClick={handleLogin}
           variant="main"
           className="w-full justify-center"
         >

@@ -6,9 +6,10 @@ import { Select } from "@/components/ui/Select";
 import { usePopup } from "@/hooks/usePopup";
 import { useToast } from "@/hooks/useToast";
 import { registerUser } from "@/store/features/auth/authSlice";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-const ROLES = ["etudiant", "encadrant", "entreprise", "admin"];
+const ROLES = ["etudiant", "encadrant", "entreprise"];
 const NIVEAUX = ['Bac' , 'Bac+1' , 'Bac+2' , 'Bac+3' , 'Bac+5' , 'Bac+8']
 
 export default function Register() {
@@ -18,6 +19,8 @@ export default function Register() {
 
   const dispatch = useDispatch()
   const { isLoading } = useSelector(state => state.auth)
+
+  const router = useRouter()
   
 
   const [form, setForm] = useState({
@@ -126,10 +129,9 @@ export default function Register() {
         ? { entreprise: form.entreprise } 
         : { prenom: form.prenom, nom: form.nom , date_naissance : form.date_naissance}),
     };
-
-    console.log(payload)
     try {
       await dispatch(registerUser(payload)).unwrap()
+      router.push('/login')
     } 
     catch (err) {
       toast.error(err)

@@ -2,6 +2,8 @@ const Auth = require("../models/auth");
 const bcrypt = require("bcryptjs");
 const { v4: uuidv4 } = require("uuid");
 const { sendVerificationEmail } = require("../lib/send-email");
+const jwt = require('jsonwebtoken')
+const JWT_SECRET = process.env.JWT_SECRET
 
 exports.register = async (req, res) => {
   try {
@@ -78,3 +80,180 @@ exports.register = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+
+
+exports.login = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    if (!email || !password) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    // Check if user exists
+    const [user] = await Auth.getUserByEmail(email);
+    if (!user) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    // Compare passwords
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    // Check if email is verified
+    if (!user.email_verified) {
+      return res.status(403).json({ error: "Please verify your email before login!" });
+    }
+
+    // Generate JWT token
+    const payload = { id: user.id, email: user.email, role: user.role };
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "1h" });
+
+    // Fetch role-specific data
+    let roleData = {};
+    switch (user.role) {
+      case "etudiant":
+        const [etudiant] = await Auth.getEtudiantByUserId(user.id);
+        roleData = {
+          nom: etudiant.nom,
+          prenom: etudiant.prenom,
+          niveau_scolaire: etudiant.niveau_scolaire,
+          date_naissance: etudiant.date_naissance,
+        };
+        break;
+
+      case "encadrant":
+        const [encadrant] = await Auth.getEncadrantByUserId(user.id);
+        roleData = {
+          nom: encadrant.nom,
+          prenom: encadrant.prenom,
+          date_naissance: encadrant.date_naissance,
+        };
+        break;
+
+      case "entreprise":
+        const [entreprise] = await Auth.getEntrepriseByUserId(user.id);
+        roleData = {
+          entreprise: entreprise.nom,
+        };
+        break;
+    }
+
+    // Send HttpOnly cookie and role-specific data
+    return res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "lax",
+      maxAge: 3600000,
+    }).json({
+      message: "Login successful",
+      data: {
+        email: user.email,
+        role: user.role,
+        ...roleData,
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
+exports.verfifyEmail = async (req, res) => {
+    const { id } = req.query
+    try {
+        if (!id) {
+            return res.status(400).json({ error: 'No id provided' })
+        }
+
+        // Check user Existance
+        const [user] = await Auth.getUserById(id)
+        if (!user) {
+            return res.status(401).json({ error: 'Invalid credentials' })
+        }
+
+        await Auth.verifyEmail(id)
+        return res.status(201).json({ message: 'Email verified successfully' })
+    }
+
+
+
+    catch (err) {
+        console.log(err);
+        res.status(500).json({ error: 'Internal server error' })
+    }
+
+
+}
+
+exports.verifySession = async (req, res) => {
+    const token = req.cookies.token;
+    if (!token) {
+        return res.status(401).json({ error: 'Session expired or invalid. Please login again.' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, JWT_SECRET);
+
+        // Fetch user
+        const [user] = await Auth.getUserById(decoded.id); // no destructuring
+        if (!user) {
+            return res.status(401).json({ error: 'Session expired or invalid. Please login again.' });
+        }
+
+        // Role-specific data
+        let roleData = {};
+        switch (user.role) {
+            case "etudiant":
+                const etudiant = await Auth.getEtudiantByUserId(user.id);
+                roleData = {
+                    nom: etudiant.nom,
+                    prenom: etudiant.prenom,
+                    niveau_scolaire: etudiant.niveau_scolaire,
+                    date_naissance: etudiant.date_naissance,
+                };
+                break;
+
+            case "encadrant":
+                const encadrant = await Auth.getEncadrantByUserId(user.id);
+                roleData = {
+                    nom: encadrant.nom,
+                    prenom: encadrant.prenom,
+                    date_naissance: encadrant.date_naissance,
+                };
+                break;
+
+            case "entreprise":
+                const entreprise = await Auth.getEntrepriseByUserId(user.id);
+                roleData = {
+                    entreprise: entreprise.nom,
+                };
+                break;
+        }
+
+        // Return session data
+        res.json({
+            message: 'Valid session',
+            data: {
+                email: user.email,
+                role: user.role,
+                ...roleData
+            }
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(401).json({ error: 'Session expired or invalid. Please login again.' });
+    }
+};
+
+
+exports.logout = async (req, res) => {
+    return res.clearCookie('token', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'lax',
+    }).json({ message: 'Logout successfull', })
+}
