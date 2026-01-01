@@ -9,15 +9,15 @@ import { registerUser } from "@/store/features/auth/authSlice";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 const ROLES = ["etudiant", "encadrant", "entreprise", "admin"];
+const NIVEAUX = ['Bac' , 'Bac+1' , 'Bac+2' , 'Bac+3' , 'Bac+5' , 'Bac+8']
 
 export default function Register() {
   const [role, setRole] = useState("etudiant");
+  const [niveau, setNiveau] = useState("");
 
 
   const dispatch = useDispatch()
   const { isLoading } = useSelector(state => state.auth)
-
-  if (isLoading) console.log(isLoading)
   
 
   const [form, setForm] = useState({
@@ -27,13 +27,13 @@ export default function Register() {
     email: "",
     password: "",
     confirmPassword: "", 
-    date_naissance : ""
+    date_naissance : "" ,
+    niveau_scolaire : ""
   });
 
   const [validationErrors, setValidationErrors] = useState({});
 
   const toast = useToast()
-  const { openPopup} = usePopup()
 
   /* ================= HANDLERS ================= */
 
@@ -50,8 +50,16 @@ export default function Register() {
       prenom: "",
       date_naissance : "",
       nom: "",
-      entreprise: "",
+      entreprise: "", 
+      niveau_scolaire : ""
     }));
+  };
+
+
+  const handleNiveauChange = (value) => {
+    setNiveau(value);
+    setForm(prev => ({...prev , niveau_scolaire : value}))
+    setValidationErrors({});
   };
 
   /* ================= VALIDATION ================= */
@@ -65,6 +73,11 @@ export default function Register() {
         errors.entreprise = "Le nom de l’entreprise est requis";
       }
     } else {
+      if (role === 'etudiant') {
+          if (!form.niveau_scolaire.trim()) {
+            errors.niveau_scolaire = "Le niveau scolaire est requis";
+          }
+      }
       if (!form.prenom.trim()) {
         errors.prenom = "Le prénom est requis";
       }
@@ -106,12 +119,15 @@ export default function Register() {
 
     const payload = {
       role,
-      email: form.email,
+      email: form.email, 
+      ...(role === 'etudiant' && {niveau_scolaire : form.niveau_scolaire}) ,
       password: form.password,
       ...(role === "entreprise"
-        ? { entreprise: form.entreprise }
+        ? { entreprise: form.entreprise } 
         : { prenom: form.prenom, nom: form.nom , date_naissance : form.date_naissance}),
     };
+
+    console.log(payload)
     try {
       await dispatch(registerUser(payload)).unwrap()
     } 
@@ -122,6 +138,7 @@ export default function Register() {
   };
 
   const roleOptions = ROLES.map((r) => ({ value: r, label: r }));
+  const niveauOptions = NIVEAUX.map((n) => ({ value: n, label: n }));
 
   /* ================= JSX ================= */
 
@@ -191,14 +208,28 @@ export default function Register() {
 
           {/* Date naissance*/}
            <div className="space-y-2">
-          <label htmlFor="email" className="text-sm font-medium">
+          <label htmlFor="date_naissance" className="text-sm font-medium">
             Date de naissance
           </label>
           <Input id="date_naissance" type='date' value={form.date_naissance} onChange={handleChange} />
           {validationErrors.date_naissance && (
             <p className="text-xs text-red-500">{validationErrors.date_naissance}</p>
           )}
-        </div>
+           </div>
+        </>}
+
+
+        {role === 'etudiant' && <>
+          {/* Niveau scolaire*/}
+           <div className="space-y-2">
+          <label htmlFor="niveau_scolaire" className="text-sm font-medium">
+            niveau scolaire
+          </label>
+          <Select options={niveauOptions} value={form.niveau_scolaire} onChange={handleNiveauChange} />
+          {validationErrors.niveau_scolaire && (
+            <p className="text-xs text-red-500">{validationErrors.niveau_scolaire}</p>
+          )}
+           </div>
         </>}
 
         {/* Email */}
