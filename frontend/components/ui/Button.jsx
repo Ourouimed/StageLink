@@ -6,7 +6,7 @@ export const Button = ({children , className , variant = "DEFAULT" , href , ...p
 
 
     const btnStyle = `inline-flex gap-4 py-3 px-6 rounded-lg font-semibold ${variants[variant.toUpperCase() || "DEFAULT"]}
-                               cursor-pointer  ${className}`
+                               cursor-pointer  transition duration-300 ${className}`
 
     if (href){
         return <a className={btnStyle} href={href} {...props}>

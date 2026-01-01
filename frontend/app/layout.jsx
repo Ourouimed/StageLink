@@ -1,6 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "@/providers/ReduxProvider";
+import {ToastList} from "@/components/ui/toast-list";
+import { PopupModal } from "@/components/ui/popup-modal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,6 +26,8 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ReduxProvider>
+          <ToastList/>
+          <PopupModal/>
           {children}
         </ReduxProvider>
       </body>

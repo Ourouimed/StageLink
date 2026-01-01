@@ -3,6 +3,8 @@
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
+import { usePopup } from "@/hooks/usePopup";
+import { useToast } from "@/hooks/useToast";
 import { registerUser } from "@/store/features/auth/authSlice";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,6 +31,9 @@ export default function Register() {
   });
 
   const [validationErrors, setValidationErrors] = useState({});
+
+  const toast = useToast()
+  const { openPopup} = usePopup()
 
   /* ================= HANDLERS ================= */
 
@@ -96,7 +101,7 @@ export default function Register() {
 
   /* ================= SUBMIT ================= */
 
-  const handleRegister = () => {
+  const handleRegister = async() => {
     if (!validateForm()) return;
 
     const payload = {
@@ -107,7 +112,13 @@ export default function Register() {
         ? { entreprise: form.entreprise }
         : { prenom: form.prenom, nom: form.nom , date_naissance : form.date_naissance}),
     };
-    dispatch(registerUser(payload))
+    try {
+      await dispatch(registerUser(payload)).unwrap()
+    } 
+    catch (err) {
+      toast.error(err)
+    }
+    
   };
 
   const roleOptions = ROLES.map((r) => ({ value: r, label: r }));
