@@ -1,4 +1,4 @@
-export const Button = ({children , className , variant = "DEFAULT" , href})=>{
+export const Button = ({children , className , variant = "DEFAULT" , href , ...props})=>{
     const variants = {
         DEFAULT : " bg-black text-white" ,
         MAIN : "bg-main text-white"
@@ -9,11 +9,11 @@ export const Button = ({children , className , variant = "DEFAULT" , href})=>{
                                cursor-pointer  ${className}`
 
     if (href){
-        return <a className={btnStyle} href={href}>
+        return <a className={btnStyle} href={href} {...props}>
         {children}
     </a>
     }
-    return <button className={btnStyle} >
+    return <button className={btnStyle} {...props}>
         {children}
     </button>
 }

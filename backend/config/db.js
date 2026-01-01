@@ -5,8 +5,8 @@ if (process.env.NODE_ENV !== 'production') {
 const pool = mysql.createPool({
     database : process.env.DB_NAME,
     user : process.env.DB_USER,
-    password : process.env.PASSWORD,
-    host : process.env.HOST,
+    password : process.env.DB_PASSWORD,
+    host : process.env.DB_HOST,
     connectionLimit : 10,
     waitForConnections: true,
     timezone: 'Z'

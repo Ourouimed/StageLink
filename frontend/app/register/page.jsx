@@ -3,17 +3,19 @@
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
+import { registerUser } from "@/store/features/auth/authSlice";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 const ROLES = ["etudiant", "encadrant", "entreprise", "admin"];
 
 export default function Register() {
   const [role, setRole] = useState("etudiant");
 
 
-  const { test } = useSelector(state => state.auth)
+  const dispatch = useDispatch()
+  const { isLoading } = useSelector(state => state.auth)
 
-  if (test) console.log(test)
+  if (isLoading) console.log(isLoading)
   
 
   const [form, setForm] = useState({
@@ -22,7 +24,8 @@ export default function Register() {
     entreprise: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    confirmPassword: "", 
+    date_naissance : ""
   });
 
   const [validationErrors, setValidationErrors] = useState({});
@@ -40,6 +43,7 @@ export default function Register() {
     setForm((prev) => ({
       ...prev,
       prenom: "",
+      date_naissance : "",
       nom: "",
       entreprise: "",
     }));
@@ -61,6 +65,9 @@ export default function Register() {
       }
       if (!form.nom.trim()) {
         errors.nom = "Le nom est requis";
+      }
+      if (!form.date_naissance.trim()) {
+        errors.date_naissance = "La date de naissance est requis";
       }
     }
 
@@ -98,11 +105,9 @@ export default function Register() {
       password: form.password,
       ...(role === "entreprise"
         ? { entreprise: form.entreprise }
-        : { prenom: form.prenom, nom: form.nom }),
+        : { prenom: form.prenom, nom: form.nom , date_naissance : form.date_naissance}),
     };
-
-    console.log("REGISTER PAYLOAD 👉", payload);
-    // TODO: axios.post("/api/register", payload)
+    dispatch(registerUser(payload))
   };
 
   const roleOptions = ROLES.map((r) => ({ value: r, label: r }));
@@ -111,11 +116,7 @@ export default function Register() {
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleRegister();
-        }}
+      <div
         className="w-full max-w-md bg-white border border-gray-300 rounded-2xl shadow-sm p-6 space-y-5"
       >
         {/* Header */}
@@ -152,7 +153,7 @@ export default function Register() {
               </p>
             )}
           </div>
-        ) : (
+        ) : <>
           <div className="flex gap-4">
             <div className="space-y-2 w-full">
               <label htmlFor="prenom" className="text-sm font-medium">
@@ -176,7 +177,18 @@ export default function Register() {
               )}
             </div>
           </div>
-        )}
+
+          {/* Date naissance*/}
+           <div className="space-y-2">
+          <label htmlFor="email" className="text-sm font-medium">
+            Date de naissance
+          </label>
+          <Input id="date_naissance" type='date' value={form.date_naissance} onChange={handleChange} />
+          {validationErrors.date_naissance && (
+            <p className="text-xs text-red-500">{validationErrors.date_naissance}</p>
+          )}
+        </div>
+        </>}
 
         {/* Email */}
         <div className="space-y-2">
@@ -225,8 +237,8 @@ export default function Register() {
           )}
         </div>
 
-        <Button type="submit" variant="main" className="w-full justify-center">
-          S’inscrire
+        <Button onClick={handleRegister} variant="main" className={`w-full justify-center ${isLoading && 'opacity-30 cursor-not-allowed'}`} disabled={isLoading}>
+          {isLoading ? 'Inscription en cours' : 'S’inscrire'}
         </Button>
 
         <p className="text-center text-sm text-gray-500">
@@ -235,7 +247,7 @@ export default function Register() {
             Se connecter
           </a>
         </p>
-      </form>
+      </div>
     </section>
   );
 }
