@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 export const Button = ({children , className , variant = "DEFAULT" , href , ...props})=>{
     const variants = {
         DEFAULT : " bg-black text-white" ,
@@ -9,9 +11,9 @@ export const Button = ({children , className , variant = "DEFAULT" , href , ...p
                                cursor-pointer  transition duration-300 ${className}`
 
     if (href){
-        return <a className={btnStyle} href={href} {...props}>
+        return <Link className={btnStyle} href={href} {...props}>
         {children}
-    </a>
+    </Link>
     }
     return <button className={btnStyle} {...props}>
         {children}

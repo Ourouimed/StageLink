@@ -54,7 +54,8 @@ export const authSlice = createSlice({
     name : 'auth' ,
     initialState : {
         user : null , 
-        isLoading : false 
+        isLoading : false  ,
+        isInitialized: false
     },
     extraReducers : builder => {
     builder
@@ -109,10 +110,12 @@ export const authSlice = createSlice({
       state.isLoading = false;
       console.log(action.payload)
       state.user = action.payload.data
+       state.isInitialized = true;
     })
     .addCase(verifySession.rejected, (state, action) => {
       state.isLoading = false;
       state.user = null
+      state.isInitialized = true;
     })
 
     // Log out 

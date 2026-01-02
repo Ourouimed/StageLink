@@ -23,9 +23,9 @@ export default function Login() {
 
 
      useEffect(() => {
-    // Check session on page load
-      dispatch(verifySession());
-    }, [dispatch]);
+      // Check session on page load
+        dispatch(verifySession());
+      }, [dispatch]);
 
      useEffect(() => {
     if (user) {
