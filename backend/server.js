@@ -1,15 +1,20 @@
-const express = require('express')
+import express from 'express'
+// routes imports
+import authRouter from './routes/auth.js'
+import corsOptions from './middlewares/corsOptions.js'
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
+import cors from 'cors'
+
+
+
 const app = express()
 const PORT = 3001
 
 
-const cors = require('cors')
 
-// routes imports
-const authRouter = require('./routes/auth')
-const corsOptions = require('./middlewares/corsOptions')
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
+
+
 
 
 app.use(express.json())

@@ -1,11 +1,11 @@
-const Auth = require("../models/auth");
-const bcrypt = require("bcryptjs");
-const { v4: uuidv4 } = require("uuid");
-const { sendVerificationEmail } = require("../lib/send-email");
-const jwt = require('jsonwebtoken')
+import Auth from "../models/auth.js"
+import bcrypt from 'bcryptjs'
+import { v4 as uuidv4 } from "uuid" 
+import { sendVerificationEmail } from "../lib/send-email.js"
+import jwt from 'jsonwebtoken'
 const JWT_SECRET = process.env.JWT_SECRET
 
-exports.register = async (req, res) => {
+const register = async (req, res) => {
   try {
     const { email, password, role } = req.body;
 
@@ -82,7 +82,7 @@ exports.register = async (req, res) => {
 };
 
 
-exports.login = async (req, res) => {
+const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -162,7 +162,7 @@ exports.login = async (req, res) => {
 };
 
 
-exports.verfifyEmail = async (req, res) => {
+const verfifyEmail = async (req, res) => {
     const { id } = req.query
     try {
         if (!id) {
@@ -189,17 +189,10 @@ exports.verfifyEmail = async (req, res) => {
 
 }
 
-exports.verifySession = async (req, res) => {
-    const token = req.cookies.token;
-    if (!token) {
-        return res.status(401).json({ error: 'Session expired or invalid. Please login again.' });
-    }
-
+const verifySession = async (req, res) => {
     try {
-        const decoded = jwt.verify(token, JWT_SECRET);
-
         // Fetch user
-        const [user] = await Auth.getUserById(decoded.id); // no destructuring
+        const [user] = await Auth.getUserById(req.user.id); 
         if (!user) {
             return res.status(401).json({ error: 'Session expired or invalid. Please login again.' });
         }
@@ -208,7 +201,7 @@ exports.verifySession = async (req, res) => {
         let roleData = {};
         switch (user.role) {
             case "etudiant":
-                const etudiant = await Auth.getEtudiantByUserId(user.id);
+                const [etudiant] = await Auth.getEtudiantByUserId(user.id);
                 roleData = {
                     nom: etudiant.nom,
                     prenom: etudiant.prenom,
@@ -218,7 +211,7 @@ exports.verifySession = async (req, res) => {
                 break;
 
             case "encadrant":
-                const encadrant = await Auth.getEncadrantByUserId(user.id);
+                const [encadrant] = await Auth.getEncadrantByUserId(user.id);
                 roleData = {
                     nom: encadrant.nom,
                     prenom: encadrant.prenom,
@@ -227,12 +220,13 @@ exports.verifySession = async (req, res) => {
                 break;
 
             case "entreprise":
-                const entreprise = await Auth.getEntrepriseByUserId(user.id);
+                const [entreprise] = await Auth.getEntrepriseByUserId(user.id);
                 roleData = {
                     entreprise: entreprise.nom,
                 };
                 break;
         }
+
 
         // Return session data
         res.json({
@@ -250,10 +244,13 @@ exports.verifySession = async (req, res) => {
 };
 
 
-exports.logout = async (req, res) => {
+const logout = async (req, res) => {
     return res.clearCookie('token', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'lax',
     }).json({ message: 'Logout successfull', })
 }
+
+
+export { login , logout , register , verfifyEmail , verifySession}

@@ -1,6 +1,7 @@
-const mysql = require('mysql2/promise')
+import { config } from 'dotenv'
+import mysql from 'mysql2/promise'
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
+  config()
 }
 const pool = mysql.createPool({
     database : process.env.DB_NAME,
@@ -12,4 +13,4 @@ const pool = mysql.createPool({
     timezone: 'Z'
 })
 
-module.exports = pool
+export default pool

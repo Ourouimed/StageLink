@@ -1,5 +1,6 @@
-require('dotenv').config();
-const nodemailer = require("nodemailer");
+import { config } from "dotenv";
+config()
+import nodemailer from "nodemailer"
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -52,4 +53,4 @@ async function sendVerificationEmail(id , to) {
     }
 }
 
-module.exports = { sendVerificationEmail }
+export { sendVerificationEmail }

@@ -1,5 +1,4 @@
-const db = require('../config/db')
-
+import db from '../config/db.js'
 
 const Auth = {
     getUserByEmail : async (email)=>{
@@ -41,4 +40,4 @@ const Auth = {
 }
 
 
-module.exports = Auth
+export default Auth

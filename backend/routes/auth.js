@@ -1,5 +1,6 @@
-const express  = require('express')
-const authController = require('../controllers/authController')
+import express from 'express'
+import {register , login , logout , verfifyEmail , verifySession} from  '../controllers/authController.js'
+import verifyJWT from '../middlewares/verifyJwt.js'
 
 const router = express.Router()
 
@@ -7,11 +8,11 @@ const router = express.Router()
 router.get('/' , (req , res)=>{
     res.send('Hello auth')
 })
-router.post('/register' , authController.register)
-router.post('/login' , authController.login)
-router.post('/verify-email' , authController.verfifyEmail)
-router.get('/verify-session' , authController.verifySession)
+router.post('/register' , register)
+router.post('/login' , login)
+router.post('/verify-email' , verfifyEmail)
+router.get('/verify-session' , verifyJWT , verifySession)
 
 
 
-module.exports = router
+export default router
