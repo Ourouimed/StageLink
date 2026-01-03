@@ -1,5 +1,5 @@
 import express from 'express'
-import {register , login , logout , verfifyEmail , verifySession} from  '../controllers/authController.js'
+import {register , login , logout , verifySession , verifyEmail , resendOtp} from  '../controllers/authController.js'
 import verifyJWT from '../middlewares/verifyJwt.js'
 
 const router = express.Router()
@@ -10,8 +10,9 @@ router.get('/' , (req , res)=>{
 })
 router.post('/register' , register)
 router.post('/login' , login)
-router.post('/verify-email' , verfifyEmail)
 router.get('/verify-session' , verifyJWT , verifySession)
+router.post('/verify-email' , verifyEmail)
+router.post('/resend-otp' , resendOtp)
 
 
 

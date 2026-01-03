@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs'
 import { v4 as uuidv4 } from "uuid" 
 import { sendVerificationEmail } from "../lib/send-email.js"
 import jwt from 'jsonwebtoken'
+import { generateValidationCode } from "../lib/generate-randomCode.js"
 const JWT_SECRET = process.env.JWT_SECRET
 
 const register = async (req, res) => {
@@ -72,7 +73,11 @@ const register = async (req, res) => {
     }
 
     // Send verification email
-    await sendVerificationEmail(userId, email);
+    const code = generateValidationCode();
+
+    const hashedCode = await bcrypt.hash(code, 10);
+    await Auth.saveVerificationCode(userId , hashedCode)
+    await sendVerificationEmail(email , code);
 
     return res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
@@ -161,34 +166,6 @@ const login = async (req, res) => {
   }
 };
 
-
-const verfifyEmail = async (req, res) => {
-    const { id } = req.query
-    try {
-        if (!id) {
-            return res.status(400).json({ error: 'No id provided' })
-        }
-
-        // Check user Existance
-        const [user] = await Auth.getUserById(id)
-        if (!user) {
-            return res.status(401).json({ error: 'Invalid credentials' })
-        }
-
-        await Auth.verifyEmail(id)
-        return res.status(201).json({ message: 'Email verified successfully' })
-    }
-
-
-
-    catch (err) {
-        console.log(err);
-        res.status(500).json({ error: 'Internal server error' })
-    }
-
-
-}
-
 const verifySession = async (req, res) => {
     try {
         // Fetch user
@@ -253,4 +230,78 @@ const logout = async (req, res) => {
 }
 
 
-export { login , logout , register , verfifyEmail , verifySession}
+const verifyEmail = async (req, res) => {
+  const { otp } = req.body;
+  const { email } = req.query;
+
+  try {
+    if (!email || !otp) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    // Get user
+    const [user] = await Auth.getUserByEmail(email);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    if (user.email_verified){
+      return res.status(400).json({ error: "Email is already verified" });
+    }
+
+    // Check OTP expiration (15 minutes)
+    const otpSentAt = new Date(user.otpSentAt);
+    const now = new Date();
+
+
+    const diffInMinutes = (now - otpSentAt) / (1000 * 60);
+
+    if (diffInMinutes > 15) {
+      return res.status(401).json({ error: "OTP expired" });
+    }
+
+    // Compare OTP
+    const isMatch = await bcrypt.compare(otp, user.otpCode);
+    if (!isMatch) {
+      return res.status(401).json({ error: "Incorrect OTP" });
+    }
+
+    // Mark email as verified & cleanup
+    await Auth.verifyEmail(user.id)
+    await Auth.clearOtp(user.id)
+    return res.status(200).json({ message: "Email verified successfully" });
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+const resendOtp = async (req , res)=>{
+    const { email } = req.body
+    try {
+        if (!email) {
+          return res.status(400).json({ error: "All fields are required" });
+        }
+
+        const [user] = await Auth.getUserByEmail(email);
+        if (!user) {
+          return res.status(401).json({ error: "User Not found" });
+        }
+
+
+        // Send verification email
+        const code = generateValidationCode();
+
+        const hashedCode = await bcrypt.hash(code, 10);
+        await Auth.saveVerificationCode(user.id , hashedCode)
+        await sendVerificationEmail(email , code); 
+        return res.json({message : 'Email sent successfully!'})
+    } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+
+export { login , logout , register , verifySession , verifyEmail , resendOtp}

@@ -1,6 +1,6 @@
 import { config } from "dotenv";
-config()
 import nodemailer from "nodemailer"
+config()
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -11,46 +11,62 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-async function sendVerificationEmail(id , to) {
+
+async function sendVerificationEmail(to, code) {
     const htmlContent = `
-        <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
-            <h2 style="color: #333;">Welcome to Yalla Fantasy!</h2>
-            <p>Thank you for signing up. Please verify your email address by clicking the button below:</p>
-            <a href="${process.env.ALLOW_CORS_URL}/?verify-email=${id}" 
-               style="display: inline-block; padding: 10px 20px; margin: 15px 0; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;"
-               target="_blank"
-            >
-                Verify Email Address
-            </a>
-            <p style="font-size: 0.9em; color: #777;">
-                If you did not sign up for Yalla Fantasy, please ignore this email.
+        <div style="font-family: Arial, sans-serif; padding: 24px; border: 1px solid #e5e7eb; border-radius: 10px; max-width: 520px; margin: auto;">
+            <h2 style="color: #111827; margin-bottom: 10px;">Bienvenue sur <span style="color:#2563eb;">StageLink</span> 👋</h2>
+            
+            <p style="color: #374151; font-size: 15px;">
+                Merci pour votre inscription. Pour finaliser la création de votre compte, veuillez utiliser le code de vérification ci-dessous :
             </p>
-            <p style="font-size: 0.8em; color: #aaa;">
-                If the button above doesn't work, copy and paste this link into your browser: <br>
-                <a href="">Link</a>
+
+            <div style="margin: 24px 0; text-align: center;">
+                <span style="display: inline-block; font-size: 24px; letter-spacing: 4px; font-weight: bold; color: #2563eb;">
+                    ${code}
+                </span>
+            </div>
+
+            <p style="color: #374151; font-size: 14px;">
+                Ce code est valable pour une durée limitée. Ne le partagez avec personne.
+            </p>
+
+            <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 24px 0;" />
+
+            <p style="font-size: 13px; color: #6b7280;">
+                Si vous n’êtes pas à l’origine de cette inscription, vous pouvez ignorer cet email en toute sécurité.
+            </p>
+
+            <p style="font-size: 12px; color: #9ca3af;">
+                © ${new Date().getFullYear()} StageLink. Tous droits réservés.
             </p>
         </div>
     `;
 
-
     const textContent = `
-        Welcome to Yalla Fantasy!
-        Thank you for signing up. Please verify your email address using this link:
-        Link
-        If you did not sign up for Yalla Fantasy, please ignore this email.
+Bienvenue sur StageLink !
+
+Merci pour votre inscription.
+Votre code de vérification est : ${code}
+
+Ce code est valable pour une durée limitée.
+Si vous n’êtes pas à l’origine de cette demande, ignorez cet email.
+
+— StageLink
     `;
+
     try {
-        
-        const info = await transporter.sendMail({
-            from: `"Yalla Fantasy" <${process.env.EMAIL_USER}>`,
-            to , 
-            subject: "Email Verification",
-            html: htmlContent ,
-            text : textContent
+        await transporter.sendMail({
+            from: `"StageLink" <${process.env.EMAIL_USER}>`,
+            to,
+            subject: "Code de vérification – StageLink",
+            html: htmlContent,
+            text: textContent
         });
     } catch (error) {
-        throw new Error(error.message)
+        throw new Error(error.message);
     }
 }
+
 
 export { sendVerificationEmail }

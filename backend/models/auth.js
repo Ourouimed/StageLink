@@ -34,8 +34,15 @@ const Auth = {
         return rows
     } ,
     getEntrepriseByUserId : async (id)=>{
-        const [rows] = await db.query('SELECT * FROM entreprise where id = ?' , [id])
+        const [rows] = await db.query('SELECT * FROM entreprises where id = ?' , [id])
         return rows
+    },
+
+    saveVerificationCode : async (id , code)=>{
+        await db.query('UPDATE utilisateurs set otpCode = ? , otpSentAt =  UTC_TIMESTAMP() where id = ?' , [code , id]) 
+    },
+    clearOtp : async (id)=>{
+        await db.query('UPDATE utilisateurs set otpCode = NULL , otpSentAt = NULL where id = ?' , [id])
     }
 }
 
