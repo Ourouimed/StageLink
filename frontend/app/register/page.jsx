@@ -38,7 +38,6 @@ export default function Register() {
 
   const toast = useToast()
 
-  /* ================= HANDLERS ================= */
 
   const handleChange = ({ target }) => {
     setForm((prev) => ({ ...prev, [target.id]: target.value }));
@@ -64,8 +63,6 @@ export default function Register() {
     setForm(prev => ({...prev , niveau_scolaire : value}))
     setValidationErrors({});
   };
-
-  /* ================= VALIDATION ================= */
 
   const validateForm = () => {
     const errors = {};
@@ -115,7 +112,6 @@ export default function Register() {
     return Object.keys(errors).length === 0;
   };
 
-  /* ================= SUBMIT ================= */
 
   const handleRegister = async() => {
     if (!validateForm()) return;
@@ -131,7 +127,7 @@ export default function Register() {
     };
     try {
       await dispatch(registerUser(payload)).unwrap()
-      router.push('/login')
+      router.push(`/verify-email?email=${form.email}`)
     } 
     catch (err) {
       toast.error(err)
@@ -142,7 +138,6 @@ export default function Register() {
   const roleOptions = ROLES.map((r) => ({ value: r, label: r }));
   const niveauOptions = NIVEAUX.map((n) => ({ value: n, label: n }));
 
-  /* ================= JSX ================= */
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-gray-50 p-6">

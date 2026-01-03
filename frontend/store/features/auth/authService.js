@@ -10,8 +10,8 @@ const login = async (data) => {
     return respone.data
 }
 
-const verifyEmail = async (id)=>{
-    const respone = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/verify-email?id=${id}`)
+const verifyEmail = async (email , otp)=>{
+    const respone = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/verify-email?email=${email}` , {otp})
     return respone.data
 }
 
@@ -21,13 +21,21 @@ const verifySession = async ()=>{
 }
 
 
+
+
 const logout = async ()=>{
     const respone = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/logout` , {},
     { withCredentials: true }) 
     return respone.data
 }
 
+const resendOtp = async (email)=>{
+    const respone = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/resend-otp` , {email})
+    return respone.data
+}
 
 
-const authService = { register , login , verifyEmail , verifySession , logout}
+
+
+const authService = { register , login , verifyEmail , verifySession , logout , resendOtp}
 export default authService

@@ -23,9 +23,9 @@ export const loginUser = createAsyncThunk('auth/login' , async (user , thunkAPI)
 })
 
 
-export const verifyEmail = createAsyncThunk('auth/verify-email' , async (id , thunkAPI)=>{
+export const verifyEmail = createAsyncThunk('auth/verify-email' , async ({email , otp} , thunkAPI)=>{
   try {
-    return await authService.verifyEmail(id)
+    return await authService.verifyEmail(email , otp)
   }
   catch (err){
     return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
@@ -44,6 +44,16 @@ export const verifySession = createAsyncThunk('auth/verify-session' , async (_ ,
 export const logout = createAsyncThunk('auth/logout' , async (_ , thunkAPI)=>{
   try {
     return await authService.logout()
+  }
+  catch (err){
+    return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
+  }
+})
+
+
+export const resendOtp = createAsyncThunk('auth/resend-otp' , async (email , thunkAPI)=>{
+  try {
+    return await authService.resendOtp(email)
   }
   catch (err){
     return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
@@ -130,6 +140,20 @@ export const authSlice = createSlice({
     .addCase(logout.rejected, (state, action) => {
       state.isLoading = false;
       state.user = null
+    })
+
+
+
+    // Resend Otp 
+    .addCase(resendOtp.pending, (state) => {
+      state.isLoading = true
+    })
+    .addCase(resendOtp.fulfilled, (state, action) => {
+      state.isLoading = false;
+      console.log(action.payload)
+    })
+    .addCase(resendOtp.rejected, (state, action) => {
+      state.isLoading = false;
     })
     }
 })
