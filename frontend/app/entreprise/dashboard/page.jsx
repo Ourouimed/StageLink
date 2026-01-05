@@ -1,3 +1,10 @@
+'use client'
+import DashboardLayout from "@/components/dashboard/DashboardLayout";
+
 export default function EntrepriseDashboard (){
-    return <h1>Hello etudiant</h1>
+    return <>
+        <DashboardLayout>
+            <h4>Hello world</h4>
+        </DashboardLayout>
+    </>
 }

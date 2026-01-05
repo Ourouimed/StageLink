@@ -12,3 +12,41 @@ export const menu = [
         url : '/'
     }
 ]
+
+
+const generalLinks = (role) => [
+  {
+    name: 'Dashboard',
+    url: `/${role}/dashboard`,
+  },
+]
+
+export const dashboardLinks = {
+  etudiant: [
+    ...generalLinks('etudiant'),
+    {
+      name: 'Mes Candidatures',
+      url: '/etudiant/candidatures',
+    },
+    {
+      name: 'Mon Profile',
+      url: '/etudiant/profile',
+    },
+  ],
+
+  entreprise: [
+    ...generalLinks('entreprise'),
+    {
+      name: 'Offres de stage',
+      url: '/entreprise/offres-stages',
+    },
+    {
+      name: 'Candidats',
+      url: '/entreprise/candidats',
+    },
+    {
+      name: 'Entreprise',
+      url: '/entreprise/profile',
+    },
+  ],
+}

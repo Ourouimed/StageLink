@@ -7,13 +7,13 @@ import { BarChart, Menu } from "lucide-react";
 import { useState } from "react";
 import MobileMenu from "../mobile-menu";
 
-export default function Header({ isSticky }) {
+export default function Header({ isSticky , className}) {
   const { user } = useSelector(state => state.auth);
   // mobile Menu 
   const [mobileMenuIsOpen , setMobileMenuIsOpen] = useState(false)
 
   return (
-    <header className={`${isSticky ? "sticky" : "fixed"} top-0 w-full py-6 px-10 md:px-20 flex items-center justify-between z-10`}>
+    <header className={`${className} ${isSticky ? "sticky" : "fixed"} top-0 w-full py-6 px-10 md:px-20 flex items-center justify-between z-10 bg-white`}>
       <h3 className="text-2xl font-bold">
         Stage<span className="text-main">Link</span>
       </h3>

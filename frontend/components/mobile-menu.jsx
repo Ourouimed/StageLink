@@ -61,7 +61,7 @@ export default function MobileMenu({ isOpen, onClose }) {
                         />
                     </div>
                     <div>
-                        <h4 className='font-semibold'>{user?.prenom}{" "} {user?.nom}</h4>
+                        <h4 className='font-semibold'>{user?.role === 'entreprise' ? user.entreprise : user.nom + user.prenom}</h4>
                         <span className='text-sm text-gray-500'>{user?.email}</span>
                     </div>
             </div> : (

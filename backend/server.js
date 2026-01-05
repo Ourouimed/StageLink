@@ -1,12 +1,13 @@
 import express from 'express'
 // routes imports
 import authRouter from './routes/auth.js'
+import entrepriseRouter from './routes/entreprise.js'
+
+
 import corsOptions from './middlewares/corsOptions.js'
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import cors from 'cors'
-
-
 
 const app = express()
 const PORT = 3001
@@ -30,6 +31,7 @@ app.use(cors(corsOptions))
 
 // routes 
 app.use('/api/auth' , authRouter)
+app.use('/api/entreprise' , entrepriseRouter)
 
 if (process.env.NODE_ENV !== 'production') {
     // test route

@@ -60,6 +60,8 @@ export const resendOtp = createAsyncThunk('auth/resend-otp' , async (email , thu
   }
 })
 
+
+
 export const authSlice = createSlice({
     name : 'auth' ,
     initialState : {
@@ -155,6 +157,7 @@ export const authSlice = createSlice({
     .addCase(resendOtp.rejected, (state, action) => {
       state.isLoading = false;
     })
+
     }
 })
 

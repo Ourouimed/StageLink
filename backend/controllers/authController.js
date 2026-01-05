@@ -198,8 +198,9 @@ const verifySession = async (req, res) => {
 
             case "entreprise":
                 const [entreprise] = await Auth.getEntrepriseByUserId(user.id);
+                console.log(entreprise)
                 roleData = {
-                    entreprise: entreprise.nom,
+                    entreprise: entreprise.nom_entreprise,
                 };
                 break;
         }
