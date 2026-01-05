@@ -2,6 +2,7 @@ import express from 'express'
 // routes imports
 import authRouter from './routes/auth.js'
 import entrepriseRouter from './routes/entreprise.js'
+import etudiantRouter from './routes/etudiants.js'
 
 
 import corsOptions from './middlewares/corsOptions.js'
@@ -32,6 +33,8 @@ app.use(cors(corsOptions))
 // routes 
 app.use('/api/auth' , authRouter)
 app.use('/api/entreprise' , entrepriseRouter)
+app.use('/api/etudiant' , etudiantRouter)
+
 
 if (process.env.NODE_ENV !== 'production') {
     // test route

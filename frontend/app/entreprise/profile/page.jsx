@@ -115,7 +115,7 @@ export default function ProfileEntreprise() {
                 </div>
 
                 <div className="grid gap-8">
-                    <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                    <div className="bg-white p-6 rounded-xl shadow-sm">
                         <div className="flex flex-col md:flex-row gap-8 items-start">
                             
                             <div className="relative group">
@@ -155,7 +155,7 @@ export default function ProfileEntreprise() {
                     </div>
 
                     {/* Section 2: Description */}
-                    <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+                    <div className="bg-white p-6 rounded-xl shadow-sm">
                         <label className="text-sm font-medium flex items-center gap-2">
                             Description de l'entreprise <span className="text-red-500">*</span>
                         </label>

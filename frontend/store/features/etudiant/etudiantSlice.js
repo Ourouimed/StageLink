@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import entrepriseService from "./entrepriseService";
+import etudiantService from "./etudiantService";
 
 
-export const updateProfile = createAsyncThunk('entreprise/update' , async (data, thunkAPI)=>{
+export const updateProfile = createAsyncThunk('etudiant/update' , async (data, thunkAPI)=>{
   try {
-    return await entrepriseService.updateProfile(data)
+    return await etudiantService.updateProfile(data)
   }
   catch (err){
     return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
@@ -13,9 +13,9 @@ export const updateProfile = createAsyncThunk('entreprise/update' , async (data,
 
 
 
-export const getProfile = createAsyncThunk('entreprise/get' , async (_, thunkAPI)=>{
+export const getProfile = createAsyncThunk('etudiant/get' , async (_, thunkAPI)=>{
   try {
-    return await entrepriseService.getProfile()
+    return await etudiantService.getProfile()
   }
   catch (err){
     return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
@@ -23,8 +23,8 @@ export const getProfile = createAsyncThunk('entreprise/get' , async (_, thunkAPI
 })
 
 
-const entrepriseSlice = createSlice({
-    name : 'entreprise' ,
+const etudiantSlice = createSlice({
+    name : 'etudiant' ,
     initialState : {
         profile : null , 
         isLoading : false
@@ -65,4 +65,4 @@ const entrepriseSlice = createSlice({
 
 
 
-export default entrepriseSlice.reducer
+export default etudiantSlice.reducer

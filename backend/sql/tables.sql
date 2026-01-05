@@ -5,14 +5,10 @@ create table utilisateurs (
     created_at timestamp default current_timestamp , 
     email_verified tinyint default 0 ,
     email_verified_at timestamp default null ,
+    otpCode varchar(100) default NULL ,
+	otpSentAt timestamp default current_timestamp ,
     password varchar(500) not null 
 );
-
-
-alter table utilisateurs 
-add column email_verified tinyint default 0 ,
-add column email_verified_at timestamp default null ;
-
 
 create table etudiants (
 	id char(36) primary key ,
@@ -22,6 +18,7 @@ create table etudiants (
 	date_naissance date ,
     FOREIGN KEY (id) references utilisateurs (id)
 );
+select * from utilisateurs;
 
 
 create table encadrants (
@@ -44,6 +41,13 @@ create table admins (
 create table entreprises (
 	id char(36) primary key ,
     nom_entreprise varchar(100) ,
-    domain varchar(100),
+    ville	varchar(100) ,
+    type_entreprise	varchar(100),
+	description	varchar(500),
+	secteur	varchar(100),
+	website	varchar(200),
+	linkedin	varchar(200),
     FOREIGN KEY (id) references utilisateurs (id)
 );
+
+
