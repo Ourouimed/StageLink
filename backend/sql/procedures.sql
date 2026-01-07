@@ -76,5 +76,52 @@ END $$
 
 DELIMITER ;
 
-desc entreprises;
+DELIMITER $$
+
+CREATE PROCEDURE create_stage (
+    IN p_id CHAR(36),
+    IN p_titre VARCHAR(20),
+    IN p_entreprise CHAR(36),
+    IN p_specialite VARCHAR(50),
+    IN p_ville VARCHAR(50),
+    IN p_type_stage VARCHAR(100),
+    IN p_description VARCHAR(500),
+    IN p_duree_months INT,
+    IN p_nombre_profiles INT,
+    IN p_demarage TIMESTAMP,
+    IN p_disponibilite varchar(30)
+)
+BEGIN
+    INSERT INTO OFFRE_stage (
+        id,
+        titre,
+        entreprise,
+        specialite,
+        ville,
+        type_stage,
+        description,
+        duree_months,
+        nombre_profiles,
+        demarage,
+        disponibilite ,
+        created_at
+    ) VALUES (
+        p_id,
+        p_titre,
+        p_entreprise,
+        p_specialite,
+        p_ville,
+        p_type_stage,
+        p_description,
+        p_duree_months,
+        p_nombre_profiles,
+        p_demarage,
+        p_disponibilite ,
+        NOW()
+    );
+END $$
+
+DELIMITER ;
+
+
 

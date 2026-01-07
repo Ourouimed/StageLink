@@ -6,7 +6,7 @@ create table utilisateurs (
     email_verified tinyint default 0 ,
     email_verified_at timestamp default null ,
     otpCode varchar(100) default NULL ,
-	otpSentAt timestamp default current_timestamp ,
+	otpSentAt timestamp ,
     password varchar(500) not null 
 );
 
@@ -16,6 +16,10 @@ create table etudiants (
     prenom varchar(100) , 
     niveau_scolaire varchar(50),
 	date_naissance date ,
+    ville	varchar(100) ,
+    bio	varchar(500),
+    website	varchar(200),
+	linkedin varchar(200),
     FOREIGN KEY (id) references utilisateurs (id)
 );
 select * from utilisateurs;
@@ -46,8 +50,23 @@ create table entreprises (
 	description	varchar(500),
 	secteur	varchar(100),
 	website	varchar(200),
-	linkedin	varchar(200),
+	linkedin varchar(200),
     FOREIGN KEY (id) references utilisateurs (id)
 );
 
 
+CREATE TABLE OFFRE_stage (
+	id char(36) primary key ,
+    titre varchar(20) ,
+    entreprise char(36) ,
+    specialite varchar(50),
+    ville varchar(50) ,
+    type_stage varchar(50),
+    description varchar(500),
+    duree_months int ,
+    nombre_profiles int default 0,
+    demarage timestamp default null ,
+    created_at timestamp default current_timestamp ,
+    disponibilite ENUM('emps plein' , 'Temps partiel') ,
+    FOREIGN KEY (entreprise) references entreprises(id) 
+);

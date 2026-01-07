@@ -1,4 +1,4 @@
-"use client"; // تأكد من وجود هذه الإضافة في Next.js App Router
+"use client"; 
 
 import { verifySession } from "@/store/features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";

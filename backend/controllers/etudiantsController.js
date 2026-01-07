@@ -3,7 +3,6 @@ import Etudiant from "../models/etudiant.js";
 const updateProfile = async (req , res) => {
     try {
         const userId = req.user.id 
-        console.log(req.body)
         const { nom , prenom , date_naissance , niveau_scolaire , ville  , bio  , website  , linkedin } = req.body
 
         if (!nom , !prenom , !date_naissance , !niveau_scolaire , !ville  , !bio){

@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
-import { usePopup } from "@/hooks/usePopup";
 import { useToast } from "@/hooks/useToast";
 import { registerUser } from "@/store/features/auth/authSlice";
 import { useRouter } from "next/navigation";
