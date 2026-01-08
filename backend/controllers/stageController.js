@@ -36,7 +36,12 @@ const createStage = async (req , res)=>{
 
 const getAllStage = async (req , res)=>{
     try {
-        const stages = await Stage.getAllStage()
+        const user = req.user
+        if (!user){
+            return res.status(404).json({error : 'user not found'})
+        }
+        const stages = await Stage.getAllStage(user.id)
+        
         return res.json({message : 'Stage fetched successfully' , stages })
     }
 

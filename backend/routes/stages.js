@@ -4,6 +4,6 @@ import verifyJWT from '../middlewares/verifyJwt.js'
 const router = express.Router()
 
 router.post('/create' , verifyJWT , createStage)
-router.get('/' , getAllStage)
+router.get('/' , verifyJWT , getAllStage)
 
 export default router
