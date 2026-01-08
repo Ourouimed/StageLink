@@ -190,11 +190,11 @@ export default function ProfileEntreprise() {
                             </h5>
                             <div className="space-y-3 p-6">
                                 <div className="relative">
-                                    <Input id='website' icon={Globe} type="url" placeholder="Site web"  value={profileForm.website} onChange={handleChange}/>
+                                    <Input id='website'  icon={Globe} type="url" placeholder="https://example.com"  value={profileForm.website} onChange={handleChange}/>
                                   
                                 </div>
                                 <div className="relative">
-                                    <Input id='linkedin' icon={Linkedin} type="url" placeholder="Site web"  value={profileForm.linkedin} onChange={handleChange}/>
+                                    <Input id='linkedin' icon={Linkedin} type="url" placeholder="https://linkedin.com/exemple"  value={profileForm.linkedin} onChange={handleChange}/>
                                   
                                 </div>
                             </div>

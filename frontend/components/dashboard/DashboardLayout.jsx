@@ -5,11 +5,15 @@ import { useDispatch, useSelector } from "react-redux";
 import Sidebar from "./Sidebar";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { getProfile } from "@/store/features/entreprise/entrepriseSlice";
 
 export default function DashboardLayout({ children }) {
     const dispatch = useDispatch();
     const router = useRouter();
     const { isLoading: authLoading, isInitialized, user } = useSelector(state => state.auth);
+
+
+    const { profile } = useSelector(state => state.entreprise)
 
    
     useEffect(() => {
@@ -17,6 +21,11 @@ export default function DashboardLayout({ children }) {
             dispatch(verifySession());
         }
     }, [dispatch, isInitialized]);
+
+
+    useEffect(()=>{
+        dispatch(getProfile())
+    } , [dispatch])
 
 
 
@@ -43,7 +52,7 @@ export default function DashboardLayout({ children }) {
         <section className="min-h-screen bg-gray-50"> 
             <div className="grid grid-cols-1 md:grid-cols-[250px_1fr] gap-6 px-4 md:px-10">
                 <aside className="">
-                    <Sidebar user={user} />
+                    <Sidebar user={{...profile , role : user.role}} />
                 </aside>
                 <main className="py-6">
                     {children}
