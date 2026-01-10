@@ -6,11 +6,12 @@ export const Button = ({
   variant = "DEFAULT",
   size = "md",
   href,
+  outline = false , 
   ...props
 }) => {
   const variants = {
-    DEFAULT: "bg-black text-white",
-    MAIN: "bg-main text-white",
+    DEFAULT: `${outline ? 'bg-transparent hover:bg-black hover:text-white text-black border-black' : 'bg-black text-white'}` ,
+    MAIN: `${outline ? 'bg-transparent hover:bg-main hover:text-white text-main border-main' : "bg-main text-white"}`,
   };
 
   const sizes = {
@@ -20,6 +21,7 @@ export const Button = ({
   };
 
   const btnStyle = `
+    border
     inline-flex items-center gap-4 rounded-lg font-semibold
     transition duration-300 cursor-pointer
     ${variants[variant.toUpperCase()] || variants.DEFAULT}

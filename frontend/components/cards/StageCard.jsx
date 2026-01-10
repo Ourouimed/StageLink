@@ -1,24 +1,29 @@
 import { Calendar, MapPin, Timer } from "lucide-react"
 
 export const StageCard = ({stage})=>{
+    console.log(stage)
     return (
         <div className="border border-gray-300 rounded-xl p-5 shadow-sm bg-white hover:shadow-md transition-shadow">
      
       <div className="mb-4">
-        <h3 className="font-semibold text-lg capitalize">{stage.titre}</h3>
+        <h3 className="font-semibold text-2xl capitalize">{stage.titre}</h3>
         <p className="text-sm text-main font-medium">{stage.entreprise}</p>
       </div>
 
    
-      <div className="space-y-2 text-sm text-slate-600">
-        <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 text-sm text-slate-600">
+        <div className="flex items-center gap-1">
           <span className="font-semibold flex items-center gap-1"> <MapPin size={14}/> Ville:</span> {stage.ville}
         </div>
-        <div className="flex items-center gap-3">
-          <span className="font-semibold flex items-center gap-1"><Calendar size={14}/> Début:</span> {new Date(stage.demarage).toLocaleDateString('fr-FR')}
+        <div className="flex items-center gap-1">
+          <span className="font-semibold flex items-center gap-1"><Calendar size={14}/> Début:</span> {new Date(stage.demarage).toDateString('fr-FR')}
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1">
           <span className="font-semibold flex items-center gap-1"><Timer size={14}/> Durée:</span> {stage.duree_months} mois
+        </div>
+
+        <div className="flex items-center gap-1">
+          <span className="font-semibold flex items-center gap-1"><Calendar size={14}/> Creer en:</span> {new Date(stage.created_at).toDateString('fr-FR')}
         </div>
       </div>
 

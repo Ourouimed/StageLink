@@ -32,6 +32,11 @@ export const dashboardLinks = {
       name: 'Mon Profile',
       url: '/etudiant/profile',
     },
+
+    {
+    name: 'Offres de stage',
+    url: `/offre-stages`,
+  },
   ],
 
   entreprise: [

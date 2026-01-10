@@ -223,6 +223,7 @@ const verifySession = async (req, res) => {
 
 
 const logout = async (req, res) => {
+    console.log('Hello')
     return res.clearCookie('token', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
