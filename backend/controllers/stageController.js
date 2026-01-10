@@ -34,13 +34,13 @@ const createStage = async (req , res)=>{
 }
 
 
-const getAllStage = async (req , res)=>{
+const getAllStagesByEntreprise = async (req , res)=>{
     try {
         const user = req.user
         if (!user){
             return res.status(404).json({error : 'user not found'})
         }
-        const stages = await Stage.getAllStage(user.id)
+        const stages = await Stage.getAllStagesByEntreprise(user.id)
         
         return res.json({message : 'Stage fetched successfully' , stages })
     }
@@ -52,4 +52,21 @@ const getAllStage = async (req , res)=>{
 
 }
 
-export { createStage , getAllStage}
+
+const getAllStage = async (req , res)=>{
+      try {
+        const user = req.user
+        if (!user){
+            return res.status(404).json({error : 'user not found'})
+        }
+        const stages = await Stage.getAllStages(user.id)
+        
+        return res.json({message : 'Stage fetched successfully' , stages })
+    }
+
+     catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+}
+export { createStage , getAllStage , getAllStagesByEntreprise}

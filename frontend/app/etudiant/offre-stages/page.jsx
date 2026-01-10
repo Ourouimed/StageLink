@@ -2,6 +2,8 @@
 
 import DashboardLayout from "@/components/dashboard/DashboardLayout"
 import { Button } from "@/components/ui/Button"
+import { useToast } from "@/hooks/useToast"
+import { createCandidature } from "@/store/features/candidatures/candidatureSlice"
 import { getAllStages } from "@/store/features/offre-stage/offreStageSlice"
 import { Save, Zap } from "lucide-react"
 import { useEffect, useMemo, useState } from "react"
@@ -9,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 export default function OffreDeStagesSearch() {
   const dispatch = useDispatch()
+  const toast = useToast()
   const { stages } = useSelector(state => state.stage)
 
   const [search, setSearch] = useState("")
@@ -19,6 +22,16 @@ export default function OffreDeStagesSearch() {
   useEffect(() => {
     dispatch(getAllStages())
   }, [dispatch])
+
+  const handleCreateCandidature = async ()=>{
+    try {
+        await dispatch(createCandidature(selectedStage.stage_id)).unwrap()
+        toast.success('Candidature cree avec success')
+    }
+    catch (err){
+        toast.error(err)
+    }
+  }
 
   const filteredStages = useMemo(() => {
     let data = [...stages]
@@ -129,7 +142,7 @@ export default function OffreDeStagesSearch() {
 
                     {/* CTA */}
                     <div className="flex gap-1 items-center">
-                        <Button size="sm" variant="main">
+                        <Button size="sm" variant="main" onClick={handleCreateCandidature}>
                             <Zap size={12}/> Postuler
                         </Button>
                         <Button size="sm" outline>

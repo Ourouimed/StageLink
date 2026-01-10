@@ -70,3 +70,16 @@ CREATE TABLE OFFRE_stage (
     disponibilite ENUM('emps plein' , 'Temps partiel') ,
     FOREIGN KEY (entreprise) references entreprises(id) 
 );
+
+
+CREATE TABLE candidatures (
+  id char(36) primary key,
+  stage_id char(36) ,
+  etudiant_id char(36) , 
+  status varchar(50) default 'pending' ,
+  application_sent_at TIMESTAMP ,
+  FOREIGN KEY (stage_id) references offre_stage(id),
+  FOREIGN KEY (etudiant_id) references etudiants (id)
+  );
+  
+  

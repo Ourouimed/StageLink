@@ -34,6 +34,16 @@ export const getAllStages = createAsyncThunk('offres-stage/getall' , async (_ , 
 })
 
 
+export const ajouterCandidature = createAsyncThunk('offres-stage/candidature' , async (_ , thunkAPI)=>{
+    try {
+        return await offreStageService.getAll()
+    }
+    catch (err){
+        return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
+    }
+})
+
+
 
 export const offreStageSlice = createSlice({
     name : 'stage' ,

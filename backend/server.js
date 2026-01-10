@@ -4,6 +4,7 @@ import authRouter from './routes/auth.js'
 import entrepriseRouter from './routes/entreprise.js'
 import etudiantRouter from './routes/etudiants.js'
 import stageRouter from './routes/stages.js'
+import candidatureRouter from './routes/candidature.js'
 
 
 import corsOptions from './middlewares/corsOptions.js'
@@ -36,6 +37,7 @@ app.use('/api/auth' , authRouter)
 app.use('/api/entreprise' , entrepriseRouter)
 app.use('/api/etudiant' , etudiantRouter)
 app.use('/api/offre-stage' , stageRouter)
+app.use('/api/candidature' , candidatureRouter)
 
 
 if (process.env.NODE_ENV !== 'production') {

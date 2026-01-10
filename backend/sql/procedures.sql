@@ -117,11 +117,42 @@ BEGIN
         p_nombre_profiles,
         p_demarage,
         p_disponibilite ,
-        NOW()
+        UTC_TIMESTAMP()
     );
 END $$
 
 DELIMITER ;
 
 
+
+DELIMITER &&
+
+CREATE PROCEDURE AjouterCandidature (
+    IN p_id CHAR(36),
+    IN p_stage_id CHAR(36),
+    IN p_etudiant_id CHAR(36)
+)
+BEGIN
+    -- Vérifier si la candidature existe déjà
+    IF EXISTS (
+        SELECT 1 FROM candidatures 
+        WHERE stage_id = p_stage_id 
+          AND etudiant_id = p_etudiant_id
+    ) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Candidature déjà existante pour cette offre';
+    ELSE
+        INSERT INTO candidatures (
+            id, stage_id, etudiant_id, application_sent_at
+        ) VALUES (
+            p_id, p_stage_id, p_etudiant_id, NOW()
+        );
+    END IF;
+END &&
+
+DELIMITER ;
+
+
+
+ 
 

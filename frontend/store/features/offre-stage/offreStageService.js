@@ -16,5 +16,11 @@ const getAll = async ()=>{
     return respone.data
 }
 
+
+
+
+
+
+
 const offreStageService = {createOffre , getAllByEntreprise , getAll}
 export default offreStageService
