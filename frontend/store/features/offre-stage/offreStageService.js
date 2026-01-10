@@ -6,10 +6,15 @@ const createOffre = async (data)=>{
 }
 
 
-const getAll = async (data)=>{
+const getAllByEntreprise = async ()=>{
+    const respone = await axiosService.get(`/api/offre-stage/entrepsie`)
+    return respone.data
+}
+
+const getAll = async ()=>{
     const respone = await axiosService.get(`/api/offre-stage`)
     return respone.data
 }
 
-const offreStageService = {createOffre , getAll}
+const offreStageService = {createOffre , getAllByEntreprise , getAll}
 export default offreStageService

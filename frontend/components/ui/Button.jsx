@@ -12,6 +12,7 @@ export const Button = ({
   const variants = {
     DEFAULT: `${outline ? 'bg-transparent hover:bg-black hover:text-white text-black border-black' : 'bg-black text-white'}` ,
     MAIN: `${outline ? 'bg-transparent hover:bg-main hover:text-white text-main border-main' : "bg-main text-white"}`,
+    ERROR : `${outline ? 'bg-transparent hover:bg-red-500 hover:text-white text-red-500 border-red-500' : "bg-red-500 text-white"}`,
   };
 
   const sizes = {

@@ -3,7 +3,7 @@ import { StageCard } from "@/components/cards/StageCard";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { Button } from "@/components/ui/Button";
 import { usePopup } from "@/hooks/usePopup";
-import { getAllStage } from "@/store/features/offre-stage/offreStageSlice";
+import { getAllByEntreprise } from "@/store/features/offre-stage/offreStageSlice";
 import { Calendar, Plus } from "lucide-react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,10 +12,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function OffresDeStages (){
     const dispatch = useDispatch()
+    const { user } = useSelector(state => state.auth)
     const {stages , isLoading : stageLoading } =  useSelector(state => state.stage)
 
     useEffect(()=>{
-        dispatch(getAllStage())
+        dispatch(getAllByEntreprise())
     } , [dispatch])
 
 
@@ -59,7 +60,7 @@ export default function OffresDeStages (){
                 ) : (
                 <div className="space-y-3 mt-6">
                     {stages.map((s) => (
-                    <StageCard key={s.titre} stage={s} />
+                    <StageCard key={s.titre} stage={s} role={user?.role}/>
                     ))}
                 </div>
                 )}

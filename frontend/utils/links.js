@@ -35,7 +35,7 @@ export const dashboardLinks = {
 
     {
     name: 'Offres de stage',
-    url: `/offre-stages`,
+    url: `/etudiant/offre-stages`,
   },
   ],
 

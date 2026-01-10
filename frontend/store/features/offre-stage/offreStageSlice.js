@@ -12,14 +12,28 @@ export const createStage = createAsyncThunk('offres-stage/create' , async (data 
 })
 
 
-export const getAllStage = createAsyncThunk('offres-stage/getall' , async (_ , thunkAPI)=>{
+export const getAllByEntreprise = createAsyncThunk('offres-stage/getall-entreprise' , async (_ , thunkAPI)=>{
     try {
-        return await offreStageService.getAll(_)
+        return await offreStageService.getAllByEntreprise()
     }
     catch (err){
         return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
     }
 })
+
+
+
+
+export const getAllStages = createAsyncThunk('offres-stage/getall' , async (_ , thunkAPI)=>{
+    try {
+        return await offreStageService.getAll()
+    }
+    catch (err){
+        return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
+    }
+})
+
+
 
 export const offreStageSlice = createSlice({
     name : 'stage' ,
@@ -44,19 +58,37 @@ export const offreStageSlice = createSlice({
     })
 
 
-    // get all stages
-    .addCase(getAllStage.pending , (state)=>{
+    // get all stages by entreprise
+    .addCase(getAllByEntreprise.pending , (state)=>{
         state.isLoading = true
     })
-    .addCase(getAllStage.fulfilled, (state , action)=>{
+    .addCase(getAllByEntreprise.fulfilled, (state , action)=>{
         state.stages = action.payload.stages
         state.isLoading = false
         console.log(action.payload)
     })
-    .addCase(getAllStage.rejected, (state , action)=>{
+    .addCase(getAllByEntreprise.rejected, (state , action)=>{
         state.isLoading = false
         console.log(action.payload)
     })
+
+
+    // get all stages
+    .addCase(getAllStages.pending , (state)=>{
+        state.isLoading = true
+    })
+    .addCase(getAllStages.fulfilled, (state , action)=>{
+        state.stages = action.payload.stages
+        state.isLoading = false
+        console.log(action.payload)
+    })
+    .addCase(getAllStages.rejected, (state , action)=>{
+        state.isLoading = false
+        console.log(action.payload)
+    })
+
+
+   
 })
 
 

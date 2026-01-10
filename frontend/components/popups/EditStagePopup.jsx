@@ -4,7 +4,7 @@ import { Select } from "@/components/ui/Select"
 import { Textarea } from "@/components/ui/Textares"
 import { moroccoCities } from "@/utils/cities"
 import { Button } from "../ui/Button"
-import { Plus } from "lucide-react"
+import { Pencil, Plus } from "lucide-react"
 import { useDispatch, useSelector } from "react-redux"
 import { useToast } from "@/hooks/useToast"
 import { createStage } from "@/store/features/offre-stage/offreStageSlice"
@@ -39,17 +39,18 @@ const DISPONIBILITE = [
   { label: "Temps partiel", value: "Temps partiel" }
 ]
 
-export default function AjouterOffreStage() {
+export default function EditStagePopup({stage}) {
+    console.log(stage)
   const [offreForm, setOffreForm] = useState({
-    titre: "",
-    type_stage: "",
-    specialite: "",
-    ville: "",
-    duree: "",
-    nbr_places: 1,
-    description: "",
-    demarage: "",
-    disponibilite: ""
+    titre: stage.titre || "",
+    type_stage: stage.type_stage || "",
+    specialite: stage.specialite || "",
+    ville: stage.ville || "",
+    duree: stage.duree_months || "",
+    nbr_places: stage.nombre_profiles || "",
+    description: stage.description || "",
+    demarage: stage.demarage.split("T")[0] || "",
+    disponibilite: stage.disponibilite || ""
   })
 
   const [validationErrors, setValidationErrors] = useState({})
@@ -223,7 +224,7 @@ export default function AjouterOffreStage() {
           disabled={isLoading}
           onClick={handleAddStage}
         >
-          Publier l'offre <Plus />
+          Modifier l'offre <Pencil />
         </Button>
       </div>
     </div>
