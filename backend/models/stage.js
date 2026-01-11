@@ -21,7 +21,11 @@ const Stage = {
                                               s.description , s.duree_months , s.disponibilite from offre_stage s 
                                               inner join entreprises e on e.id = s.entreprise`)
         return rows 
-    } 
+    } ,
+
+    deleteStage : async (id) =>{
+        await db.query('DELETE FROM offre_stage where id = ?' , [id])
+    }
 } 
 
 

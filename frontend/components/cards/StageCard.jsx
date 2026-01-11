@@ -12,7 +12,7 @@ export const StageCard = ({stage , role })=>{
 
 
     const handleOpenDeletePopup = ()=>{
-        openPopup({title : "Supprimer l'offre", component :'DeleteStagePopup'})
+        openPopup({title : "Supprimer l'offre", component :'DeleteStagePopup' , props : {id : stage.stage_id , titre : stage.titre} })
     }
     return (
         <div className="border border-gray-300 rounded-xl p-5 shadow-sm bg-white hover:shadow-md transition-shadow">

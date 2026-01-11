@@ -18,9 +18,16 @@ const getAll = async ()=>{
 
 
 
+const deleteStage = async (id)=>{
+    const respone = await axiosService.delete(`/api/offre-stage/delete/${id}`)
+    return respone.data
+}
 
 
 
 
-const offreStageService = {createOffre , getAllByEntreprise , getAll}
+
+
+
+const offreStageService = {createOffre , getAllByEntreprise , getAll , deleteStage}
 export default offreStageService

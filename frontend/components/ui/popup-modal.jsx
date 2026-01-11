@@ -36,7 +36,7 @@ export const PopupModal = ()=>{
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4 overflow-y-auto">
+    <div className="fixed inset-0 z-51 bg-black/70 flex items-center justify-center p-4 overflow-y-auto">
       <div
         ref={ref}
         className="w-full max-w-md bg-white rounded-md shadow-lg flex flex-col max-h-[90vh] overflow-hidden"

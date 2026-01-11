@@ -33,6 +33,24 @@ const createStage = async (req , res)=>{
     }
 }
 
+const deleteStage = async (req , res)=>{
+    try {
+        const { id } = req.params
+        if (!id){
+            return res.status(400).json({ error: "Stage id is required" });
+        }
+
+        await Stage.deleteStage(id)
+        return res.json({message : 'Stage supprimer avec success' , id})
+    }   
+
+    catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: err?.sqlMessage || "Internal server error" });
+    }
+    
+}
+
 
 const getAllStagesByEntreprise = async (req , res)=>{
     try {
@@ -69,4 +87,4 @@ const getAllStage = async (req , res)=>{
         return res.status(500).json({ error: "Internal server error" });
     }
 }
-export { createStage , getAllStage , getAllStagesByEntreprise}
+export { createStage , getAllStage , getAllStagesByEntreprise , deleteStage}

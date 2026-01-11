@@ -34,9 +34,11 @@ export const getAllStages = createAsyncThunk('offres-stage/getall' , async (_ , 
 })
 
 
-export const ajouterCandidature = createAsyncThunk('offres-stage/candidature' , async (_ , thunkAPI)=>{
+
+
+export const deleteStage = createAsyncThunk('offres-stage/delete' , async (id , thunkAPI)=>{
     try {
-        return await offreStageService.getAll()
+        return await offreStageService.deleteStage(id)
     }
     catch (err){
         return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
@@ -96,6 +98,23 @@ export const offreStageSlice = createSlice({
         state.isLoading = false
         console.log(action.payload)
     })
+
+    // delete stage
+    .addCase(deleteStage.pending, (state) => {
+        state.isLoading = true
+        })
+    .addCase(deleteStage.fulfilled, (state, action) => {
+        console.log(action.payload)
+        state.stages = state.stages.filter(
+            stage => stage.stage_id !== action.payload.id
+        )
+        state.isLoading = false
+    })
+    .addCase(deleteStage.rejected, (state, action) => {
+        state.isLoading = false
+        console.log(action.payload)
+    })
+
 
 
    
