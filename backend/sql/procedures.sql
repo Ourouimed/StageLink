@@ -153,6 +153,38 @@ END &&
 DELIMITER ;
 
 
+DELIMITER $$
+
+CREATE PROCEDURE update_stage (
+    IN p_id CHAR(36),
+    IN p_titre VARCHAR(20),
+    IN p_entreprise CHAR(36),
+    IN p_specialite VARCHAR(50),
+    IN p_ville VARCHAR(50),
+    IN p_type_stage VARCHAR(100),
+    IN p_description VARCHAR(500),
+    IN p_duree_months INT,
+    IN p_nombre_profiles INT,
+    IN p_demarage TIMESTAMP,
+    IN p_disponibilite VARCHAR(30)
+)
+BEGIN
+    UPDATE OFFRE_stage
+    SET
+        titre = p_titre,
+        entreprise = p_entreprise,
+        specialite = p_specialite,
+        ville = p_ville,
+        type_stage = p_type_stage,
+        description = p_description,
+        duree_months = p_duree_months,
+        nombre_profiles = p_nombre_profiles,
+        demarage = p_demarage,
+        disponibilite = p_disponibilite
+    WHERE id = p_id;
+END $$
+
+DELIMITER ;
 
  
 

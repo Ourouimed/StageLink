@@ -70,7 +70,7 @@ export default function DashboardLayout({ children }) {
       <div className="grid grid-cols-1 md:grid-cols-[250px_1fr] gap-0 md:gap-6 px-0 md:px-10">
         {/* Sidebar Wrapper */}
         <aside className={`
-          fixed inset-y-0 left-0 z-49 w-72 transform transition-transform duration-300 ease-in-out bg-white
+          fixed inset-y-0 left-0 z-[60] w-72 transform transition-transform duration-300 ease-in-out bg-white
           md:relative md:translate-x-0 md:w-full md:block
           ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
         `}>

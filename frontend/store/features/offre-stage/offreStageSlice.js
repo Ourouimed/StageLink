@@ -12,6 +12,16 @@ export const createStage = createAsyncThunk('offres-stage/create' , async (data 
 })
 
 
+export const updateStage = createAsyncThunk('offres-stage/update' , async (data , thunkAPI)=>{
+    try {
+        return await offreStageService.updateStage(data )
+    }
+    catch (err){
+        return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
+    }
+})
+
+
 export const getAllByEntreprise = createAsyncThunk('offres-stage/getall-entreprise' , async (_ , thunkAPI)=>{
     try {
         return await offreStageService.getAllByEntreprise()
@@ -68,6 +78,25 @@ export const offreStageSlice = createSlice({
         state.isLoading = false
         console.log(action.payload)
     })
+
+
+    // update stage
+    .addCase(updateStage.pending, (state) => {
+        state.isLoading = true
+        })
+    .addCase(updateStage.fulfilled, (state, action) => {
+        state.stages = state.stages.map(stage =>
+            stage.stage_id === action.payload.stage.stage_id
+            ? action.payload.stage
+            : stage
+        )
+        state.isLoading = false
+    })
+    .addCase(updateStage.rejected, (state, action) => {
+        state.isLoading = false
+        console.log(action.payload)
+    })
+
 
 
     // get all stages by entreprise

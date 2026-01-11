@@ -7,7 +7,7 @@ import { Button } from "../ui/Button"
 import { Pencil, Plus } from "lucide-react"
 import { useDispatch, useSelector } from "react-redux"
 import { useToast } from "@/hooks/useToast"
-import { createStage } from "@/store/features/offre-stage/offreStageSlice"
+import { createStage, updateStage } from "@/store/features/offre-stage/offreStageSlice"
 import { usePopup } from "@/hooks/usePopup"
 
 const TYPE_STAGE = [
@@ -39,7 +39,7 @@ const DISPONIBILITE = [
   { label: "Temps partiel", value: "Temps partiel" }
 ]
 
-export default function EditStagePopup({stage}) {
+export default function EditStagePopup({stage , id}) {
     console.log(stage)
   const [offreForm, setOffreForm] = useState({
     titre: stage.titre || "",
@@ -92,11 +92,11 @@ export default function EditStagePopup({stage}) {
     return Object.keys(errors).length === 0
   }
 
-  const handleAddStage = async () => {
+  const handleUpdateStage = async () => {
     if (!validateForm()) return
 
     try {
-      await dispatch(createStage(offreForm)).unwrap()
+      await dispatch(updateStage({...offreForm , id})).unwrap()
       toast.success("Offre créée avec succès")
       setOffreForm({
         titre: "",
@@ -111,7 +111,7 @@ export default function EditStagePopup({stage}) {
       })
       closePopup()
     } catch (err) {
-      toast.error(err?.message || "Erreur lors de la création")
+      toast.error(err)
     }
   }
 
@@ -222,7 +222,7 @@ export default function EditStagePopup({stage}) {
           variant="main"
           size="sm"
           disabled={isLoading}
-          onClick={handleAddStage}
+          onClick={handleUpdateStage}
         >
           Modifier l'offre <Pencil />
         </Button>

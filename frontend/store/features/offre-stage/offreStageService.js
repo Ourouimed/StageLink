@@ -23,11 +23,16 @@ const deleteStage = async (id)=>{
     return respone.data
 }
 
+const updateStage = async (data)=>{
+    const respone = await axiosService.put(`/api/offre-stage/update/${data.id}` , data)
+    return respone.data
+}
 
 
 
 
 
 
-const offreStageService = {createOffre , getAllByEntreprise , getAll , deleteStage}
+
+const offreStageService = {createOffre , getAllByEntreprise , getAll , deleteStage , updateStage}
 export default offreStageService

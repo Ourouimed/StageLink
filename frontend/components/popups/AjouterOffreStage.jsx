@@ -110,7 +110,7 @@ export default function AjouterOffreStage() {
       })
       closePopup()
     } catch (err) {
-      toast.error(err?.message || "Erreur lors de la création")
+      toast.error(err)
     }
   }
 

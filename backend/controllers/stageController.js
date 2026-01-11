@@ -45,8 +45,8 @@ const deleteStage = async (req , res)=>{
     }   
 
     catch (err) {
-        console.error(err);
-        return res.status(500).json({ error: err?.sqlMessage || "Internal server error" });
+        console.error(err?.sqlMessage || err?.message || err);
+        return res.status(500).json({ error: err?.sqlMessage || err?.message || "Internal server error" });
     }
     
 }
@@ -78,6 +78,8 @@ const getAllStage = async (req , res)=>{
             return res.status(404).json({error : 'user not found'})
         }
         const stages = await Stage.getAllStages(user.id)
+
+        console.log(stages)
         
         return res.json({message : 'Stage fetched successfully' , stages })
     }
@@ -87,4 +89,38 @@ const getAllStage = async (req , res)=>{
         return res.status(500).json({ error: "Internal server error" });
     }
 }
-export { createStage , getAllStage , getAllStagesByEntreprise , deleteStage}
+
+
+
+const updateStage = async (req , res)=>{
+     try {
+        const { id : stage_id } = req.params
+        console.log(req.params)
+        const { titre , type_stage , specialite , ville , duree , nbr_places , description , demarage , disponibilite} = req.body
+        const user = req?.user
+        if (user?.role !== 'entreprise'){
+            return res.status(401).json({ message: "Unauthorized , you d'ont have permision for this specific action" });
+        }
+
+        if (!stage_id || !titre || !type_stage || !specialite || !ville || !duree || !nbr_places || !description || !demarage || !disponibilite) {
+            return res.status(400).json({ error: "Some required fields are empty" });
+        }
+
+        const demarageDate = new Date(demarage).toISOString().slice(0, 19).replace('T', ' ');
+
+        await Stage.updateStage(stage_id , titre , user.id , specialite , ville , type_stage , description , duree , nbr_places , demarageDate , disponibilite)
+
+        const [ stage ] = await Stage.getStage(stage_id)
+        if (!stage) {
+            return res.status(404).json({error : 'Stage unfound'})
+        }
+
+        return res.json({message : 'Stage updated successfully' , stage })
+
+    }
+    catch (err) {
+        console.error(err?.sqlMessage || err?.message || err);
+        return res.status(500).json({ error: err?.sqlMessage || err?.message || "Internal server error" });
+    }
+}
+export { createStage , getAllStage , getAllStagesByEntreprise , deleteStage , updateStage}
