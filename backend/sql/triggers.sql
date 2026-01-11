@@ -38,6 +38,8 @@ DELIMITER ;
 
 
 
+
+
 DELIMITER &&
 
 CREATE TRIGGER before_insert_candidature

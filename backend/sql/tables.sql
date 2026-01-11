@@ -20,9 +20,9 @@ create table etudiants (
     bio	varchar(500),
     website	varchar(200),
 	linkedin varchar(200),
+    cv varchar(255),
     FOREIGN KEY (id) references utilisateurs (id)
 );
-select * from utilisateurs;
 
 
 create table encadrants (

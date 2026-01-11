@@ -21,7 +21,7 @@ export const EtudiantStageCard = ({ stage , onClick, isActive}) => {
                 <div className="flex justify-between items-start mb-2">
                     <div className="flex items-center gap-2 text-main">
                         <Building2 size={16} />
-                        <h4 className="text-sm font-semibold uppercase tracking-wider">{stage.entreprise}</h4>
+                        <h4 className="text-sm font-semibold uppercase tracking-wider">{stage.entreprise.nom_entreprise}</h4>
                     </div>
                     <span className="text-[10px] text-gray-400 font-medium">
                         Posté le {formatDate(stage.created_at)}

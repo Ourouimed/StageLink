@@ -5,6 +5,7 @@ import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
+import { usePopup } from "@/hooks/usePopup";
 import { useToast } from "@/hooks/useToast";
 import { createCandidature } from "@/store/features/candidatures/candidatureSlice";
 import { getAllStages } from "@/store/features/offre-stage/offreStageSlice";
@@ -54,10 +55,11 @@ export default function OffreDeStagesSearch() {
   }, [stages, selectedStage]);
 
   const filteredStages = useMemo(() => {
+    
     let data = [...stages];
     if (search) {
       data = data.filter((s) =>
-        `${s.titre} ${s.entreprise} ${s.ville}`.toLowerCase().includes(search.toLowerCase())
+        `${s.titre} ${s.entreprise.nom_entreprise} ${s.ville}`.toLowerCase().includes(search.toLowerCase())
       );
     }
     if (ville !== "all") {
@@ -95,6 +97,9 @@ export default function OffreDeStagesSearch() {
       year: "numeric",
     });
 
+
+
+    const { openPopup } = usePopup()
   return (
     <DashboardLayout>
       <div className="max-w-7xl mx-auto space-y-6 p-4 md:p-0">
@@ -185,7 +190,11 @@ export default function OffreDeStagesSearch() {
                         {selectedStage.titre}
                       </h2>
                       <div className="flex flex-wrap items-center gap-4 text-gray-500 text-sm">
-                        <span className="flex items-center gap-1.5"><Briefcase size={16} /> {selectedStage.entreprise}</span>
+                        <span className="flex items-center gap-1.5 underline cursor-pointer hover:text-main transition duration-300" onClick={()=>{
+                          openPopup({title : 'A propos' , component : 'EntrepriseInfoPopup', props : {
+                            entreprise : selectedStage.entreprise
+                          }})
+                        }}><Briefcase size={16} /> {selectedStage.entreprise.nom_entreprise}</span>
                         <span className="flex items-center gap-1.5"><MapPin size={16} /> {selectedStage.ville}</span>
                       </div>
                     </div>

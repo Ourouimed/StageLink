@@ -1,7 +1,10 @@
 import axiosService from "@/utils/axiosService"
 
 const updateProfile = async (data)=>{
-    const respone = await axiosService.post(`/api/etudiant/update` , data)
+    const respone = await axiosService.post(`/api/etudiant/update` , data , {
+        withCredentials: true ,
+    })
+    
     return respone.data
 }
 

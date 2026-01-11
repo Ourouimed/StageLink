@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid" 
 import Stage from "../models/stage.js"
+import Entreprise from "../models/entreprise.js"
 
 const createStage = async (req , res)=>{
     
@@ -20,6 +21,7 @@ const createStage = async (req , res)=>{
         await Stage.createStage(stageId , titre , user.id , specialite , ville , type_stage , description , duree , nbr_places , demarageDate , disponibilite)
 
         const [ stage ] = await Stage.getStage(stageId)
+        console.log(stage)
         if (!stage) {
             return res.status(404).json({error : 'Stage unfound'})
         }
@@ -77,11 +79,20 @@ const getAllStage = async (req , res)=>{
         if (!user){
             return res.status(404).json({error : 'user not found'})
         }
-        const stages = await Stage.getAllStages(user.id)
+        const stages = await Stage.getAllStages(user.id);
 
-        console.log(stages)
+        const stageToSend = await Promise.all(
+            stages.map(async (s) => {
+                const [entreprise] = await Entreprise.getInfo(s.entreprise_id);
+                return { ...s, entreprise };
+            })
+        );
+
+
+
         
-        return res.json({message : 'Stage fetched successfully' , stages })
+        
+        return res.json({message : 'Stage fetched successfully' , stages : stageToSend })
     }
 
      catch (err) {
