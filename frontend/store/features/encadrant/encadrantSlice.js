@@ -11,6 +11,16 @@ export const getProfile = createAsyncThunk('encadrant/get' , async (_, thunkAPI)
   }
 })
 
+
+export const updateProfile = createAsyncThunk('encadrant/update' , async (data, thunkAPI)=>{
+  try {
+    return await encadrantService.updateProfile(data)
+  }
+  catch (err){
+    return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
+  }
+})
+
 export const encadrantSlice = createSlice({
     name : 'encadrant' ,
     initialState : {
@@ -29,6 +39,21 @@ export const encadrantSlice = createSlice({
         console.log(action.payload)
     })
     .addCase(getProfile.rejected , (state )=>{
+        state.profile = null
+        state.isLoading = false
+        console.log(null)
+    })
+
+    // update profile
+    .addCase(updateProfile.pending , (state)=>{
+        state.isLoading = true
+    })
+    .addCase(updateProfile.fulfilled , (state , action)=>{
+        state.profile = action.payload.profile
+        state.isLoading = false
+        console.log(action.payload)
+    })
+    .addCase(updateProfile.rejected , (state )=>{
         state.profile = null
         state.isLoading = false
         console.log(null)

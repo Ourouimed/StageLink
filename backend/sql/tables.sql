@@ -30,6 +30,10 @@ create table encadrants (
     nom varchar(100) ,
     prenom varchar(100) , 
 	date_naissance date ,
+    ville	varchar(100) ,
+    bio	varchar(500),
+    website	varchar(200),
+	linkedin varchar(200),
     FOREIGN KEY (id) references utilisateurs (id)
 );
 
@@ -67,7 +71,7 @@ CREATE TABLE OFFRE_stage (
     nombre_profiles int default 0,
     demarage timestamp default null ,
     created_at timestamp default current_timestamp ,
-    disponibilite ENUM('emps plein' , 'Temps partiel') ,
+    disponibilite ENUM('Temps plein' , 'Temps partiel') ,
     FOREIGN KEY (entreprise) references entreprises(id) 
 );
 
@@ -84,3 +88,19 @@ CREATE TABLE candidatures (
   
   
   
+create table demande_encadrant (
+	id_encadrant char(36),
+    id_entreprise char(36) ,
+    joined_at timestamp ,
+    status varchar(50) default 'pending' ,
+    FOREIGN KEY (id_encadrant) references encadrants (id),
+    FOREIGN KEY (id_entreprise) references entreprises (id)
+);
+
+
+CREATE TABLE STAGES (
+	stage_id char(36),
+    entreprise_id char(36) ,
+    etudiant_id char(36),
+    status varchar(50) default 'In progress' 
+);

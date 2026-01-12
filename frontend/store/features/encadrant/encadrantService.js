@@ -6,6 +6,11 @@ const getProfile = async ()=>{
 }
 
 
+const updateProfile = async (data)=>{
+    const respone = await axiosService.post(`/api/encadrant/update` , data)
+    return respone.data
+}
 
-const encadrantService = { getProfile }  
+
+const encadrantService = { getProfile , updateProfile}  
 export default encadrantService

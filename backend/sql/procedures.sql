@@ -186,5 +186,35 @@ END $$
 
 DELIMITER ;
 
- 
+
+
+DELIMITER &&
+
+DELIMITER &&
+
+CREATE PROCEDURE addEncadrant ( 
+    IN p_id_encadrant CHAR(36), 
+    IN p_id_entreprise CHAR(36)
+)
+BEGIN
+    -- Check if the combination already exists
+    IF EXISTS (
+        SELECT 1 
+        FROM demande_encadrant 
+        WHERE id_encadrant = p_id_encadrant 
+          AND id_entreprise = p_id_entreprise
+    ) THEN
+        -- Throw a custom SQL State
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Error: This supervisor is already assigned to this company.';
+    ELSE
+        -- Perform the insert if no duplicate is found
+        INSERT INTO demande_encadrant (id_encadrant, id_entreprise, joined_at) 
+        VALUES (p_id_encadrant, p_id_entreprise, UTC_TIMESTAMP());
+    END IF;
+END&&
+
+DELIMITER ;
+
+drop procedure addEncadrant;
 

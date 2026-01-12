@@ -34,10 +34,26 @@ export const dashboardLinks = {
     },
 
     {
-    name: 'Offres de stage',
-    url: `/etudiant/offre-stages`,
-  },
+      name: 'Offres de stage',
+      url: `/etudiant/offre-stages`,
+    },
   ],
+
+  encadrant : [
+     ...generalLinks('encadrant'),
+    {
+      name: 'Stages',
+      url: '/encadrant/stages',
+    },
+    {
+      name: 'Entreprises',
+      url: '/encadrant/entreprises',
+    },
+    {
+      name: 'Mon Profile',
+      url: '/encadrant/profile',
+    },
+  ]  ,
 
   entreprise: [
     ...generalLinks('entreprise'),
@@ -50,7 +66,17 @@ export const dashboardLinks = {
       url: '/entreprise/candidats',
     },
     {
-      name: 'Entreprise',
+      name: 'Stages',
+      url: '/entreprise/stages',
+    },
+   
+    {
+      name: 'Encadrants',
+      url: '/entreprise/encadrants',
+    },
+
+     {
+      name: 'Profile Entreprise',
       url: '/entreprise/profile',
     },
   ],

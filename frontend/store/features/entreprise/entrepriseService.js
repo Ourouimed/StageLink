@@ -11,5 +11,23 @@ const getProfile = async ()=>{
 }
 
 
-const entrepriseService = {updateProfile , getProfile}
+const getCandidats = async ()=>{
+    const respone = await axiosService.get(`/api/entreprise/candidats`)
+    return respone.data
+}
+
+const getEncadrants = async ()=>{
+    const respone = await axiosService.get(`/api/entreprise/encadrants`)
+    return respone.data
+}
+
+
+
+const addEncadrant = async (id)=>{
+    const respone = await axiosService.post(`/api/entreprise/encadrants/add/${id}`)
+    return respone.data
+}
+
+
+const entrepriseService = {updateProfile , getProfile , getCandidats , getEncadrants , addEncadrant}
 export default entrepriseService
