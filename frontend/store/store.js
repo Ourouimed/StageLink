@@ -6,6 +6,7 @@ import entrepriseReducer from './features/entreprise/entrepriseSlice'
 import etudiantReducer from './features/etudiant/etudiantSlice'
 import offreStageReducer from "./features/offre-stage/offreStageSlice";
 import candidatureReducer from "./features/candidatures/candidatureSlice";
+import encadrantReducer from "./features/encadrant/encadrantSlice"
 
 
 export const store = configureStore({
@@ -16,6 +17,7 @@ export const store = configureStore({
         entreprise : entrepriseReducer , 
         etudiant : etudiantReducer , 
         stage : offreStageReducer ,
-        candidature : candidatureReducer
+        candidature : candidatureReducer  ,
+        encadrant : encadrantReducer
     }
 })

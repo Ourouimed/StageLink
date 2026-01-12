@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getProfile as getEntrepriseProfile } from "@/store/features/entreprise/entrepriseSlice";
 import { getProfile as getEtudiantProfile } from "@/store/features/etudiant/etudiantSlice";
+import { getProfile as getEncadrantProfile } from "@/store/features/encadrant/encadrantSlice";
 import { Menu, X } from "lucide-react"; 
 
 export default function DashboardLayout({ children }) {
@@ -19,6 +20,7 @@ export default function DashboardLayout({ children }) {
   const { isLoading, isInitialized, user } = useSelector(state => state.auth);
   const { profile: entrepriseProfile } = useSelector(state => state.entreprise);
   const { profile: etudiantProfile } = useSelector(state => state.etudiant);
+  const { profile: encadrantProfile } = useSelector(state => state.encadrant);
 
   useEffect(() => {
     if (!isInitialized) {
@@ -33,6 +35,10 @@ export default function DashboardLayout({ children }) {
       dispatch(getEntrepriseProfile());
     } else if (user.role === "etudiant") {
       dispatch(getEtudiantProfile());
+    }
+    else if (user.role === "encadrant") {
+      console.log('HICHDC')
+      dispatch(getEncadrantProfile());
     }
   }, [dispatch, user]);
 
@@ -52,7 +58,7 @@ export default function DashboardLayout({ children }) {
 
   if (!user) return null;
 
-  const profile = user.role === "entreprise" ? entrepriseProfile : etudiantProfile;
+  const profile = user.role === "entreprise" ? entrepriseProfile : user.role === 'encadrant' ? encadrantProfile : etudiantProfile;
 
   return (
     <section className="min-h-screen bg-gray-50">

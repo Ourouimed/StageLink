@@ -1,3 +1,7 @@
+import DashboardLayout from "@/components/dashboard/DashboardLayout";
+
 export default function EncadrantDashboard (){
-    return <h1>Hello Encadrant</h1>
+    return <DashboardLayout>
+        Hello
+    </DashboardLayout>
 }
