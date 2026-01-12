@@ -21,10 +21,48 @@ export const updateProfile = createAsyncThunk('encadrant/update' , async (data, 
   }
 })
 
+
+
+export const getEntreprises = createAsyncThunk('encadrant/entreprises/get' , async (_, thunkAPI)=>{
+  try {
+    return await encadrantService.getEntreprises()
+  }
+  catch (err){
+    return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
+  }
+})
+
+
+
+export const acceptEntrepriseRequest = createAsyncThunk('encadrant/entreprises/accept' , async (id, thunkAPI)=>{
+  try {
+    return await encadrantService.acceptEntrepriseRequest(id)
+  }
+  catch (err){
+    console.log(err)
+    return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
+  }
+})
+
+
+
+
+export const declineEntrepriseRequest = createAsyncThunk('encadrant/entreprises/decline' , async (id, thunkAPI)=>{
+  try {
+    return await encadrantService.declineEntrepriseRequest(id)
+  }
+  catch (err){
+    console.log(err)
+    return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
+  }
+})
+
+
 export const encadrantSlice = createSlice({
     name : 'encadrant' ,
     initialState : {
         profile : null , 
+        entreprises : [],
         isLoading : false
     },
 
@@ -58,6 +96,69 @@ export const encadrantSlice = createSlice({
         state.isLoading = false
         console.log(null)
     })
+
+
+    // get entreprises
+      .addCase(getEntreprises.pending , (state)=>{
+          state.isLoading = true
+      })
+      .addCase(getEntreprises.fulfilled , (state , action)=>{
+          state.entreprises = action.payload.entreprises
+          state.isLoading = false
+          console.log(action.payload)
+      })
+      .addCase(getEntreprises.rejected , (state )=>{
+          state.entreprises = []
+          state.isLoading = false
+          console.log(null)
+      })
+
+
+
+       // accept entreprise
+      .addCase(acceptEntrepriseRequest.pending , (state)=>{
+          state.isLoading = true
+      })
+      .addCase(acceptEntrepriseRequest.fulfilled , (state , action)=>{
+          
+          state.entreprises.map(e => {
+            console.log(e.id_entreprise)
+            console.log(action.payload.ids.entreprise_id)
+
+            return e.id_entreprise === action.payload.ids.entreprise_id ? {...e , status : 'accepted'} : e
+          })
+          state.isLoading = false
+          console.log(action.payload)
+      })
+      .addCase(acceptEntrepriseRequest.rejected , (state )=>{
+          state.entreprises = []
+          state.isLoading = false
+          console.log(null)
+      })
+
+
+      // decline entreprise
+      .addCase(declineEntrepriseRequest.pending , (state)=>{
+          state.isLoading = true
+      })
+      .addCase(declineEntrepriseRequest.fulfilled , (state , action)=>{
+          
+          state.entreprises.map(e => {
+            console.log(e.id_entreprise)
+            console.log(action.payload.ids.entreprise_id)
+
+            return e.id_entreprise === action.payload.ids.entreprise_id ? {...e , status : 'accepted'} : e
+          })
+          state.isLoading = false
+          console.log(action.payload)
+      })
+      .addCase(declineEntrepriseRequest.rejected , (state )=>{
+          state.entreprises = []
+          state.isLoading = false
+          console.log(null)
+      })
+
+      
 })
 
 

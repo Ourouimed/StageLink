@@ -1,5 +1,6 @@
 'use client'
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
+import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { usePopup } from "@/hooks/usePopup";
 import { getEncadrants } from "@/store/features/entreprise/entrepriseSlice";
@@ -62,14 +63,7 @@ export default function ListEncadrants() {
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium border ${
-                                            encadrant.status === 'pending'
-                                                ? 'bg-yellow-50 text-yellow-700 border-yellow-100'
-                                                : 'bg-green-50 text-green-700 border-green-100'
-                                        }`}>
-                                            <span className={`w-1.5 h-1.5 rounded-full ${encadrant.status === 'pending' ? 'bg-yellow-400' : 'bg-green-500'}`}></span>
-                                            {encadrant.status === 'pending' ? 'En attente' : 'Actif'}
-                                        </span>
+                                        <Badge text={encadrant.status} variant="error"/>
                                     </td>
                                     <td className="px-6 py-4">
                                         <div className="flex items-center text-sm text-gray-500 gap-2">
@@ -77,10 +71,16 @@ export default function ListEncadrants() {
                                             {new Date(encadrant.joined_at).toLocaleDateString('fr-FR')}
                                         </div>
                                     </td>
-                                    <td className="px-6 py-4 text-right">
-                                        <button className="text-gray-400 hover:text-gray-600 p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                                            <MoreVertical size={18} />
-                                        </button>
+                                    <td className="px-6 py-4">
+                                        <div className="flex justify-end">
+                                            <Button 
+                                                variant="error"
+                                                outline
+                                                size="sm">
+                                                annuler demande
+                                            </Button>
+                                        </div>
+                                        
                                     </td>
                                 </tr>
                             ))}

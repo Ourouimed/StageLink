@@ -1,7 +1,9 @@
 'use client'
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
+import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { getCandidats } from "@/store/features/entreprise/entrepriseSlice";
+import { Calendar } from "lucide-react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -43,36 +45,56 @@ export default function CandidatsPage() {
                 <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
                     <table className="w-full text-left border-collapse">
                         <thead>
-                            <tr className="bg-gray-50/50 border-b border-gray-200">
-                                <th className="px-6 py-4 text-xs uppercase tracking-wider font-semibold text-gray-600">ID Étudiant</th>
-                                <th className="px-6 py-4 text-xs uppercase tracking-wider font-semibold text-gray-600">Statut</th>
-                                <th className="px-6 py-4 text-xs uppercase tracking-wider font-semibold text-gray-600">Date d'envoi</th>
-                                <th className="px-6 py-4 text-xs uppercase tracking-wider font-semibold text-gray-600 text-right">Décision</th>
+                            <tr className="bg-gray-50 border-b border-gray-200">
+                                <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">ID Étudiant</th>
+                                <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Statut</th>
+                                <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Titre de stage</th>
+                                <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Date d'envoi</th>
+                                
+                                <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Date de demarage</th>
+                                <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Ville</th>
+                                <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider text-right">Décision</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100">
                             {candidats && candidats.map((c) => (
                                 <tr key={c.id} className="hover:bg-gray-50/80 transition-all">
                                     <td className="px-6 py-4">
-                                        <div className="font-mono text-sm text-blue-600 bg-blue-50 px-2 py-1 rounded w-fit">
-                                            {c.etudiant_id.split('-')[0]}...
+                                         <div className="flex items-center gap-3">
+                                            <div className="h-10 w-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
+                                                {c.prenom[0]}{c.nom[0]}
+                                            </div>
+                                            <div>
+                                                <p className="text-sm font-semibold text-gray-900 capitalize">
+                                                    {c.prenom} {c.nom}
+                                                </p>
+                                                <p className="text-xs text-gray-400 font-mono">
+                                                    ID: {c.etudiant_id.slice(0, 8)}
+                                                </p>
+                                            </div>
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold capitalize ${
-                                            c.status === 'pending' 
-                                            ? 'bg-orange-100 text-orange-700' 
-                                            : 'bg-green-100 text-green-700'
-                                        }`}>
-                                            <span className={`w-1.5 h-1.5 rounded-full ${c.status === 'pending' ? 'bg-orange-500' : 'bg-green-500'}`}></span>
-                                            {c.status}
-                                        </span>
+                                         <Badge text={c.status}/>
                                     </td>
                                     <td className="px-6 py-4 text-gray-600 text-sm">
-                                        {new Date(c.application_sent_at).toLocaleDateString('fr-FR', {
-                                            day: 'numeric',
-                                            month: 'long'
-                                        })}
+                                        {c.titre}
+                                    </td>
+                                    <td className="px-6 py-4 text-gray-600 text-sm">
+                                        <div className="flex items-center text-sm text-gray-500 gap-2">
+                                            <Calendar size={14} />
+                                            {new Date(c.demarage).toLocaleDateString('fr-FR')}
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-4 text-gray-600 text-sm">
+                                        <div className="flex items-center text-sm text-gray-500 gap-2">
+                                            <Calendar size={14} />
+                                            {new Date(c.application_sent_at).toLocaleDateString('fr-FR')}
+                                        </div>
+                                        
+                                    </td>
+                                    <td className="px-6 py-4 text-gray-600 text-sm">
+                                        {c.ville}
                                     </td>
                                     <td className="px-6 py-4">
                                         <div className="flex justify-end gap-1">
