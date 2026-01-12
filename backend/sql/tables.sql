@@ -101,15 +101,18 @@ create table demande_encadrant (
 CREATE TABLE STAGES (
 	stage_id char(36) PRIMARY KEY,
     candidature_id char(36),
-    encadrant_id char(36),
+    encadrant_id char(36), 
+    note_pedagogique double (4,2) default 0 ,
+    note_evaluation double (4,2) default 0 ,
+    note_final double(4,2) default 0,
     status varchar(50) default 'In progress' ,
     FOREIGN KEY (encadrant_id) references encadrants (id) ,
     FOREIGN KEY (candidature_id) references candidatures (id)
 );
 
 
+select * from stages;
 
 
 
 
-UPDATE demande_encadrant set status = 'pending' where id_encadrant !='dddd';

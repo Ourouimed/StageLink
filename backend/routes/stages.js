@@ -1,5 +1,5 @@
 import express from 'express'
-import { createStage, deleteStage, getAllStage, getAllStagesByEntreprise, updateStage } from '../controllers/stageController.js'
+import {createStage, deleteStage, getAllStage, getAllStagesByEntreprise, updateStage } from '../controllers/stageController.js'
 import verifyJWT from '../middlewares/verifyJwt.js'
 const router = express.Router()
 

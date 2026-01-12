@@ -134,4 +134,10 @@ const updateStage = async (req , res)=>{
         return res.status(500).json({ error: err?.sqlMessage || err?.message || "Internal server error" });
     }
 }
-export { createStage , getAllStage , getAllStagesByEntreprise , deleteStage , updateStage}
+
+
+
+
+
+
+export { createStage , getAllStage , getAllStagesByEntreprise , deleteStage , updateStage }

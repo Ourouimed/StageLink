@@ -99,6 +99,26 @@ const getCandidats = async (req , res)=>{
 }
 
 
+const getStages = async (req , res)=>{
+   try {
+        let user = req.user
+        const stages = await Entreprise.getStages(user.id)
+        console.log(stages)
+
+
+       
+        return res.json({stages , message : 'stages fetched successfully'})
+
+    }
+
+    catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+
+}
+
+
 const accepterCandidature = async (req , res)=>{
     try {
         const user = req.user
@@ -157,5 +177,26 @@ const getEncadrants = async (req , res)=>{
 }
 
 
+
+const addNoteEvaluation = async (req , res)=>{
+    const { id } = req.params
+    const { note } = req.body
+
+
+    console.log(id)
+    console.log(note)
+
+    if (!id || isNaN(note)) return res.status(400).json({error : 'Missed fields'})
+    if (note < 0 || note > 20) return res.status(409).json({error : 'Note must be between 0 and 20'})
+
+
+    await Entreprise.updateNoteEvaluation(id , note)
+    const [stage] = await Entreprise.getStage(id)
+
+    return res.json({stage , message : 'Note attribue avec success'})
+}
+
+
+
 export { updateProfile , getProfile , getCandidats , getEncadrants, addEncadrant , 
-    accepterCandidature , declineCandidature}
+    accepterCandidature , declineCandidature , getStages , addNoteEvaluation}

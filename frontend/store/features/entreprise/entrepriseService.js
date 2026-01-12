@@ -22,6 +22,12 @@ const getEncadrants = async ()=>{
 }
 
 
+const getStages = async ()=>{
+    const respone = await axiosService.get(`/api/entreprise/stages`)
+    return respone.data
+}
+
+
 const addEncadrant = async (id)=>{
     const respone = await axiosService.post(`/api/entreprise/encadrants/add/${id}`)
     return respone.data
@@ -36,12 +42,21 @@ const declineCandidature = async (id)=>{
 
 
 const acceptCandidature = async (id , encadrant)=>{
-    console.log(encadrant)
     const respone = await axiosService.post(`/api/entreprise/candidature/accept/${id}` , { encadrant})
     return respone.data
 }
 
 
+
+
+
+const addNoteEvaluation = async (id , note)=>{
+    const respone = await axiosService.post(`/api/entreprise/stages/addNoteEvaluation/${id}` , { note })
+    return respone.data
+}
+
+
 const entrepriseService = {updateProfile , 
-    getProfile , getCandidats , getEncadrants , addEncadrant , declineCandidature , acceptCandidature}
+    getProfile , getCandidats , getEncadrants , addEncadrant , 
+    getStages , declineCandidature , acceptCandidature  , addNoteEvaluation}
 export default entrepriseService

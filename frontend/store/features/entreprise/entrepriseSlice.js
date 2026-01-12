@@ -44,6 +44,16 @@ export const getEncadrants = createAsyncThunk('entreprise/encadrants/get' , asyn
 })
 
 
+export const getStages = createAsyncThunk('entreprise/stages/get' , async (_, thunkAPI)=>{
+  try {
+    return await entrepriseService.getStages()
+  }
+  catch (err){
+    return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
+  }
+})
+
+
 
 
 export const addEncadrant = createAsyncThunk('entreprise/encadrants/add' , async (id, thunkAPI)=>{
@@ -79,6 +89,21 @@ export const acceptCandidature = createAsyncThunk('entreprise/candidature/accept
 
 
 
+export const addNoteEvaluation = createAsyncThunk('entreprise/stages/addNoteEvaluation' , async (data, thunkAPI)=>{
+  try {
+    return await entrepriseService.addNoteEvaluation(data.id , data.note)
+  }
+  catch (err){
+    console.log(err)
+    return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
+  }
+})
+
+
+
+
+
+
 
 const entrepriseSlice = createSlice({
     name : 'entreprise' ,
@@ -86,7 +111,8 @@ const entrepriseSlice = createSlice({
         profile : null , 
         isLoading : false , 
         candidats : [] ,
-        encadrants : []
+        encadrants : [] ,
+        stages : []
     },
 
     extraReducers : builder => builder
@@ -134,6 +160,22 @@ const entrepriseSlice = createSlice({
     })
     .addCase(getCandidats.rejected , (state )=>{
         state.candidats = []
+        state.isLoading = false
+        console.log(null)
+    })
+
+
+    // get stages
+    .addCase(getStages.pending , (state)=>{
+        state.isLoading = true
+    })
+    .addCase(getStages.fulfilled , (state , action)=>{
+        state.stages = action.payload.stages
+        state.isLoading = false
+        console.log(action.payload)
+    })
+    .addCase(getStages.rejected , (state )=>{
+        state.stages = []
         state.isLoading = false
         console.log(null)
     })
@@ -197,6 +239,29 @@ const entrepriseSlice = createSlice({
         state.isLoading = false
         console.log(null)
     })
+
+
+
+
+
+
+
+
+    // add Note
+    .addCase(addNoteEvaluation.pending , (state)=>{
+        state.isLoading = true
+    })
+    .addCase(addNoteEvaluation.fulfilled , (state , action)=>{
+        state.isLoading = false
+        console.log(action.payload)
+    })
+    .addCase(addNoteEvaluation.rejected , (state )=>{
+        state.isLoading = false
+        console.log(null)
+    })
+
+
+ 
 })
 
 

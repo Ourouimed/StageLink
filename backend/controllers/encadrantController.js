@@ -132,4 +132,48 @@ const declineRequest = async (req , res)=>{
         return res.status(500).json({ error: "Internal server error" });
     }
 }
-export { getProfile , updateProfile , getEntreprises , acceptRequest , declineRequest}
+
+
+
+const getStages = async (req , res)=>{
+   try {
+        let user = req.user
+        const stages = await Encadrant.getStages(user.id)
+        console.log(stages)
+        console.log('fffff')
+
+
+       
+        return res.json({stages , message : 'stages fetched successfully'})
+
+    }
+
+    catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+
+}
+
+
+
+const addNotePedagogique = async (req , res)=>{
+    const { id } = req.params
+    const { note } = req.body
+
+
+    console.log(id)
+    console.log(note)
+
+    if (!id || isNaN(note)) return res.status(400).json({error : 'Missed fields'})
+    if (note < 0 || note > 20) return res.status(409).json({error : 'Note must be between 0 and 20'})
+
+
+    await Encadrant.updateNotePedagogique(id , note)
+    const [stage] = await Encadrant.getStage(id)
+
+    return res.json({stage , message : 'Note attribue avec success'})
+}
+
+export { getProfile , updateProfile , getEntreprises , acceptRequest ,
+    addNotePedagogique , declineRequest , getStages}

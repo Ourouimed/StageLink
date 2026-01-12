@@ -57,13 +57,36 @@ export const declineEntrepriseRequest = createAsyncThunk('encadrant/entreprises/
   }
 })
 
+export const getStages = createAsyncThunk('encadrant/stages/get' , async (_, thunkAPI)=>{
+  try {
+    return await encadrantService.getStages()
+  }
+  catch (err){
+    console.log(err)
+    return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
+  }
+})
+
+
+export const addNotePedagogique = createAsyncThunk('entreprise/stages/addNotePedagogique' , async (data, thunkAPI)=>{
+  try {
+    return await encadrantService.addNotePedagogique(data.id , data.note)
+  }
+  catch (err){
+    console.log(err)
+    return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
+  }
+})
+
+
 
 export const encadrantSlice = createSlice({
     name : 'encadrant' ,
     initialState : {
         profile : null , 
         entreprises : [],
-        isLoading : false
+        isLoading : false ,
+        stages : []
     },
 
     extraReducers : builder => builder
@@ -158,7 +181,34 @@ export const encadrantSlice = createSlice({
           console.log(null)
       })
 
-      
+
+      // get stages
+          .addCase(getStages.pending , (state)=>{
+              state.isLoading = true
+          })
+          .addCase(getStages.fulfilled , (state , action)=>{
+              state.stages = action.payload.stages
+              state.isLoading = false
+              console.log(action.payload)
+          })
+          .addCase(getStages.rejected , (state )=>{
+              state.stages = []
+              state.isLoading = false
+              console.log(null)
+          })
+
+          // add Note
+              .addCase(addNotePedagogique.pending , (state)=>{
+                  state.isLoading = true
+              })
+              .addCase(addNotePedagogique.fulfilled , (state , action)=>{
+                  state.isLoading = false
+                  console.log(action.payload)
+              })
+              .addCase(addNotePedagogique.rejected , (state )=>{
+                  state.isLoading = false
+                  console.log(null)
+              })
 })
 
 

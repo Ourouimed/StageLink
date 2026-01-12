@@ -31,5 +31,20 @@ const declineEntrepriseRequest = async (id)=>{
 
 
 
-const encadrantService = { getProfile , updateProfile , getEntreprises , acceptEntrepriseRequest , declineEntrepriseRequest}  
+const getStages = async ()=>{
+    const respone = await axiosService.get(`/api/encadrant/stages`)
+    return respone.data
+}
+
+const addNotePedagogique = async (id , note)=>{
+    const respone = await axiosService.post(`/api/encadrant/stages/addNotePedagogique/${id}` , { note })
+    return respone.data
+}
+
+
+
+
+const encadrantService = { getProfile , updateProfile ,
+     getEntreprises , acceptEntrepriseRequest , declineEntrepriseRequest,
+    addNotePedagogique , getStages}  
 export default encadrantService
