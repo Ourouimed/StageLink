@@ -57,6 +57,28 @@ export const addEncadrant = createAsyncThunk('entreprise/encadrants/add' , async
 
 
 
+export const declineCandidature = createAsyncThunk('entreprise/candidature/decline' , async (id, thunkAPI)=>{
+  try {
+    return await entrepriseService.declineCandidature(id)
+  }
+  catch (err){
+    return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
+  }
+})
+
+
+export const acceptCandidature = createAsyncThunk('entreprise/candidature/accept' , async (data, thunkAPI)=>{
+  try {
+    return await entrepriseService.acceptCandidature(data.id , data.encadrant)
+  }
+  catch (err){
+    console.log(err)
+    return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
+  }
+})
+
+
+
 
 const entrepriseSlice = createSlice({
     name : 'entreprise' ,
@@ -144,6 +166,34 @@ const entrepriseSlice = createSlice({
         console.log(action.payload)
     })
     .addCase(addEncadrant.rejected , (state )=>{
+        state.isLoading = false
+        console.log(null)
+    })
+
+
+     // accept candidature
+    .addCase(acceptCandidature.pending , (state)=>{
+        state.isLoading = true
+    })
+    .addCase(acceptCandidature.fulfilled , (state , action)=>{
+        state.isLoading = false
+        console.log(action.payload)
+    })
+    .addCase(acceptCandidature.rejected , (state )=>{
+        state.isLoading = false
+        console.log(null)
+    })
+
+
+    // decline candidature
+    .addCase(declineCandidature.pending , (state)=>{
+        state.isLoading = true
+    })
+    .addCase(declineCandidature.fulfilled , (state , action)=>{
+        state.isLoading = false
+        console.log(action.payload)
+    })
+    .addCase(declineCandidature.rejected , (state )=>{
         state.isLoading = false
         console.log(null)
     })

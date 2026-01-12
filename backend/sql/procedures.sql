@@ -216,5 +216,37 @@ END&&
 
 DELIMITER ;
 
-drop procedure addEncadrant;
+DELIMITER $$
+
+CREATE PROCEDURE CreateStage(
+    IN p_stage_id CHAR(36),
+    IN p_candidature_id CHAR(36),
+    IN p_encadrant_id CHAR(36)
+)
+BEGIN
+    -- Check if stage already exists for this candidature
+    IF EXISTS (
+        SELECT 1
+        FROM stages
+        WHERE candidature_id = p_candidature_id
+    ) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Stage already exists for this candidature';
+    ELSE
+        INSERT INTO stages (
+            stage_id,
+            candidature_id,
+            encadrant_id
+        )
+        VALUES (
+            p_stage_id,
+            p_candidature_id,
+            p_encadrant_id
+        );
+    END IF;
+END $$
+
+DELIMITER ;
+
+
 

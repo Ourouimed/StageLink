@@ -22,12 +22,26 @@ const getEncadrants = async ()=>{
 }
 
 
-
 const addEncadrant = async (id)=>{
     const respone = await axiosService.post(`/api/entreprise/encadrants/add/${id}`)
     return respone.data
 }
 
 
-const entrepriseService = {updateProfile , getProfile , getCandidats , getEncadrants , addEncadrant}
+const declineCandidature = async (id)=>{
+    const respone = await axiosService.post(`/api/entreprise/candidature/decline/${id}`)
+    return respone.data
+}
+
+
+
+const acceptCandidature = async (id , encadrant)=>{
+    console.log(encadrant)
+    const respone = await axiosService.post(`/api/entreprise/candidature/accept/${id}` , { encadrant})
+    return respone.data
+}
+
+
+const entrepriseService = {updateProfile , 
+    getProfile , getCandidats , getEncadrants , addEncadrant , declineCandidature , acceptCandidature}
 export default entrepriseService

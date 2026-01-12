@@ -99,11 +99,17 @@ create table demande_encadrant (
 
 
 CREATE TABLE STAGES (
-	stage_id char(36),
-    entreprise_id char(36) ,
-    etudiant_id char(36),
-    status varchar(50) default 'In progress' 
+	stage_id char(36) PRIMARY KEY,
+    candidature_id char(36),
+    encadrant_id char(36),
+    status varchar(50) default 'In progress' ,
+    FOREIGN KEY (encadrant_id) references encadrants (id) ,
+    FOREIGN KEY (candidature_id) references candidatures (id)
 );
 
-use stage;
-select * from utilisateurs where id = '825d35b2-6f69-4432-ae73-93be5cb93f68';
+
+
+
+
+
+UPDATE demande_encadrant set status = 'pending' where id_encadrant !='dddd';

@@ -1,5 +1,6 @@
 import Encadrant from "../models/encadrant.js";
 import Entreprise from "../models/entreprise.js";
+import { v4 as uuidv4} from 'uuid'
 
 const updateProfile = async (req , res) => {
     try {
@@ -98,6 +99,43 @@ const getCandidats = async (req , res)=>{
 }
 
 
+const accepterCandidature = async (req , res)=>{
+    try {
+        const user = req.user
+        const { id } = req.params
+        const { encadrant } = req.body
+        if (!id || !encadrant) return res.status(400).json({error : 'Missed data'})
+
+        await Entreprise.changeCandidatureStatus(id , 'accepted')
+
+        const stageId = uuidv4()
+        await Entreprise.createStage(stageId , id , encadrant)
+
+        const [stage] = await Entreprise.getStage(stageId)
+        return res.json({stage , message : 'candidature accepted'})
+    }   
+     catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: err.sqlMessage || "Internal server error" });
+    }
+}
+
+
+const declineCandidature = async (req , res)=>{
+    try {
+        const user = req.user
+        const { id } = req.params
+        if (!id) return res.status(400).json({error : 'Id is required'})
+
+        await Entreprise.changeCandidatureStatus(id , 'declined')
+        return res.json({message : 'Candidature refusee' , candidature_id : id})
+    }   
+     catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+}
+
 
 const getEncadrants = async (req , res)=>{
     try {
@@ -117,4 +155,7 @@ const getEncadrants = async (req , res)=>{
     }
     
 }
-export { updateProfile , getProfile , getCandidats , getEncadrants, addEncadrant}
+
+
+export { updateProfile , getProfile , getCandidats , getEncadrants, addEncadrant , 
+    accepterCandidature , declineCandidature}

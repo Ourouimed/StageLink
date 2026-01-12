@@ -2,7 +2,8 @@
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { getCandidats } from "@/store/features/entreprise/entrepriseSlice";
+import { usePopup } from "@/hooks/usePopup";
+import { getCandidats, getEncadrants } from "@/store/features/entreprise/entrepriseSlice";
 import { Calendar } from "lucide-react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,24 +11,21 @@ import { useDispatch, useSelector } from "react-redux";
 export default function CandidatsPage() {
     const dispatch = useDispatch();
     const { candidats, isLoading } = useSelector(state => state.entreprise);
+    const { encadrants } = useSelector(state => state.entreprise);
+    const { openPopup } = usePopup()
 
     useEffect(() => {
         dispatch(getCandidats());
-    }, [dispatch]); // Fixed: Only runs on mount
+    }, [dispatch]); 
 
-    const handleAccept = (id) => {
-        if (confirm("Voulez-vous accepter cette candidature ?")) {
-            console.log("Accepted candidate:", id);
-            // Example: dispatch(updateCandidatStatus({ id, status: 'accepted' }));
-        }
-    };
+    
 
-    const handleDecline = (id) => {
-        if (confirm("Voulez-vous refuser cette candidature ?")) {
-            console.log("Declined candidate:", id);
-            // Example: dispatch(updateCandidatStatus({ id, status: 'declined' }));
-        }
-    };
+
+    useEffect(() => {
+        dispatch(getEncadrants());
+    }, [dispatch]); 
+
+    
 
     return (
         <DashboardLayout>
@@ -101,14 +99,19 @@ export default function CandidatsPage() {
                                             {c.status === 'pending' ? (
                                                 <>
                                                     <Button size="sm" variant="error" outline
-                                                        onClick={() => handleDecline(c.id)}
+                                                        onClick={() => openPopup({title : 'Decline candidature' , component : 'DeclineCandidaturePopup' , props : {
+                                                            id : c.id
+                                                        }})}
                                                     >
                                                         Refuser
                                                     </Button>
                                                     <Button
                                                         size="sm" 
                                                         variant="success"
-                                                        onClick={() => handleAccept(c.id)}
+                                                        onClick={() => openPopup({title : 'Accept candidature' , component : 'AcceptCandidaturePopup' , props : {
+                                                            id : c.id ,
+                                                            encadrants
+                                                        }})}
                                 
                                                     >
                                                         Accepter
