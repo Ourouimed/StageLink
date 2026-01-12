@@ -76,4 +76,60 @@ const updateProfile = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
-export { getProfile , updateProfile}
+
+
+
+
+const getEntreprises = async (req , res)=>{
+    try {
+        let user = req.user
+        const entreprises = await Encadrant.getEntreprises(user.id)
+        console.log(entreprises)
+
+
+       
+        return res.json({entreprises , message : 'entreprises fetched successfully'})
+
+    }
+
+    catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+    
+}
+
+
+
+
+const acceptRequest = async (req , res)=>{
+    try {
+        let user = req.user
+        const { id : entreprise_id} = req.params
+        if (!entreprise_id) return res.status(400).json({error : 'Id is required'})
+
+        await Encadrant.changeDemandeStatus(entreprise_id , user.id , 'accepted')
+        return res.json({message : 'Offre acceptee' , ids : {entreprise_id , encadrant_id : req.id}})
+    }
+    catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+}
+
+
+const declineRequest = async (req , res)=>{
+    try {
+        let user = req.user
+        const { id : entreprise_id} = req.params
+        if (!entreprise_id) return res.status(400).json({error : 'Id is required'})
+
+        await Encadrant.changeDemandeStatus(entreprise_id , user.id , 'declined')
+        return res.json({message : 'Offre refusee' , ids : {entreprise_id , encadrant_id : req.id}})
+    }
+    catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+}
+export { getProfile , updateProfile , getEntreprises , acceptRequest , declineRequest}

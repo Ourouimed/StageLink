@@ -12,7 +12,8 @@ const Entreprise = {
         return rows
     } 
     ,getCandidats : async (id)=>{
-        const [rows] = await db.query(`select c.* from candidatures c 
+        const [rows] = await db.query(`select c.* ,etd.nom , os.titre , os.ville , os.demarage , etd.prenom from candidatures c 
+                                        inner join etudiants etd on c.etudiant_id = etd.id
                                        inner join offre_stage os on c.stage_id = os.id 
                                        inner join entreprises e on e.id = os.entreprise where os.entreprise = ?` , [id])
         return rows

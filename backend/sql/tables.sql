@@ -104,3 +104,6 @@ CREATE TABLE STAGES (
     etudiant_id char(36),
     status varchar(50) default 'In progress' 
 );
+
+use stage;
+select * from utilisateurs where id = '825d35b2-6f69-4432-ae73-93be5cb93f68';
