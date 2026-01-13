@@ -105,15 +105,13 @@ CREATE TABLE STAGES (
     note_pedagogique double (4,2) default 0 ,
     note_evaluation double (4,2) default 0 ,
     note_final double(4,2) default 0,
+    rapport_stage varchar(255) default null,
     status varchar(50) default 'In progress' ,
     FOREIGN KEY (encadrant_id) references encadrants (id) ,
     FOREIGN KEY (candidature_id) references candidatures (id)
 );
 
-use stage;
-update demande_encadrant set status = 'pending' where id_encadrant !='dddd';
 
 
 
-
-select * from entreprises;
+select * from stages;

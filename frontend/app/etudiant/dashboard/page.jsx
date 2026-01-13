@@ -35,7 +35,7 @@ export default function EtudiantDashboard() {
 
     return (
         <DashboardLayout>
-            <div className="space-y-4">
+            <div className="space-y-3">
                 {/* Header */}
                 <div>
                      <h4 className="text-2xl font-bold text-gray-800">Bonjour {profile?.nom} {" "} {profile?.prenom}</h4>

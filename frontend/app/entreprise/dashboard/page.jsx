@@ -39,7 +39,7 @@ export default function EntrepriseDashboard() {
 
     return (
         <DashboardLayout>
-            <div className="space-y-6">
+            <div className="space-y-3">
                 {/* Header Section */}
                 <div className="flex justify-between items-end">
                     <div>
@@ -56,7 +56,7 @@ export default function EntrepriseDashboard() {
                     <StatCard title="Encadrants" value={stats.totalMentors} sub="Équipe pédagogique" color="text-purple-600" icon={GraduationCap} />
                 </div>
 
-                <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 xl:grid-cols-3 gap-3">
                     {/* Recent Candidates (Left Column) */}
                     <section className="xl:col-span-1 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
                         <div className="p-4 border-b border-gray-100 flex justify-between items-center">

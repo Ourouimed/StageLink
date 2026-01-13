@@ -52,11 +52,13 @@ const Entreprise = {
         const [rows] = await db.query(`SELECT st.stage_id , st.note_evaluation , st.rapport_stage  , st.note_pedagogique , st.note_final , 
                         st.status , os.titre , os.specialite , os.type_stage , os.disponibilite ,
                         concat(etd.nom , ' ' , etd.prenom) as etudiant ,
+                        ent.nom_entreprise as entreprise , 
                         concat(enc.nom , ' ' , enc.prenom) as encadrant from stages st
                         inner join candidatures c on c.id = st.candidature_id 
                         inner join offre_stage os on os.id = c.stage_id 
                         inner join etudiants etd on c.etudiant_id = etd.id 
                         inner join encadrants enc on st.encadrant_id = enc.id 
+                        inner join entreprises ent on st.encadrant_id = enc.id 
                         where st.stage_id = ?` ,[id]) 
         return rows
     } ,
@@ -66,6 +68,7 @@ const Entreprise = {
                         st.note_pedagogique , st.note_final , st.status ,
                         os.titre , os.specialite , os.type_stage , os.disponibilite ,
                         concat(etd.nom , ' ' , etd.prenom) as etudiant ,
+                        ent.nom_entreprise as entreprise , 
                         concat(enc.nom , ' ' , enc.prenom) as encadrant from stages st
                         inner join candidatures c on c.id = st.candidature_id 
                         inner join etudiants etd on c.etudiant_id = etd.id 

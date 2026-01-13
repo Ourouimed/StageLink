@@ -39,7 +39,7 @@ export default function EncadrantDashboard() {
 
     return (
         <DashboardLayout>
-            <div className="space-y-6">
+            <div className="space-y-3">
                 {/* Welcome Header */}
                 <div>
                     <h4 className="text-2xl font-bold text-gray-800">Bonjour, Dr. {profile?.nom}</h4>
@@ -54,7 +54,7 @@ export default function EncadrantDashboard() {
                     <StatCard title="Entreprises" value={stats.totalPartners} sub="Collaborations" color="text-blue-600" icon={Building2} />
                 </div>
 
-                <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 xl:grid-cols-3 gap-3">
                     {/* Enterprise Requests (Left Column) */}
                     <section className="xl:col-span-1 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
                         <div className="p-4 border-b border-gray-100">
@@ -70,9 +70,9 @@ export default function EncadrantDashboard() {
                                         </div>
                                         <Badge variant="warning">Nouveau</Badge>
                                     </div>
-                                    <div className="flex gap-2">
-                                        <Button size="sm" className="flex-1" onClick={() => dispatch(acceptEntrepriseRequest(e.id_entreprise))}>Accepter</Button>
-                                        <Button size="sm" variant="outline" className="flex-1 text-red-600 border-red-100" onClick={() => dispatch(declineEntrepriseRequest(e.id_entreprise))}>Refuser</Button>
+                                    <div className="flex gap-1">
+                                        <Button size="sm" variant="success" onClick={() => dispatch(acceptEntrepriseRequest(e.id_entreprise))}>Accepter</Button>
+                                        <Button size="sm" variant="error" outline onClick={() => dispatch(declineEntrepriseRequest(e.id_entreprise))}>Refuser</Button>
                                     </div>
                                 </div>
                             ))}
@@ -105,7 +105,7 @@ export default function EncadrantDashboard() {
                                                 <p className="text-xs text-gray-500">{s.titre}</p>
                                             </td>
                                             <td className="px-4 py-4">
-                                                <Badge variant="outline" className="text-gray-600">{s.entreprise}</Badge>
+                                                <Badge variant="outline" text={s.entreprise}></Badge>
                                             </td>
                                             <td className="px-4 py-4 text-center">
                                                 <span className={`text-xs font-bold ${s.note_pedagogique > 0 ? 'text-green-600' : 'text-gray-300'}`}>

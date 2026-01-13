@@ -30,6 +30,7 @@ const Etudiant = {
                         st.note_pedagogique , st.note_final , st.status ,
                         os.titre , os.specialite , os.type_stage , os.disponibilite ,
                         ent.nom_entreprise as entreprise ,
+                        concat(etd.nom , ' ' , etd.prenom) as etudiant ,
                         concat(enc.nom , ' ' , enc.prenom) as encadrant from stages st
                         inner join candidatures c on c.id = st.candidature_id 
                         inner join etudiants etd on c.etudiant_id = etd.id 
@@ -47,6 +48,7 @@ const Etudiant = {
                         st.note_pedagogique , st.note_final , st.status ,
                         os.titre , os.specialite , os.type_stage , os.disponibilite ,
                         ent.nom_entreprise as entreprise ,
+                        concat(etd.nom , ' ' , etd.prenom) as etudiant ,
                         concat(enc.nom , ' ' , enc.prenom) as encadrant from stages st
                         inner join candidatures c on c.id = st.candidature_id 
                         inner join etudiants etd on c.etudiant_id = etd.id 
