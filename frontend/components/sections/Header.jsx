@@ -13,7 +13,7 @@ export default function Header({ isSticky , className}) {
   const [mobileMenuIsOpen , setMobileMenuIsOpen] = useState(false)
 
   return (
-    <header className={`${className} ${isSticky ? "sticky" : "fixed"} top-0 w-full py-6 px-10 md:px-20 flex items-center justify-between z-10 bg-white`}>
+    <header className={`${className} ${isSticky ? "sticky" : "fixed"} bg-white z-80 top-0 w-full py-6 px-10 md:px-20 flex items-center justify-between z-10 bg-white`}>
       <h3 className="text-2xl font-bold">
         Stage<span className="text-main">Link</span>
       </h3>

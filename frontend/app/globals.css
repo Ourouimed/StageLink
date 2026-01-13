@@ -4,3 +4,22 @@
   --color-main : #0079ff;
   --color-second : #93c6ff;  
 }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+html {
+  scroll-behavior: smooth;
+}

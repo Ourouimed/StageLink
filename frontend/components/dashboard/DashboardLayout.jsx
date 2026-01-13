@@ -14,7 +14,6 @@ export default function DashboardLayout({ children }) {
   const dispatch = useDispatch();
   const router = useRouter();
   
-  // State to manage mobile sidebar visibility
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const { isLoading, isInitialized, user } = useSelector(state => state.auth);

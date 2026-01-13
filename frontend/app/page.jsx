@@ -1,31 +1,30 @@
 'use client';
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { verifySession } from "@/store/features/auth/authSlice";
+
 import Header from "@/components/sections/Header";
 import Hero from "@/components/sections/Hero";
-import { verifySession } from "@/store/features/auth/authSlice";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
+import Companies from "@/components/sections/Companies";
+import HowItWorks from "@/components/sections/HowItWorks";
+import LatestOffers from "@/components/sections/LatestOffers";
+import Footer from "@/components/sections/Footer";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const {isLoading: authLoading, isInitialized } = useSelector(state => state.auth);
 
   useEffect(() => {
     dispatch(verifySession());
   }, [dispatch]);
 
-  if (authLoading || !isInitialized) {
-    return (
-      <div className="w-full h-screen flex items-center justify-center">
-        Loading...
-      </div>
-    );
-  }
-
   return (
-    <>
+    <main className="min-h-screen bg-white">
       <Header />
       <Hero />
-    </>
+      <Companies />
+      <HowItWorks />
+      <LatestOffers />
+      <Footer />
+    </main>
   );
 }
