@@ -49,7 +49,7 @@ export default function EtudiantDashboard() {
                     <StatCard title="Candidatures" value={stats.totalCands} sub="Total envoyé" color="text-blue-600" />
                     <StatCard title="Acceptées" value={stats.accepted} sub="Prêtes pour convention" color="text-green-600" />
                     <StatCard title="Stages Finis" value={stats.finishedStages} sub="Évaluations closes" color="text-purple-600" />
-                    <StatCard title="Moyenne Générale" value={`${stats.avgGrade}/20`} sub="Note pédagogique/finale" color="text-orange-600" />
+                    <StatCard title="Moyenne Générale" value={`${stats.avgGrade}/20`} sub="Note finale" color="text-orange-600" />
                 </div>
 
                 <div className="grid grid-cols-1 xl:grid-cols-3 gap-3">

@@ -36,101 +36,103 @@ export default function CandidatsPage() {
             </div>
 
             <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-                <table className="w-full text-left border-collapse">
-                    <thead>
-                        <tr className="bg-gray-50 border-b border-gray-200">
-                            <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">ID Étudiant</th>
-                            <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Statut</th>
-                            <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Titre de stage</th>
-                            <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Date d'envoi</th>
-                            <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Date de démarrage</th>
-                            <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Ville</th>
-                            <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider text-right">Décision</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-100">
-                        {candidats && candidats.map((c) => (
-                            <tr key={c.id} className="hover:bg-gray-50/80 transition-all">
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-3">
-                                        <div className="cursor-pointer h-10 w-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold" 
-                                            onClick={()=> openPopup({title : 'Candidat info' , component : 'CandidatProfilePopup' , props : {
-                                                candidat : c
-                                            }})}>
-                                            {c.prenom[0]}{c.nom[0]}
-                                        </div>
-                                        <div>
-                                            <p className="text-sm font-semibold text-gray-900 capitalize">
-                                                {c.prenom} {c.nom}
-                                            </p>
-                                            <p className="text-xs text-gray-400 font-mono">
-                                                ID: {c.etudiant_id?.slice(0, 8)}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <Badge text={c.status}/>
-                                </td>
-                                <td className="px-6 py-4 text-gray-600 text-sm">
-                                    {c.titre}
-                                </td>
-                                <td className="px-6 py-4 text-gray-600 text-sm">
-                                    <div className="flex items-center gap-2">
-                                        <Calendar size={14} />
-                                        {new Date(c.application_sent_at).toLocaleDateString('fr-FR')}
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4 text-gray-600 text-sm">
-                                    <div className="flex items-center gap-2">
-                                        <Calendar size={14} />
-                                        {new Date(c.demarage).toLocaleDateString('fr-FR')}
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4 text-gray-600 text-sm">
-                                    {c.ville}
-                                </td>
-                                <td className="px-6 py-4 text-right">
-                                    <div className="flex justify-end gap-2">
-                                        {c.status === 'pending' ? (
-                                            <>
-                                                <Button 
-                                                    size="sm" 
-                                                    variant="error" 
-                                                    outline
-                                                    onClick={() => openPopup({
-                                                        title: 'Refuser la candidature', 
-                                                        component: 'DeclineCandidaturePopup', 
-                                                        props: { id: c.id }
-                                                    })}
-                                                >
-                                                    Refuser
-                                                </Button>
-                                                <Button
-                                                    size="sm" 
-                                                    variant="success"
-                                                    onClick={() => openPopup({
-                                                        title: 'Accepter la candidature', 
-                                                        component: 'AcceptCandidaturePopup', 
-                                                        props: { 
-                                                            id: c.id, encadrants: acceptedEncadrants 
-                                                        }
-                                                    })}
-                                                >
-                                                    Accepter
-                                                </Button>
-                                            </>
-                                        ) : (
-                                            <span className="text-gray-400 text-sm italic py-2">
-                                                Déjà traité
-                                            </span>
-                                        )}
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                                <tr className="bg-gray-50 border-b border-gray-200">
+                                    <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">ID Étudiant</th>
+                                    <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Statut</th>
+                                    <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Titre de stage</th>
+                                    <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Date d'envoi</th>
+                                    <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Date de démarrage</th>
+                                    <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Ville</th>
+                                    <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider text-right">Décision</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-100">
+                                {candidats && candidats.map((c) => (
+                                    <tr key={c.id} className="hover:bg-gray-50/80 transition-all">
+                                        <td className="px-6 py-4">
+                                            <div className="flex items-center gap-3">
+                                                <div className="cursor-pointer h-10 w-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold" 
+                                                    onClick={()=> openPopup({title : 'Candidat info' , component : 'CandidatProfilePopup' , props : {
+                                                        candidat : c
+                                                    }})}>
+                                                    {c.prenom[0]}{c.nom[0]}
+                                                </div>
+                                                <div>
+                                                    <p className="text-sm font-semibold text-gray-900 capitalize">
+                                                        {c.prenom} {c.nom}
+                                                    </p>
+                                                    <p className="text-xs text-gray-400 font-mono">
+                                                        ID: {c.etudiant_id?.slice(0, 8)}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <Badge text={c.status}/>
+                                        </td>
+                                        <td className="px-6 py-4 text-gray-600 text-sm">
+                                            {c.titre}
+                                        </td>
+                                        <td className="px-6 py-4 text-gray-600 text-sm">
+                                            <div className="flex items-center gap-2">
+                                                <Calendar size={14} />
+                                                {new Date(c.application_sent_at).toLocaleDateString('fr-FR')}
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4 text-gray-600 text-sm">
+                                            <div className="flex items-center gap-2">
+                                                <Calendar size={14} />
+                                                {new Date(c.demarage).toLocaleDateString('fr-FR')}
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4 text-gray-600 text-sm">
+                                            {c.ville}
+                                        </td>
+                                        <td className="px-6 py-4 text-right">
+                                            <div className="flex justify-end gap-2">
+                                                {c.status === 'pending' ? (
+                                                    <>
+                                                        <Button 
+                                                            size="sm" 
+                                                            variant="error" 
+                                                            outline
+                                                            onClick={() => openPopup({
+                                                                title: 'Refuser la candidature', 
+                                                                component: 'DeclineCandidaturePopup', 
+                                                                props: { id: c.id }
+                                                            })}
+                                                        >
+                                                            Refuser
+                                                        </Button>
+                                                        <Button
+                                                            size="sm" 
+                                                            variant="success"
+                                                            onClick={() => openPopup({
+                                                                title: 'Accepter la candidature', 
+                                                                component: 'AcceptCandidaturePopup', 
+                                                                props: { 
+                                                                    id: c.id, encadrants: acceptedEncadrants 
+                                                                }
+                                                            })}
+                                                        >
+                                                            Accepter
+                                                        </Button>
+                                                    </>
+                                                ) : (
+                                                    <span className="text-gray-400 text-sm italic py-2">
+                                                        Déjà traité
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
 
                 {(!candidats || candidats.length === 0) && (
                     <div className="py-20 text-center">

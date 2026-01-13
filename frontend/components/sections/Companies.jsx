@@ -7,7 +7,7 @@ export default function Companies() {
 
     return (
         <section className="py-12 border-b border-gray-100">
-            <div className="container mx-auto px-4 md:px-20">
+            <div className="px-4 md:px-20">
                 <p className="text-center text-gray-500 text-sm font-medium mb-8">
                     ILS NOUS FONT CONFIANCE
                 </p>

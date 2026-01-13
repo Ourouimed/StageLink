@@ -5,8 +5,8 @@ import { Button } from "../ui/Button";
 
 export default function Hero() {
   return (
-    <section id="hero" className="min-h-[calc(100vh-80px)] flex items-center bg-gradient-to-br from-blue-50/50 to-white overflow-hidden pt-20 pb-10">
-      <div className="container mx-auto px-4 md:px-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <section id="hero" className="min-h-[calc(100vh-80px)] flex items-center bg-gradient-to-br from-blue-50/50 to-white overflow-hidden py-20">
+      <div className="px-4 md:px-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
         
         <div className="space-y-8 flex flex-col items-center md:items-start text-center md:text-left z-10">

@@ -85,7 +85,7 @@ export default function Sidebar({ user, onNavigate }) {
               <li key={name}>
                 <Link
                   href={url}
-                  onClick={onNavigate} // Closes the mobile drawer when clicking a link
+                  onClick={onNavigate} 
                   className={`block px-4 py-2 rounded-lg text-sm font-medium transition
                     ${
                       isActive
@@ -101,7 +101,7 @@ export default function Sidebar({ user, onNavigate }) {
         </ul>
       </nav>
 
-      {/* ===== Logout Button ===== */}
+      
       <div className="pt-4 border-t border-gray-100 mt-auto">
         <Button
           onClick={handleLogout}

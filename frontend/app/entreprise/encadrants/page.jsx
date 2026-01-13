@@ -34,59 +34,60 @@ export default function ListEncadrants() {
                 </div>
 
                 {/* Table / List Section */}
-                <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-                    <table className="w-full text-left border-collapse">
-                        <thead>
-                            <tr className="bg-gray-50 border-b border-gray-200">
-                                <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Nom & Prénom</th>
-                                <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Statut</th>
-                                <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Rejoint le</th>
-                                <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-100">
-                            {encadrants && encadrants.map((encadrant) => (
-                                <tr key={encadrant.id_encadrant} className="hover:bg-gray-50 transition-colors">
-                                    <td className="px-6 py-4">
-                                        <div className="flex items-center gap-3">
-                                            <div className="h-10 w-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
-                                                {encadrant.prenom[0]}{encadrant.nom[0]}
-                                            </div>
-                                            <div>
-                                                <p className="text-sm font-semibold text-gray-900 capitalize">
-                                                    {encadrant.prenom} {encadrant.nom}
-                                                </p>
-                                                <p className="text-xs text-gray-400 font-mono">
-                                                    ID: {encadrant.id_encadrant.slice(0, 8)}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        <Badge text={encadrant.status} variant="error"/>
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        <div className="flex items-center text-sm text-gray-500 gap-2">
-                                            <Calendar size={14} />
-                                            {new Date(encadrant.joined_at).toLocaleDateString('fr-FR')}
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        <div className="flex justify-end">
-                                            <Button 
-                                                variant="error"
-                                                outline
-                                                size="sm">
-                                                annuler demande
-                                            </Button>
-                                        </div>
-                                        
-                                    </td>
+                <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                                <tr className="bg-gray-50 border-b border-gray-200">
+                                    <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Nom & Prénom</th>
+                                    <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Statut</th>
+                                    <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Rejoint le</th>
+                                    <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider text-right">Actions</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-
+                            </thead>
+                            <tbody className="divide-y divide-gray-100">
+                                {encadrants && encadrants.map((encadrant) => (
+                                    <tr key={encadrant.id_encadrant} className="hover:bg-gray-50 transition-colors">
+                                        <td className="px-6 py-4">
+                                            <div className="flex items-center gap-3">
+                                                <div className="h-10 w-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
+                                                    {encadrant.prenom[0]}{encadrant.nom[0]}
+                                                </div>
+                                                <div>
+                                                    <p className="text-sm font-semibold text-gray-900 capitalize">
+                                                        {encadrant.prenom} {encadrant.nom}
+                                                    </p>
+                                                    <p className="text-xs text-gray-400 font-mono">
+                                                        ID: {encadrant.id_encadrant.slice(0, 8)}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <Badge text={encadrant.status} variant="error"/>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <div className="flex items-center text-sm text-gray-500 gap-2">
+                                                <Calendar size={14} />
+                                                {new Date(encadrant.joined_at).toLocaleDateString('fr-FR')}
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <div className="flex justify-end">
+                                                <Button 
+                                                    variant="error"
+                                                    outline
+                                                    size="sm">
+                                                    annuler demande
+                                                </Button>
+                                            </div>
+                                            
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                     {(!encadrants || encadrants.length === 0) && (
                         <div className="flex flex-col items-center justify-center py-12 text-gray-500">
                             <UserCheck size={48} className="text-gray-200 mb-4" />

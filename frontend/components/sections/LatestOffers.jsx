@@ -36,7 +36,7 @@ export default function LatestOffers() {
 
     return (
         <section className="py-20">
-            <div className="container mx-auto px-4 md:px-20">
+            <div className="px-4 md:px-20">
                 <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
                     <div className="max-w-xl">
                         <h2 className="text-3xl md:text-4xl font-bold mb-4">Dernières offres de stage</h2>
@@ -69,7 +69,7 @@ export default function LatestOffers() {
                             <div className="space-y-2 mb-6">
                                 <div className="flex items-center text-gray-500 text-sm">
                                     <MapPin size={16} className="mr-2 flex-shrink-0" />
-                                    <span className="truncate">{stage.ville || stage.entreprise?.ville}</span>
+                                    <span className="truncate">{stage.ville}</span>
                                 </div>
                                 <div className="flex items-center text-gray-500 text-sm">
                                     <Clock size={16} className="mr-2 flex-shrink-0" />

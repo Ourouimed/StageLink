@@ -49,79 +49,80 @@ export default function Demandeentreprises() {
 
                 {/* Main Content */}
                 <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-                    <table className="w-full text-left">
-                        <thead>
-                            <tr className="bg-gray-50 border-b border-gray-200">
-                                <th className="px-6 py-4 text-xs uppercase font-bold text-gray-500 tracking-wider">Entreprise</th>
-                                <th className="px-6 py-4 text-xs uppercase font-bold text-gray-500 tracking-wider">Date de demande</th>
-                                <th className="px-6 py-4 text-xs uppercase font-bold text-gray-500 tracking-wider">Statut</th>
-                                <th className="px-6 py-4 text-xs uppercase font-bold text-gray-500 tracking-wider text-right">Décision</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-100">
-                            {entreprises && entreprises.map((ent) => (
-                                <tr key={ent.id_entreprise} className="hover:bg-gray-50/50 transition-colors">
-                                    <td className="px-6 py-4">
-                                        <div className="flex items-center gap-4">
-                                            <div className="h-12 w-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center border border-indigo-100">
-                                                <Building2 size={24} />
-                                            </div>
-                                            <div>
-                                                <p className="text-sm font-semibold text-gray-900 capitalize">
-                                                    {ent.nom_entreprise}
-                                                </p>
-                                                <p className="text-xs text-gray-400 font-mono">
-                                                    ID: {ent.id_entreprise.slice(0, 8)}...
-                                                </p>
-                                            </div>
-                                           
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600">
-                                        <div className="flex items-center gap-2">
-                                            <Calendar size={14} className="text-gray-400" />
-                                            {new Date(ent.joined_at).toLocaleDateString('fr-FR', {
-                                                day: 'numeric',
-                                                month: 'short',
-                                                year: 'numeric'
-                                            })}
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        <Badge text={ent.status}/>
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        <div className="flex justify-end gap-1">
-                                            {ent.status === 'pending' ? (
-                                                <>
-                                                    <Button
-                                                        onClick={() => handleDecline(ent.id_entreprise)}
-                                                        size="sm"
-                                                        outline
-                                                        variant="error"
-                                                    >
-                                                        Refuser
-                                                        <X size={18} />
-                                                    </Button>
-                                                    <Button 
-                                                        onClick={() => handleAccept(ent.id_entreprise)}
-                                                        size="sm"
-                                                        variant="success"
-                                                    >
-                                                        <Check size={18} />
-                                                        Accepter
-                                                    </Button>
-                                                </>
-                                            ) : (
-                                                <span className="text-gray-300 text-sm italic">Traitée</span>
-                                            )}
-                                        </div>
-                                    </td>
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left">
+                            <thead>
+                                <tr className="bg-gray-50 border-b border-gray-200">
+                                    <th className="px-6 py-4 text-xs uppercase font-bold text-gray-500 tracking-wider">Entreprise</th>
+                                    <th className="px-6 py-4 text-xs uppercase font-bold text-gray-500 tracking-wider">Date de demande</th>
+                                    <th className="px-6 py-4 text-xs uppercase font-bold text-gray-500 tracking-wider">Statut</th>
+                                    <th className="px-6 py-4 text-xs uppercase font-bold text-gray-500 tracking-wider text-right">Décision</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-
+                            </thead>
+                            <tbody className="divide-y divide-gray-100">
+                                {entreprises && entreprises.map((ent) => (
+                                    <tr key={ent.id_entreprise} className="hover:bg-gray-50/50 transition-colors">
+                                        <td className="px-6 py-4">
+                                            <div className="flex items-center gap-4">
+                                                <div className="h-12 w-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center border border-indigo-100">
+                                                    <Building2 size={24} />
+                                                </div>
+                                                <div>
+                                                    <p className="text-sm font-semibold text-gray-900 capitalize">
+                                                        {ent.nom_entreprise}
+                                                    </p>
+                                                    <p className="text-xs text-gray-400 font-mono">
+                                                        ID: {ent.id_entreprise.slice(0, 8)}...
+                                                    </p>
+                                                </div>
+                                            
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4 text-sm text-gray-600">
+                                            <div className="flex items-center gap-2">
+                                                <Calendar size={14} className="text-gray-400" />
+                                                {new Date(ent.joined_at).toLocaleDateString('fr-FR', {
+                                                    day: 'numeric',
+                                                    month: 'short',
+                                                    year: 'numeric'
+                                                })}
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <Badge text={ent.status}/>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <div className="flex justify-end gap-1">
+                                                {ent.status === 'pending' ? (
+                                                    <>
+                                                        <Button
+                                                            onClick={() => handleDecline(ent.id_entreprise)}
+                                                            size="sm"
+                                                            outline
+                                                            variant="error"
+                                                        >
+                                                            Refuser
+                                                            <X size={18} />
+                                                        </Button>
+                                                        <Button 
+                                                            onClick={() => handleAccept(ent.id_entreprise)}
+                                                            size="sm"
+                                                            variant="success"
+                                                        >
+                                                            <Check size={18} />
+                                                            Accepter
+                                                        </Button>
+                                                    </>
+                                                ) : (
+                                                    <span className="text-gray-300 text-sm italic">Traitée</span>
+                                                )}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                     {/* Empty State */}
                     {(!entreprises || entreprises.length === 0) && !isLoading && (
                         <div className="flex flex-col items-center justify-center py-20 bg-gray-50/30">

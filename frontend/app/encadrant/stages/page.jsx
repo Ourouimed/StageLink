@@ -26,83 +26,84 @@ export default function StageList() {
 
                 {/* Styled Table Container */}
                 <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-                    <table className="w-full text-left border-collapse">
-                        <thead>
-                            <tr className="bg-gray-50 border-b border-gray-200">
-                                <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">ID Stage</th>
-                                <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Statut</th>
-                                <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Note evaluation </th>
-                                <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Note pedagogique </th>
-                                <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Note final </th>
-                                <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-100">
-                            {stages && stages.map((s) => (
-                                <tr key={s.stage_id} className="hover:bg-gray-50/80 transition-all">
-                                    {/* ID Column with Avatar-style icon */}
-                                    <td className="px-6 py-4">
-                                        <div className="flex items-center gap-3">
-                                            <div className="h-10 w-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-bold">
-                                                <Award size={20} />
-                                            </div>
-                                            <div>
-                                                <p className="text-sm font-mono text-gray-400">
-                                                    #{s.stage_id.slice(0, 8)}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-
-                                    {/* Status Column */}
-                                    <td className="px-6 py-4">
-                                        <Badge text={s.status}/>
-                                    </td>
-
-                                     {/* Notes Column */}
-                                    <td className="px-6 py-4 text-gray-600 text-sm">
-                                        <span className="flex items-center gap-1">
-                                                <span className="font-semibold text-gray-900">{(s.note_evaluation || 0).toFixed(2)}</span>
-                                                <span className="text-xs text-gray-400">/ 20</span>
-                                        </span>
-                                    </td>
-
-
-                                    <td className="px-6 py-4 text-gray-600 text-sm">
-                                        <span className="flex items-center gap-1">
-                                                <span className="font-semibold text-gray-900">{(s.note_pedagogique || 0).toFixed(2)}</span>
-                                                <span className="text-xs text-gray-400">/ 20</span>
-                                        </span>
-                                    </td>
-
-                                    <td className="px-6 py-4 text-gray-600 text-sm">
-                                        <span className="flex items-center gap-1">
-                                                <span className="font-semibold text-gray-900">{(s.note_final || 0).toFixed(2)}</span>
-                                                <span className="text-xs text-gray-400">/ 20</span>
-                                        </span>
-                                    </td>
-
-
-                                    {/* Actions Column */}
-                                    <td className="px-6 py-4">
-                                        <div className="flex justify-end gap-2">
-                                            <Button variant="main"
-                                                    size="sm" outline 
-                                                    onClick ={ ()=>{
-                                                        openPopup({title : 'Edit stage' , component : 'StageInfoPopup' , props : {
-                                                            stage : s
-                                                        }})
-                                                    }}>
-                                                Modifier
-                                                <Edit/>
-                                            </Button>
-                                        </div>
-                                    </td>
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                                <tr className="bg-gray-50 border-b border-gray-200">
+                                    <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">ID Stage</th>
+                                    <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Statut</th>
+                                    <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Note evaluation </th>
+                                    <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Note pedagogique </th>
+                                    <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider">Note final </th>
+                                    <th className="px-6 py-4 text-xs uppercase font-semibold text-gray-600 tracking-wider text-right">Actions</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody className="divide-y divide-gray-100">
+                                {stages && stages.map((s) => (
+                                    <tr key={s.stage_id} className="hover:bg-gray-50/80 transition-all">
+                                        {/* ID Column with Avatar-style icon */}
+                                        <td className="px-6 py-4">
+                                            <div className="flex items-center gap-3">
+                                                <div className="h-10 w-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-bold">
+                                                    <Award size={20} />
+                                                </div>
+                                                <div>
+                                                    <p className="text-sm font-mono text-gray-400">
+                                                        #{s.stage_id.slice(0, 8)}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </td>
 
+                                        {/* Status Column */}
+                                        <td className="px-6 py-4">
+                                            <Badge text={s.status}/>
+                                        </td>
+
+                                        {/* Notes Column */}
+                                        <td className="px-6 py-4 text-gray-600 text-sm">
+                                            <span className="flex items-center gap-1">
+                                                    <span className="font-semibold text-gray-900">{(s.note_evaluation || 0).toFixed(2)}</span>
+                                                    <span className="text-xs text-gray-400">/ 20</span>
+                                            </span>
+                                        </td>
+
+
+                                        <td className="px-6 py-4 text-gray-600 text-sm">
+                                            <span className="flex items-center gap-1">
+                                                    <span className="font-semibold text-gray-900">{(s.note_pedagogique || 0).toFixed(2)}</span>
+                                                    <span className="text-xs text-gray-400">/ 20</span>
+                                            </span>
+                                        </td>
+
+                                        <td className="px-6 py-4 text-gray-600 text-sm">
+                                            <span className="flex items-center gap-1">
+                                                    <span className="font-semibold text-gray-900">{(s.note_final || 0).toFixed(2)}</span>
+                                                    <span className="text-xs text-gray-400">/ 20</span>
+                                            </span>
+                                        </td>
+
+
+                                        {/* Actions Column */}
+                                        <td className="px-6 py-4">
+                                            <div className="flex justify-end gap-2">
+                                                <Button variant="main"
+                                                        size="sm" outline 
+                                                        onClick ={ ()=>{
+                                                            openPopup({title : 'Edit stage' , component : 'StageInfoPopup' , props : {
+                                                                stage : s
+                                                            }})
+                                                        }}>
+                                                    Modifier
+                                                    <Edit/>
+                                                </Button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                     {/* Empty State */}
                     {(!stages || stages.length === 0) && (
                         <div className="py-20 text-center">
