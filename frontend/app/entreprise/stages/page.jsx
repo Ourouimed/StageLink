@@ -62,7 +62,7 @@ export default function StageList() {
                                     {/* Notes Column */}
                                     <td className="px-6 py-4 text-gray-600 text-sm">
                                         <span className="flex items-center gap-1">
-                                                <span className="font-semibold text-gray-900">{(s.note_pedagogique || 0).toFixed(2)}</span>
+                                                <span className="font-semibold text-gray-900">{(s.note_evaluation || 0).toFixed(2)}</span>
                                                 <span className="text-xs text-gray-400">/ 20</span>
                                         </span>
                                     </td>
@@ -77,10 +77,11 @@ export default function StageList() {
 
                                     <td className="px-6 py-4 text-gray-600 text-sm">
                                         <span className="flex items-center gap-1">
-                                                <span className="font-semibold text-gray-900">{(((s.note_pedagogique + s.note_evaluation) || 0)/2).toFixed(2)}</span>
+                                                <span className="font-semibold text-gray-900">{(s.note_final || 0).toFixed(2)}</span>
                                                 <span className="text-xs text-gray-400">/ 20</span>
                                         </span>
                                     </td>
+
 
                                     {/* Actions Column */}
                                     <td className="px-6 py-4">

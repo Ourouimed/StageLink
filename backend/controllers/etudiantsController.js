@@ -95,5 +95,44 @@ const getProfile = async (req , res) => {
     }
 }
 
+const getCandidatures = async (req , res)=>{
+    try {
+        let user = req.user
+        const candidatures = await Etudiant.getCandidatures(user.id)
+        console.log(candidatures)
 
-export { updateProfile , getProfile}
+
+       
+        return res.json({candidatures , message : 'candidatures fetched successfully'})
+
+    }
+
+    catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+    
+}
+
+
+const getStages = async (req , res)=>{
+   try {
+        let user = req.user
+        const stages = await Etudiant.getStages(user.id)
+        console.log(stages)
+
+
+       
+        return res.json({stages , message : 'stages fetched successfully'})
+
+    }
+
+    catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+
+}
+
+
+export { updateProfile , getProfile , getCandidatures , getStages}

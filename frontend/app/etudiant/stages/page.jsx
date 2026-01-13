@@ -2,14 +2,14 @@
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Calendar, Award, User, Edit } from "lucide-react"; // Assuming you use lucide-react
+import { Calendar, Award, User, Edit, Eye } from "lucide-react"; // Assuming you use lucide-react
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { usePopup } from "@/hooks/usePopup";
-import { getStages } from "@/store/features/encadrant/encadrantSlice";
+import { getStages } from "@/store/features/etudiant/etudiantSlice";
 
 export default function StageList() {
-    const { stages } = useSelector(state => state.encadrant);
+    const { stages } = useSelector(state => state.etudiant);
     const dispatch = useDispatch();
     const { openPopup } = usePopup()
     useEffect(() => {
@@ -59,7 +59,7 @@ export default function StageList() {
                                         <Badge text={s.status}/>
                                     </td>
 
-                                     {/* Notes Column */}
+                                    {/* Notes Column */}
                                     <td className="px-6 py-4 text-gray-600 text-sm">
                                         <span className="flex items-center gap-1">
                                                 <span className="font-semibold text-gray-900">{(s.note_evaluation || 0).toFixed(2)}</span>
@@ -82,19 +82,18 @@ export default function StageList() {
                                         </span>
                                     </td>
 
-
                                     {/* Actions Column */}
                                     <td className="px-6 py-4">
                                         <div className="flex justify-end gap-2">
                                             <Button variant="main"
                                                     size="sm" outline 
                                                     onClick ={ ()=>{
-                                                        openPopup({title : 'Edit stage' , component : 'EditStageComp' , props : {
+                                                        openPopup({title : 'Stage Info' , component : 'EditStageComp' , props : {
                                                             stage : s
                                                         }})
                                                     }}>
-                                                Modifier
-                                                <Edit/>
+                                                Consulter
+                                                <Eye/>
                                             </Button>
                                         </div>
                                     </td>

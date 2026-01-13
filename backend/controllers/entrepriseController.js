@@ -183,14 +183,13 @@ const addNoteEvaluation = async (req , res)=>{
     const { note } = req.body
 
 
-    console.log(id)
-    console.log(note)
 
     if (!id || isNaN(note)) return res.status(400).json({error : 'Missed fields'})
     if (note < 0 || note > 20) return res.status(409).json({error : 'Note must be between 0 and 20'})
 
 
     await Entreprise.updateNoteEvaluation(id , note)
+    await Entreprise.updateNoteFinal(id)
     const [stage] = await Entreprise.getStage(id)
 
     return res.json({stage , message : 'Note attribue avec success'})

@@ -1,4 +1,5 @@
 import Encadrant from "../models/encadrant.js"
+import Entreprise from "../models/entreprise.js"
 
 const getProfile = async (req , res) => {
     try {
@@ -170,6 +171,7 @@ const addNotePedagogique = async (req , res)=>{
 
 
     await Encadrant.updateNotePedagogique(id , note)
+    await Entreprise.updateNoteFinal(id)
     const [stage] = await Encadrant.getStage(id)
 
     return res.json({stage , message : 'Note attribue avec success'})

@@ -23,11 +23,34 @@ export const getProfile = createAsyncThunk('etudiant/get' , async (_, thunkAPI)=
 })
 
 
+
+
+
+export const getCandidatures = createAsyncThunk('etudiant/candidatures/get' , async (_, thunkAPI)=>{
+  try {
+    return await etudiantService.getCandidatures()
+  }
+  catch (err){
+    return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
+  }
+})
+
+export const getStages = createAsyncThunk('etudiant/stages/get' , async (_, thunkAPI)=>{
+  try {
+    return await etudiantService.getStages()
+  }
+  catch (err){
+    return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
+  }
+})
+
 const etudiantSlice = createSlice({
     name : 'etudiant' ,
     initialState : {
         profile : null , 
-        isLoading : false
+        isLoading : false ,
+        candidatures : [],
+        stages : []
     },
 
     extraReducers : builder => builder
@@ -58,6 +81,39 @@ const etudiantSlice = createSlice({
     })
     .addCase(getProfile.rejected , (state )=>{
         state.profile = null
+        state.isLoading = false
+        console.log(null)
+    }) 
+
+
+
+    // get candidatures
+    .addCase(getCandidatures.pending , (state)=>{
+        state.isLoading = true
+    })
+    .addCase(getCandidatures.fulfilled , (state , action)=>{
+        state.candidatures = action.payload.candidatures
+        state.isLoading = false
+        console.log(action.payload)
+    })
+    .addCase(getCandidatures.rejected , (state )=>{
+        state.candidatures = []
+        state.isLoading = false
+        console.log(null)
+    }) 
+
+
+     // get stages
+    .addCase(getStages.pending , (state)=>{
+        state.isLoading = true
+    })
+    .addCase(getStages.fulfilled , (state , action)=>{
+        state.stages = action.payload.stages
+        state.isLoading = false
+        console.log(action.payload)
+    })
+    .addCase(getStages.rejected , (state )=>{
+        state.stages = []
         state.isLoading = false
         console.log(null)
     })

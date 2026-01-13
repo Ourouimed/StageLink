@@ -28,6 +28,12 @@ export const dashboardLinks = {
       name: 'Mes Candidatures',
       url: '/etudiant/candidatures',
     },
+
+
+    {
+      name: 'Mes Stages',
+      url: '/etudiant/stages',
+    },
     {
       name: 'Mon Profile',
       url: '/etudiant/profile',

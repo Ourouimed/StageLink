@@ -14,5 +14,19 @@ const getProfile = async ()=>{
 }
 
 
-const etudiantService = {updateProfile , getProfile}
+
+const getCandidatures = async ()=>{
+    const respone = await axiosService.get(`/api/etudiant/candidatures`)
+    return respone.data
+}
+
+
+
+const getStages = async ()=>{
+    const respone = await axiosService.get(`/api/etudiant/stages`)
+    return respone.data
+}
+
+
+const etudiantService = {updateProfile , getProfile , getCandidatures , getStages}
 export default etudiantService

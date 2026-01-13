@@ -69,14 +69,3 @@ BEGIN
 END &&
 
 DELIMITER ;
-
-
-DELIMITER &&
-CREATE trigger after_accept_stage
-AFTER UPDATE ON candidatures 
-FOR EACH ROW
-BEGIN 
-	IF OLD.status != NEW.STATUS AND NEW.status = 'accepted' THEN
-	
-END&&
-DELIMITER ;
