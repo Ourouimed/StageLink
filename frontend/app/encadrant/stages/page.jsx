@@ -89,7 +89,7 @@ export default function StageList() {
                                             <Button variant="main"
                                                     size="sm" outline 
                                                     onClick ={ ()=>{
-                                                        openPopup({title : 'Edit stage' , component : 'EditStageComp' , props : {
+                                                        openPopup({title : 'Edit stage' , component : 'StageInfoPopup' , props : {
                                                             stage : s
                                                         }})
                                                     }}>

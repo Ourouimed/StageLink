@@ -49,7 +49,7 @@ const Entreprise = {
     } ,
 
     getStage : async(id)=>{
-        const [rows] = await db.query(`SELECT st.stage_id , st.note_evaluation , st.note_pedagogique , st.note_final , 
+        const [rows] = await db.query(`SELECT st.stage_id , st.note_evaluation , st.rapport_stage  , st.note_pedagogique , st.note_final , 
                         st.status , os.titre , os.specialite , os.type_stage , os.disponibilite ,
                         concat(etd.nom , ' ' , etd.prenom) as etudiant ,
                         concat(enc.nom , ' ' , enc.prenom) as encadrant from stages st
@@ -62,7 +62,7 @@ const Entreprise = {
     } ,
 
     getStages : async(id)=>{
-        const [rows] = await db.query(`SELECT st.stage_id , st.note_evaluation , 
+        const [rows] = await db.query(`SELECT st.stage_id , st.note_evaluation , st.rapport_stage , 
                         st.note_pedagogique , st.note_final , st.status ,
                         os.titre , os.specialite , os.type_stage , os.disponibilite ,
                         concat(etd.nom , ' ' , etd.prenom) as etudiant ,
@@ -83,6 +83,9 @@ const Entreprise = {
 
     updateNoteFinal : async (id)=>{
         await db.query('UPDATE STAGES SET note_final = (note_evaluation + note_pedagogique)/2 where stage_id =?' , [id])
+    } ,
+    endStage : async (id)=>{
+        await db.query("UPDATE stages set status = 'finished' where stage_id = ?" , [id])
     }
 }
 

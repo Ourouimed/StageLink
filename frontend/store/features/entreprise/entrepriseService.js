@@ -56,7 +56,13 @@ const addNoteEvaluation = async (id , note)=>{
 }
 
 
+const endStage = async (id)=>{
+    const respone = await axiosService.post(`/api/entreprise/stages/end/${id}` ,)
+    return respone.data
+}
+
+
 const entrepriseService = {updateProfile , 
     getProfile , getCandidats , getEncadrants , addEncadrant , 
-    getStages , declineCandidature , acceptCandidature  , addNoteEvaluation}
+    getStages , declineCandidature , acceptCandidature  , addNoteEvaluation , endStage}
 export default entrepriseService

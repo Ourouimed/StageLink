@@ -1,6 +1,6 @@
 import express from "express"
 import verifyJWT from "../middlewares/verifyJwt.js"
-import { accepterCandidature, addEncadrant, addNoteEvaluation, declineCandidature, getCandidats, getEncadrants, getProfile, getStages, updateProfile } from "../controllers/entrepriseController.js"
+import { accepterCandidature, addEncadrant, addNoteEvaluation, declineCandidature, endStage, getCandidats, getEncadrants, getProfile, getStages, updateProfile } from "../controllers/entrepriseController.js"
 const router = express.Router()
 
 router.post('/update' , verifyJWT , updateProfile)
@@ -14,4 +14,6 @@ router.post('/candidature/decline/:id' , verifyJWT , declineCandidature)
 
 
 router.post('/stages/addNoteEvaluation/:id' , verifyJWT , addNoteEvaluation)
+
+router.post('/stages/end/:id' , verifyJWT , endStage)
 export default router

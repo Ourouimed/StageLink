@@ -188,6 +188,15 @@ const addNoteEvaluation = async (req , res)=>{
     if (note < 0 || note > 20) return res.status(409).json({error : 'Note must be between 0 and 20'})
 
 
+    const [checkFinished ] = await Entreprise.getStage(id) 
+    if (!checkFinished){
+        return res.status(404).json({error : 'Stage unfound'})
+    }
+
+
+     if (checkFinished.status === 'finished'){
+        return res.status(409).json({error : 'Stage finished cannot update note'})
+    }
     await Entreprise.updateNoteEvaluation(id , note)
     await Entreprise.updateNoteFinal(id)
     const [stage] = await Entreprise.getStage(id)
@@ -196,6 +205,16 @@ const addNoteEvaluation = async (req , res)=>{
 }
 
 
+const endStage = async (req , res)=>{
+    const { id } = req.params
+    if(!id) return res.status(404).json({error : 'Id is required'})
+
+    await Entreprise.endStage(id)
+    const [stage] = await Entreprise.getStage(id)
+
+    return res.json({stage , message : 'Stage Terminee'})
+}
+
 
 export { updateProfile , getProfile , getCandidats , getEncadrants, addEncadrant , 
-    accepterCandidature , declineCandidature , getStages , addNoteEvaluation}
+    accepterCandidature , declineCandidature , getStages , addNoteEvaluation , endStage}

@@ -13,6 +13,17 @@ export const updateProfile = createAsyncThunk('etudiant/update' , async (data, t
 
 
 
+export const uploadRapport = createAsyncThunk('etudiant/upload-rapport' , async (data, thunkAPI)=>{
+  try {
+    return await etudiantService.uploadRapport(data)
+  }
+  catch (err){
+    return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
+  }
+})
+
+
+
 export const getProfile = createAsyncThunk('etudiant/get' , async (_, thunkAPI)=>{
   try {
     return await etudiantService.getProfile()

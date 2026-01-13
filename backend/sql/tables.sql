@@ -110,9 +110,10 @@ CREATE TABLE STAGES (
     FOREIGN KEY (candidature_id) references candidatures (id)
 );
 
-
-select * from stages;
-
-
+use stage;
+update demande_encadrant set status = 'pending' where id_encadrant !='dddd';
 
 
+
+
+select * from entreprises;

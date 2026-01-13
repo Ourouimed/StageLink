@@ -163,12 +163,18 @@ const addNotePedagogique = async (req , res)=>{
     const { note } = req.body
 
 
-    console.log(id)
-    console.log(note)
-
     if (!id || isNaN(note)) return res.status(400).json({error : 'Missed fields'})
     if (note < 0 || note > 20) return res.status(409).json({error : 'Note must be between 0 and 20'})
 
+    const [checkFinished ] = await Encadrant.getStage(id) 
+    if (!checkFinished){
+        return res.status(404).json({error : 'Stage unfound'})
+    }
+
+
+     if (checkFinished.status === 'finished'){
+        return res.status(409).json({error : 'Stage finished cannot update note'})
+    }
 
     await Encadrant.updateNotePedagogique(id , note)
     await Entreprise.updateNoteFinal(id)

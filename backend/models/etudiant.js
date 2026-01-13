@@ -26,7 +26,7 @@ const Etudiant = {
 
 
      getStages : async(id)=>{
-        const [rows] = await db.query(`SELECT st.stage_id , st.note_evaluation , 
+        const [rows] = await db.query(`SELECT st.stage_id , st.note_evaluation , st.rapport_stage  , 
                         st.note_pedagogique , st.note_final , st.status ,
                         os.titre , os.specialite , os.type_stage , os.disponibilite ,
                         ent.nom_entreprise as entreprise ,
@@ -39,6 +39,27 @@ const Etudiant = {
                         where etd.id = ?` ,[id]) 
         return rows
     } ,
+
+
+
+    getStage : async(id)=>{
+        const [rows] = await db.query(`SELECT st.stage_id , st.note_evaluation , st.rapport_stage  , 
+                        st.note_pedagogique , st.note_final , st.status ,
+                        os.titre , os.specialite , os.type_stage , os.disponibilite ,
+                        ent.nom_entreprise as entreprise ,
+                        concat(enc.nom , ' ' , enc.prenom) as encadrant from stages st
+                        inner join candidatures c on c.id = st.candidature_id 
+                        inner join etudiants etd on c.etudiant_id = etd.id 
+                        inner join encadrants enc on st.encadrant_id = enc.id 
+                        inner join offre_stage os on os.id = c.stage_id 
+                        inner join entreprises ent on ent.id = os.entreprise
+                        where st.stage_id = ?` ,[id]) 
+        return rows
+    } , 
+
+    updateRapport : async (id , rapport)=>{
+        await db.query('UPDATE stages set rapport_stage = ? where stage_id = ?' , [rapport , id])
+    }
 }
 
 

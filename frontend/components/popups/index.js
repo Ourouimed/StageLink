@@ -5,7 +5,7 @@ export { default as EntrepriseInfoPopup } from "./EntrepriseInfoPopup";
 export { default as AddEncadrantPopup } from "./AddEncadrantPopup";
 export { default as DeclineCandidaturePopup } from "./DeclineCandidaturePopup";
 export { default as AcceptCandidaturePopup } from "./AcceptCandidaturePopup";
-export { default as EditStageComp } from "./EditStageComp";
+export { default as StageInfoPopup } from "./StageInfoPopup";
 export { default as CandidatProfilePopup } from "./CandidatProfilePopup";
 export { default as EntrepriseProfilePopup } from "./EntrepriseProfilePopup";
 

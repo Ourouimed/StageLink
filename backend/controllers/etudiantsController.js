@@ -75,6 +75,59 @@ const updateProfile = async (req, res) => {
 };
 
 
+
+
+const uploadRapport = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const {
+      stage_id
+    } = req.body;
+
+    // Validation obligatoire
+    if (!stage_id) {
+      return res.status(400).json({ error: "Some required fields are empty" });
+    }
+
+    // Vérification type PDF
+    if (req.file && req.file.mimetype !== "application/pdf") {
+      return res.status(400).json({ error: "CV must be a PDF file" });
+    }
+
+    // Récupérer l’étudiant existant
+    const [existingStage] = await Etudiant.getStage(stage_id);
+    if (!existingStage) return res.status(404).json({ error: "Stage not found" });
+
+    // Upload nouveau CV si présent, sinon garder l’ancien
+    let rapport = existingStage.rapport_stage;
+    if (req.file) {
+      console.log("Uploading CV...");
+      rapport = await uploadFile(req.file, "rapports_stages");
+      console.log("Rapport uploaded:", rapport);
+    }
+
+    if (!rapport){
+        return res.status(400).json({error : 'Rapport required!'})
+    }
+
+    await Etudiant.updateRapport(stage_id , rapport)
+    // Recharger profil
+    const [updatedStage] = await Etudiant.getStage(stage_id);
+
+
+    return res.json({
+      stage: updatedStage,
+      message: "Rapport stage fetched successfully"
+    });
+
+  } catch (err) {
+    console.error("UPDATE PROFILE ERROR:", err);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
 const getProfile = async (req , res) => {
     try {
         const userId = req.user.id 
@@ -135,4 +188,4 @@ const getStages = async (req , res)=>{
 }
 
 
-export { updateProfile , getProfile , getCandidatures , getStages}
+export { updateProfile , getProfile , getCandidatures , getStages , uploadRapport}

@@ -1,6 +1,6 @@
 import express from "express"
 import verifyJWT from "../middlewares/verifyJwt.js"
-import { getCandidatures, getProfile, getStages, updateProfile } from "../controllers/etudiantsController.js"
+import { getCandidatures, getProfile, getStages, updateProfile, uploadRapport } from "../controllers/etudiantsController.js"
 import multer from 'multer';
 
 
@@ -14,6 +14,7 @@ const upload = multer({ storage, limits: { fileSize: 2 * 1024 * 1024 } }); // ma
 
 
 router.post('/update' , verifyJWT , upload.single('cv') ,  updateProfile)
+router.post('/upload-rapport' , verifyJWT , upload.single('rapport') ,  uploadRapport)
 router.get('/candidatures', verifyJWT , getCandidatures)
 router.get('/stages' , verifyJWT , getStages)
 router.get('/' , verifyJWT , getProfile)

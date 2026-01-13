@@ -105,6 +105,22 @@ export const addNoteEvaluation = createAsyncThunk('entreprise/stages/addNoteEval
 
 
 
+export const endStage = createAsyncThunk('entreprise/stages/end' , async (id, thunkAPI)=>{
+  try {
+    return await entrepriseService.endStage(id)
+  }
+  catch (err){
+    console.log(err)
+    return thunkAPI.rejectWithValue(err.response?.data?.error || "Unknown Error");
+  }
+})
+
+
+
+
+
+
+
 const entrepriseSlice = createSlice({
     name : 'entreprise' ,
     initialState : {
@@ -246,20 +262,39 @@ const entrepriseSlice = createSlice({
 
 
 
+// add Note
+    .addCase(addNoteEvaluation.pending, (state) => {
+        state.isLoading = true;
+    })
+    .addCase(addNoteEvaluation.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const index = state.stages.findIndex(stage => stage.stage_id === action.payload.stage.stage_id);
+        if (index !== -1) {
+            state.stages[index] = {
+                ...state.stages[index],
+                ...action.payload.stage 
+            };
+        }
+    })
+    .addCase(addNoteEvaluation.rejected, (state) => {
+        state.isLoading = false;
+    })
 
-    // add Note
-    .addCase(addNoteEvaluation.pending , (state)=>{
-        state.isLoading = true
+    // end stage
+    .addCase(endStage.pending, (state) => {
+        state.isLoading = true;
     })
-    .addCase(addNoteEvaluation.fulfilled , (state , action)=>{
-        state.isLoading = false
-        console.log(action.payload)
+    .addCase(endStage.fulfilled, (state, action) => {
+        state.isLoading = false;
+        // Find the stage and update its status/data
+        const index = state.stages.findIndex(stage => stage._id === action.payload.stage._id);
+        if (index !== -1) {
+            state.stages[index] = action.payload.stage; // Replaces the old stage object with the new one
+        }
     })
-    .addCase(addNoteEvaluation.rejected , (state )=>{
-        state.isLoading = false
-        console.log(null)
+    .addCase(endStage.rejected, (state) => {
+        state.isLoading = false;
     })
-
 
  
 })
