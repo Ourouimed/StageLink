@@ -128,7 +128,7 @@ export default function ProfileEtudiants() {
 
   return (
     <DashboardLayout>
-      <div className="max-w-5xl mx-auto">
+      <div className="">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <h4 className="text-2xl font-bold text-gray-800">Mon profil étudiant</h4>

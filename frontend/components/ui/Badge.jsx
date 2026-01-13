@@ -1,22 +1,22 @@
-export const Badge = ({ text, icon: Icon, variant = "default" }) => {
+
+export const Badge = ({ text, variant = 'default', icon: Icon, className = '' }) => {
+  const baseStyles = "inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium transition-colors";
+  
   const variants = {
-    default: "bg-second text-gray-900",
-    primary: "bg-main text-white",
-    success: "bg-green-100 text-green-700",
-    error: "bg-red-100 text-red-700",
-    outline: "border border-gray-200 text-gray-600"
+    default: "bg-gray-100 text-gray-800",
+    success: "bg-green-100 text-green-800",
+    warning: "bg-yellow-100 text-yellow-800",
+    error: "bg-red-100 text-red-800",
+    info: "bg-blue-100 text-blue-800",
   };
 
-  const activeVariant = variants[variant] || variants.default;
+  const variantStyles = variants[variant] || variants.default;
 
   return (
-    <h4 className={`inline-flex px-6 py-2 font-semibold text-sm rounded-full items-center gap-2 ${activeVariant}`}>
-        {Icon && (
-          <span className="size-6 rounded-full bg-black/10 flex items-center justify-center">
-            <Icon size={12} />
-          </span>
-        )}
-        {text}
-    </h4>
+    <span className={`${baseStyles} ${variantStyles} ${className}`}>
+      {Icon && <Icon className="w-3 h-3" aria-hidden="true" />}
+      {text}
+    </span>
   );
 };
+

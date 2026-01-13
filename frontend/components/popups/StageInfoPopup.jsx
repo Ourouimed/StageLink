@@ -9,6 +9,7 @@ import { useState } from "react";
 import { addNotePedagogique } from "@/store/features/encadrant/encadrantSlice";
 import { usePopup } from "@/hooks/usePopup";
 import { uploadRapport } from "@/store/features/etudiant/etudiantSlice";
+import { Badge } from "../ui/Badge";
 
 export default function EditStageComp({ stage }) {
     const { user } = useSelector((state) => state.auth);
@@ -93,11 +94,7 @@ export default function EditStageComp({ stage }) {
                     <h3 className="text-lg font-bold text-gray-900">{stage.titre}</h3>
                     <p className="text-sm text-gray-500 capitalize">{stage.type_stage}</p>
                 </div>
-                <span className={`px-3 py-1 rounded-full text-xs font-medium capitalize ${
-                    stage.status === 'finished' ? 'bg-green-50 text-green-700' : 'bg-blue-50 text-blue-700'
-                }`}>
-                    {stage.status}
-                </span>
+                <Badge text={stage.status}/>
             </div>
 
             {/* Details Grid */}
