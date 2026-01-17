@@ -3,7 +3,7 @@ import Image from "next/image";
 import { menu } from "@/utils/links";
 import { Button } from "../ui/Button";
 import { useSelector } from "react-redux";
-import { BarChart, Menu } from "lucide-react";
+import { BarChart, Menu, User } from "lucide-react";
 import { useState } from "react";
 import MobileMenu from "../mobile-menu";
 
@@ -31,16 +31,22 @@ export default function Header({ isSticky , className}) {
           </ul>
         </nav>
 
-        {user ? <div className="p-1 border-2 border-main rounded-full">
-            <Image
-                src={user.profile || "/assets/images/fallback-profile.png"}
-                alt="profile"
-                width={40}
-                height={40}
-                className="rounded-full"
-            />
-        </div> : (
-          <Button variant="main" href="/register">
+        {user ? <>
+          <Button size="sm" href={`${user.role}/dashboard`} variant="main">
+            <User size={16}/>
+            Dashboard 
+          </Button>
+            {/* <div className="p-1 border-2 border-main rounded-full" >
+        //     <Image
+        //         src={user.profile || "/assets/images/fallback-profile.png"}
+        //         alt="profile"
+        //         width={40}
+        //         height={40}
+        //         className="rounded-full"
+        //     />
+        // </div> */}
+          </> : (
+          <Button variant="main" size='sm' href="/register">
             Inscrivez-vous
           </Button>
         )}

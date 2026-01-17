@@ -7,6 +7,7 @@ import etudiantReducer from './features/etudiant/etudiantSlice'
 import offreStageReducer from "./features/offre-stage/offreStageSlice";
 import candidatureReducer from "./features/candidatures/candidatureSlice";
 import encadrantReducer from "./features/encadrant/encadrantSlice"
+import adminReducer from './features/admin/adminSlice'
 
 
 export const store = configureStore({
@@ -18,6 +19,7 @@ export const store = configureStore({
         etudiant : etudiantReducer , 
         stage : offreStageReducer ,
         candidature : candidatureReducer  ,
-        encadrant : encadrantReducer
+        encadrant : encadrantReducer ,
+        admin : adminReducer 
     }
 })

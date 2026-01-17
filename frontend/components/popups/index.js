@@ -8,4 +8,5 @@ export { default as AcceptCandidaturePopup } from "./AcceptCandidaturePopup";
 export { default as StageInfoPopup } from "./StageInfoPopup";
 export { default as CandidatProfilePopup } from "./CandidatProfilePopup";
 export { default as EntrepriseProfilePopup } from "./EntrepriseProfilePopup";
+export { default as BlockUnblockUserPopup } from "./BlockUnblockUserPopup";
 

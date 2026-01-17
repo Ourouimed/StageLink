@@ -22,7 +22,6 @@ const acceptEntrepriseRequest = async (id)=>{
     return respone.data
 }
 
-
 const declineEntrepriseRequest = async (id)=>{
     const respone = await axiosService.post(`/api/encadrant/entreprises/decline/${id}`)
     return respone.data
