@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Building2, ClipboardCheck, GraduationCap, Clock } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { usePopup } from "@/hooks/usePopup";
+import { StatCard } from "@/components/cards/StatsCard";
 
 export default function EncadrantDashboard() {
     const dispatch = useDispatch();
@@ -132,20 +133,5 @@ export default function EncadrantDashboard() {
                 </div>
             </div>
         </DashboardLayout>
-    );
-}
-
-function StatCard({ title, value, sub, color, icon: Icon }) {
-    return (
-        <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm flex items-start justify-between">
-            <div>
-                <span className="text-gray-500 text-xs font-semibold uppercase">{title}</span>
-                <p className={`text-2xl font-black my-1 ${color}`}>{value}</p>
-                <span className="text-gray-400 text-[10px]">{sub}</span>
-            </div>
-            <div className={`p-2 rounded-lg bg-gray-50 ${color} opacity-80`}>
-                <Icon size={22} />
-            </div>
-        </div>
     );
 }

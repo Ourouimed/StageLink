@@ -5,8 +5,9 @@ import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { getProfile, getCandidatures, getStages } from "@/store/features/etudiant/etudiantSlice";
 import { Badge } from "@/components/ui/Badge";
 import Link from "next/link";
-import { Dock, Download } from "lucide-react";
+import { BarChart3, CheckCircle, Dock, Download, GraduationCap, Send } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { StatCard } from "@/components/cards/StatsCard";
 
 export default function EtudiantDashboard() {
     const dispatch = useDispatch();
@@ -46,10 +47,10 @@ export default function EtudiantDashboard() {
 
                 {/* Statistics Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <StatCard title="Candidatures" value={stats.totalCands} sub="Total envoyé" color="text-blue-600" />
-                    <StatCard title="Acceptées" value={stats.accepted} sub="Prêtes pour convention" color="text-green-600" />
-                    <StatCard title="Stages Finis" value={stats.finishedStages} sub="Évaluations closes" color="text-purple-600" />
-                    <StatCard title="Moyenne Générale" value={`${stats.avgGrade}/20`} sub="Note finale" color="text-orange-600" />
+                    <StatCard title="Candidatures" value={stats.totalCands} sub="Total envoyé" color="text-blue-600" icon={Send}/>
+                    <StatCard title="Acceptées" value={stats.accepted} sub="Prêtes pour convention" color="text-green-600" icon={CheckCircle}/>
+                    <StatCard title="Stages Finis" value={stats.finishedStages} sub="Évaluations closes" color="text-purple-600" icon={GraduationCap}/>
+                    <StatCard title="Moyenne Générale" value={`${stats.avgGrade}/20`} sub="Note finale" color="text-orange-600" icon={BarChart3}/>
                 </div>
 
                 <div className="grid grid-cols-1 xl:grid-cols-3 gap-3">
@@ -111,15 +112,5 @@ export default function EtudiantDashboard() {
                 </div>
             </div>
         </DashboardLayout>
-    );
-}
-
-function StatCard({ title, value, sub, color }) {
-    return (
-        <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm flex flex-col">
-            <span className="text-gray-500 text-xs font-semibold uppercase">{title}</span>
-            <span className={`text-2xl font-black my-1 ${color}`}>{value}</span>
-            <span className="text-gray-400 text-[10px]">{sub}</span>
-        </div>
     );
 }
