@@ -22,7 +22,8 @@ const Admin = {
         await db.query('UPDATE utilisateurs set blocked = 0 where id = ?' , [id])
     } ,
     checkBlocked : async (id)=>{
-        await db.query('SELECT blocked from utilisateurs')
+        const [rows] = await db.query('SELECT blocked from utilisateurs where id = ?' , [id])
+        return rows[0]
     }
 }
 
