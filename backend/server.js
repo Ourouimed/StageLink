@@ -6,6 +6,7 @@ import etudiantRouter from './routes/etudiants.js'
 import stageRouter from './routes/stages.js'
 import candidatureRouter from './routes/candidature.js'
 import encadrantRouter from './routes/encadrant.js'
+import adminRouter from './routes/admin.js'
 
 
 import corsOptions from './middlewares/corsOptions.js'
@@ -40,6 +41,7 @@ app.use('/api/etudiant' , etudiantRouter)
 app.use('/api/offre-stage' , stageRouter)
 app.use('/api/candidature' , candidatureRouter)
 app.use('/api/encadrant' , encadrantRouter)
+app.use('/api/admin' , adminRouter)
 
 
 

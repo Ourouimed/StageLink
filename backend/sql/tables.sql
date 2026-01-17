@@ -6,9 +6,12 @@ create table utilisateurs (
     email_verified tinyint default 0 ,
     email_verified_at timestamp default null ,
     otpCode varchar(100) default NULL ,
-	otpSentAt timestamp ,
+	otpSentAt timestamp , 
+    blocked tinyint default 0,
     password varchar(500) not null 
 );
+
+
 
 create table etudiants (
 	id char(36) primary key ,
