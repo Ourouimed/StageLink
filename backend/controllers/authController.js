@@ -138,6 +138,16 @@ const login = async (req, res) => {
         };
         break;
 
+
+      case "admin":
+        const [admin] = await Auth.getAdminById(user.id);
+        roleData = {
+          nom: admin.nom,
+          prenom: admin.prenom,
+          date_naissance: admin.date_naissance,
+        };
+        break;
+
       case "entreprise":
         const [entreprise] = await Auth.getEntrepriseByUserId(user.id);
         roleData = {
@@ -145,6 +155,7 @@ const login = async (req, res) => {
         };
         break;
     }
+
 
     // Send HttpOnly cookie and role-specific data
     return res.cookie("token", token, {
@@ -195,6 +206,15 @@ const verifySession = async (req, res) => {
                     date_naissance: encadrant.date_naissance,
                 };
                 break;
+
+            case "admin":
+              const [admin] = await Auth.getAdminById(user.id);
+              roleData = {
+                nom: admin.nom,
+                prenom: admin.prenom,
+                date_naissance: admin.date_naissance,
+              };
+              break;
 
             case "entreprise":
                 const [entreprise] = await Auth.getEntrepriseByUserId(user.id);

@@ -38,6 +38,11 @@ const Auth = {
         return rows
     },
 
+    getAdminById : async (id)=>{
+        const [rows] = await db.query('SELECT * FROM admins where id = ?' , [id])
+        return rows
+    },
+
     saveVerificationCode : async (id , code)=>{
         await db.query('UPDATE utilisateurs set otpCode = ? , otpSentAt =  UTC_TIMESTAMP() where id = ?' , [code , id]) 
     },

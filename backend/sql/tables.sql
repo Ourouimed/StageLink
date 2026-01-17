@@ -111,3 +111,6 @@ CREATE TABLE STAGES (
     FOREIGN KEY (candidature_id) references candidatures (id)
 );
 
+
+use stage;
+select * from utilisateurs;

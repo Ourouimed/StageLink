@@ -45,6 +45,7 @@ export default function Sidebar({ user, onNavigate }) {
           </div>
         </div>
 
+        {user.role !== 'admin' &&
         <div className="pt-2 space-y-1 text-sm text-gray-600">
           <div className="flex items-center gap-2">
             <MapPin size={14} className="shrink-0" />
@@ -73,6 +74,7 @@ export default function Sidebar({ user, onNavigate }) {
             </Link>
           </div>
         </div>
+        }
       </div>
 
       {/* ===== Navigation ===== */}

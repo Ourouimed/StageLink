@@ -40,7 +40,8 @@ DELIMITER ;
 
 
 
-DELIMITER &&
+
+DELIMITER //
 
 CREATE TRIGGER before_insert_candidature
 BEFORE INSERT ON candidatures
@@ -48,24 +49,38 @@ FOR EACH ROW
 BEGIN
   DECLARE max_places INT;
   DECLARE current_count INT;
+  DECLARE cv_count INT;
 
-  -- get allowed places
+  -- check available places
   SELECT nombre_profiles
   INTO max_places
   FROM offre_stage
   WHERE id = NEW.stage_id;
 
-  -- count existing candidatures
   SELECT COUNT(*)
   INTO current_count
   FROM candidatures
   WHERE stage_id = NEW.stage_id;
 
-  -- block if full
   IF current_count >= max_places THEN
     SIGNAL SQLSTATE '45000'
-      SET MESSAGE_TEXT = 'Cet offre de stage est complete';
+      SET MESSAGE_TEXT = 'Cette offre de stage est complète';
   END IF;
-END &&
+
+  -- check if etudiant has a CV
+  SELECT COUNT(*)
+  INTO cv_count
+  FROM etudiants
+  WHERE id = NEW.etudiant_id
+    AND cv IS NOT NULL
+    AND cv <> '';
+
+  IF cv_count = 0 THEN
+    SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'Vous devez ajouter un CV avant de postuler';
+  END IF;
+
+END;
+//
 
 DELIMITER ;

@@ -22,6 +22,13 @@ const generalLinks = (role) => [
 ]
 
 export const dashboardLinks = {
+  admin : [
+    ...generalLinks('admin') ,
+    {
+      name : 'Utilisateurs' ,
+      url : '/admin/utilisateurs'
+    }
+  ],
   etudiant: [
     ...generalLinks('etudiant'),
     {
