@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid"
 import { sendVerificationEmail } from "../lib/send-email.js"
 import jwt from 'jsonwebtoken'
 import { generateValidationCode } from "../lib/generate-randomCode.js"
+import Admin from "../models/admin.js"
 const JWT_SECRET = process.env.JWT_SECRET
 
 const register = async (req, res) => {
@@ -99,6 +100,13 @@ const login = async (req, res) => {
     const [user] = await Auth.getUserByEmail(email);
     if (!user) {
       return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+
+    const {blocked} = await Admin.checkBlocked(user.id)
+
+    if (blocked){
+        return res.status(403).json({error : 'Your account is blocked'})
     }
 
     // Compare passwords

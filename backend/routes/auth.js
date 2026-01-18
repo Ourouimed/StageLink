@@ -10,7 +10,7 @@ router.get('/' , (req , res)=>{
     res.send('Hello auth')
 })
 router.post('/register' , register)
-router.post('/login'  , login)
+router.post('/login'  , login )
 router.post('/logout' , logout)
 router.get('/verify-session' , verifyJWT , checkBlocked , verifySession)
 router.post('/verify-email' , checkBlocked , verifyEmail )
