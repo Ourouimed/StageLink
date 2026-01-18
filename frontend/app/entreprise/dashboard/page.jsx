@@ -41,7 +41,7 @@ export default function EntrepriseDashboard() {
     return (
         <DashboardLayout>
             <div className="space-y-3">
-                {/* Header Section */}
+                
                 <div className="flex justify-between items-end">
                     <div>
                         <h4 className="text-2xl font-bold text-gray-800">Espace {profile?.nom_entreprise || 'Entreprise'}</h4>
@@ -58,11 +58,11 @@ export default function EntrepriseDashboard() {
                 </div>
 
                 <div className="grid grid-cols-1 xl:grid-cols-3 gap-3">
-                    {/* Recent Candidates (Left Column) */}
+                    
                     <section className="xl:col-span-1 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
                         <div className="p-4 border-b border-gray-100 flex justify-between items-center">
                             <h3 className="font-bold text-gray-800">Nouveaux Candidats</h3>
-                            <Badge variant="info">{stats.pendingCands} nouveaux</Badge>
+                            <Badge variant="info" text={`${stats.pendingCands} nouveaux`}></Badge>
                         </div>
                         <div className="divide-y divide-gray-50">
                             {candidats?.slice(0, 5).map((c) => (
@@ -72,7 +72,7 @@ export default function EntrepriseDashboard() {
                                             <p className="font-semibold text-sm text-gray-800">{c.nom} {" "} {c.prenom}</p>
                                             <p className="text-xs text-gray-500">{c.titre}</p>
                                         </div>
-                                        <Badge text={c.status} />
+                                        <Badge text={c.status} variant={c.status === 'accepted' ? 'success' : 'error'}/>
                                     </div>
                                     <div className="mt-2 flex gap-2">
                                         {/* <Link className="text-[10px] font-bold text-blue-600 hover:underline" href={c.cv}>Voir CV</Link> */}

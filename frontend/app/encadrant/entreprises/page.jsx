@@ -89,7 +89,7 @@ export default function Demandeentreprises() {
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <Badge text={ent.status}/>
+                                            <Badge text={ent.status} variant={ent.status === 'accepted' ? 'success' : c.status === 'declined' ? 'error' : 'warning'}/>
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="flex justify-end gap-1">

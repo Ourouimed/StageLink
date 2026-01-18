@@ -41,7 +41,7 @@ export default function StageList() {
                             <tbody className="divide-y divide-gray-100">
                                 {stages && stages.map((s) => (
                                     <tr key={s.stage_id} className="hover:bg-gray-50/80 transition-all">
-                                        {/* ID Column with Avatar-style icon */}
+                                      
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
                                                 <div className="h-10 w-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-bold">
@@ -57,7 +57,7 @@ export default function StageList() {
 
                                         {/* Status Column */}
                                         <td className="px-6 py-4">
-                                            <Badge text={s.status}/>
+                                            <Badge text={s.status} variant={s.status === 'finished' ? 'success' : 'warning'}/>
                                         </td>
 
                                         {/* Notes Column */}

@@ -21,7 +21,7 @@ export default function CandidatProfilePopup({ candidat }) {
           {candidat.prenom} {candidat.nom}
         </h2>
         <p className="text-lg text-blue-600 font-medium">{candidat.titre}</p>
-        <Badge text={candidat.status}/>
+        <Badge text={candidat.status} variant={candidat.status === 'accepted' ? 'success' : 'error'}/>
       </div>
 
       {/* Info Grid */}

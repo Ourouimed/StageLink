@@ -71,7 +71,7 @@ export default function CandidatsPage() {
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <Badge text={c.status}/>
+                                            <Badge text={c.status} variant={c.status === 'accepted' ? 'success' : 'error'}/>
                                         </td>
                                         <td className="px-6 py-4 text-gray-600 text-sm">
                                             {c.titre}

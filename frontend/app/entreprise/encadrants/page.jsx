@@ -64,7 +64,7 @@ export default function ListEncadrants() {
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <Badge text={encadrant.status} variant="error"/>
+                                            <Badge text={encadrant.status} variant={encadrant.status === 'accepted' ? 'success' : 'error'}/>
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="flex items-center text-sm text-gray-500 gap-2">

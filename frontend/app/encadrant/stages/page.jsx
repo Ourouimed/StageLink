@@ -57,7 +57,7 @@ export default function StageList() {
 
                                         {/* Status Column */}
                                         <td className="px-6 py-4">
-                                            <Badge text={s.status}/>
+                                            <Badge text={s.status} variant={s.status === 'finished' ? 'success' : 'warning'}/>
                                         </td>
 
                                         {/* Notes Column */}

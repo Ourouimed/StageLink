@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { getProfile, getCandidatures, getStages } from "@/store/features/etudiant/etudiantSlice";
 import { Badge } from "@/components/ui/Badge";
-import Link from "next/link";
 import { BarChart3, CheckCircle, Dock, Download, GraduationCap, Send } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { StatCard } from "@/components/cards/StatsCard";
@@ -19,7 +18,8 @@ export default function EtudiantDashboard() {
         dispatch(getStages());
     }, [dispatch]);
 
-    // Advanced Statistics based on the JSON provided
+    
+    
     const stats = useMemo(() => {
         const totalCands = candidatures?.length || 0;
         const accepted = candidatures?.filter(c => c.status === 'accepted').length || 0;
@@ -37,12 +37,10 @@ export default function EtudiantDashboard() {
     return (
         <DashboardLayout>
             <div className="space-y-3">
-                {/* Header */}
+                
                 <div>
                      <h4 className="text-2xl font-bold text-gray-800">Bonjour {profile?.nom} {" "} {profile?.prenom}</h4>
                       <p className="opacity-90 mt-2">Voici un aperçu de votre progression et de vos stages.</p>
-                    
-
                 </div>
 
                 {/* Statistics Grid */}
@@ -54,7 +52,7 @@ export default function EtudiantDashboard() {
                 </div>
 
                 <div className="grid grid-cols-1 xl:grid-cols-3 gap-3">
-                    {/* Candidatures (Left Column) */}
+    
                     <section className="xl:col-span-1 bg-white py-4 rounded-xl shadow-sm border border-gray-100">
                         <h3 className="font-bold text-gray-800 border-b border-gray-300 pb-4 px-4">Dernières Candidatures</h3>
                         <div className="space-y-4 px-4 pt-4">
@@ -62,7 +60,7 @@ export default function EtudiantDashboard() {
                                 <div key={c.id} className="flex flex-col space-y-1">
                                     <div className="flex justify-between items-center">
                                         <span className="font-semibold text-sm text-gray-700 truncate w-40">{c.titre}</span>
-                                        <Badge text={c.status} />
+                                        <Badge text={c.status} variant={c.status === 'accepted' ? 'success' : c.status === 'declined' ? 'error' : 'warning'}/>
                                     </div>
                                     <span className="text-xs text-gray-400">{c.nom_entreprise} • {c.ville}</span>
                                 </div>
@@ -70,7 +68,7 @@ export default function EtudiantDashboard() {
                         </div>
                     </section>
 
-                    {/* Stages Details (Right Column) */}
+                  
                     <section className="xl:col-span-2 bg-white py-4 rounded-xl shadow-sm border border-gray-100">
                         <h3 className="font-bold text-gray-800 border-b border-gray-300 px-4 pb-4">Suivi des Stages</h3>
                         <div className="overflow-x-auto px-4 pt-4">
@@ -101,7 +99,7 @@ export default function EtudiantDashboard() {
                                                 {s.note_final > 0 ? s.note_final : "--"}/20
                                             </td>
                                             <td className="py-3 text-right">
-                                                <Badge text={s.status}/>
+                                                <Badge text={s.status} variant={s.status === 'finished' ? 'success' : 'warning'}/>
                                             </td>
                                         </tr>
                                     ))}
