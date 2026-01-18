@@ -35,6 +35,8 @@ const getProfile = async (req , res) => {
         const userId = req.user.id 
         const [entrepriseInfo] = await Entreprise.getInfo(userId)
 
+       
+
 
         if (!entrepriseInfo){
             return res.status(404).json({error : 'Usser not found'})

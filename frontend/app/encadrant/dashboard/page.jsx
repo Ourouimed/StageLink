@@ -69,7 +69,7 @@ export default function EncadrantDashboard() {
                                             <p className="font-semibold text-sm text-gray-800">{e.nom_entreprise}</p>
                                             <p className="text-xs text-gray-400">{e.secteur || 'Secteur non défini'}</p>
                                         </div>
-                                        <Badge variant="warning">Nouveau</Badge>
+                                        <Badge variant="warning" text='Nouveau'/>
                                     </div>
                                     <div className="flex gap-1">
                                         <Button size="sm" variant="success" onClick={() => dispatch(acceptEntrepriseRequest(e.id_entreprise))}>Accepter</Button>

@@ -133,7 +133,6 @@ const getProfile = async (req , res) => {
         const userId = req.user.id 
         const [etudiantInfo] = await Etudiant.getInfo(userId)
 
-
         if (!etudiantInfo){
             return res.status(404).json({error : 'Usser not found'})
         }

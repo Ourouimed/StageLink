@@ -71,7 +71,7 @@ export default function CandidatsPage() {
                                             </div>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <Badge text={c.status} variant={c.status === 'accepted' ? 'success' : 'error'}/>
+                                            <Badge text={c.status} variant={c.status === 'accepted' ? 'success' : c.status === 'declined' ? 'error' : 'warning'}/>
                                         </td>
                                         <td className="px-6 py-4 text-gray-600 text-sm">
                                             {c.titre}
@@ -92,7 +92,7 @@ export default function CandidatsPage() {
                                             {c.ville}
                                         </td>
                                         <td className="px-6 py-4 text-right">
-                                            <div className="flex justify-end gap-2">
+                                            <div className="flex justify-end gap-2 flex-wrap">
                                                 {c.status === 'pending' ? (
                                                     <>
                                                         <Button 

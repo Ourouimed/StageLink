@@ -86,7 +86,7 @@ export default function DashboardLayout({ children }) {
       ? entrepriseProfile
       : user.role === "encadrant"
       ? encadrantProfile
-      : user.role === "encadrant" ? 
+      : user.role === "etudiant" ? 
       etudiantProfile :
       {nom : user.nom , prenom : user.prenom};
 

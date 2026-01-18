@@ -75,7 +75,7 @@ export default function EntrepriseDashboard() {
                                         <Badge text={c.status} variant={c.status === 'accepted' ? 'success' : 'error'}/>
                                     </div>
                                     <div className="mt-2 flex gap-2">
-                                        {/* <Link className="text-[10px] font-bold text-blue-600 hover:underline" href={c.cv}>Voir CV</Link> */}
+                                        <Link className="text-[10px] font-bold text-blue-600 hover:underline" href={c.cv}>Voir CV</Link>
                                     </div>
                                 </div>
                             ))}

@@ -13,8 +13,8 @@ router.post('/register' , register)
 router.post('/login'  , login )
 router.post('/logout' , logout)
 router.get('/verify-session' , verifyJWT , checkBlocked , verifySession)
-router.post('/verify-email' , checkBlocked , verifyEmail )
-router.post('/resend-otp' , checkBlocked , resendOtp)
+router.post('/verify-email' , verifyEmail )
+router.post('/resend-otp' , resendOtp)
 
 
 
