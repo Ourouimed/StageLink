@@ -80,7 +80,9 @@ const Stage = {
             FROM offre_stage s
             INNER JOIN entreprises e ON e.id = s.entreprise
             LEFT JOIN candidatures c ON c.stage_id = s.id
-            GROUP BY s.id
+            GROUP BY s.id 
+            having s.demarage > utc_timestamp()
+            ORDER BY demarage
         `);
 
         return rows;
@@ -88,6 +90,10 @@ const Stage = {
 
     deleteStage: async (id) => {
         await db.query('DELETE FROM offre_stage WHERE id = ?', [id]);
+    } ,
+
+    traiter_offre_stage : async ()=>{
+        await db.query('call traiter_offre_stage()')
     }
 };
 

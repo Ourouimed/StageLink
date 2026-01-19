@@ -85,7 +85,7 @@ const Entreprise = {
 
 
     updateNoteFinal : async (id)=>{
-        await db.query('UPDATE STAGES SET note_final = (note_evaluation + note_pedagogique)/2 where stage_id =?' , [id])
+        await db.query('UPDATE STAGES SET note_final = calc_note_final(note_evaluation , note_pedagogique) where stage_id =?' , [id])
     } ,
     endStage : async (id)=>{
         await db.query("UPDATE stages set status = 'finished' where stage_id = ?" , [id])

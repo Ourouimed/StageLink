@@ -1,5 +1,6 @@
 import { uploadFile } from "../lib/upload-file.js";
 import Etudiant from "../models/etudiant.js";
+import Stage from "../models/stage.js";
 
 const updateProfile = async (req, res) => {
   try {
@@ -171,7 +172,6 @@ const getStages = async (req , res)=>{
    try {
         let user = req.user
         const stages = await Etudiant.getStages(user.id)
-        console.log(stages)
 
 
        
