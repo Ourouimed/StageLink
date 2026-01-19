@@ -1,6 +1,7 @@
 import { Calendar, MapPin, Pencil, Timer, Trash2, Building2, Clock } from "lucide-react";
 import { Button } from "../ui/Button";
 import { usePopup } from "@/hooks/usePopup";
+import { Badge } from "../ui/Badge";
 
 export const StageCard = ({ stage, role }) => {
   const { openPopup } = usePopup();
@@ -13,8 +14,14 @@ export const StageCard = ({ stage, role }) => {
     openPopup({ title: "Supprimer l'offre", component: 'DeleteStagePopup', props: { id: stage.stage_id, titre: stage.titre } });
   };
 
+
+  const isArchived = stage.archived === 1; 
   return (
-    <div className="group border border-gray-300 rounded-2xl py-4 md:py-6 shadow-sm bg-white hover:shadow-md hover:border-main/20 transition-all duration-300">
+    <div className={`group border border-gray-300 rounded-2xl py-4 md:py-6 shadow-sm bg-white hover:shadow-md hover:border-main/20 transition-all duration-300
+    ${isArchived
+          ? 'border-dashed border-gray-300 opacity-70 grayscale cursor-not-allowed'
+          : 'border-gray-300 shadow-sm hover:shadow-md hover:border-main/20'
+        }`}>
       
       <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 px-4 md:px-6 pb-4 md:pb-6">
         <div className="flex-1">
@@ -28,6 +35,15 @@ export const StageCard = ({ stage, role }) => {
               {stage.titre}
             </h3>
           </div>
+
+           {/* Overlay archived */}
+      {isArchived && (
+        <div className="absolute inset-0 bg-white/60 rounded-2xl flex items-center justify-center z-10">
+          <span className="px-4 py-2 bg-gray-800 text-white text-sm font-bold rounded-lg uppercase tracking-wide">
+            Offre archivée
+          </span>
+        </div>
+      )}
 
           {/* Details Grid - Responsive 1 col on mobile, 2 or more on md */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4 text-sm text-slate-500">
@@ -58,7 +74,7 @@ export const StageCard = ({ stage, role }) => {
         </div>
 
         {/* Action Buttons - Stacked on mobile, row on large screens */}
-        {role === 'entreprise' && (
+        {role === 'entreprise' && !isArchived && (
           <div className="flex flex-row lg:flex-col gap-2 pt-4 lg:pt-0 border-t lg:border-none border-gray-100">
             <Button 
               size="sm" 
@@ -97,6 +113,9 @@ export const StageCard = ({ stage, role }) => {
             {stage.disponibilite}
           </span>
         </div>
+
+
+        {stage.archived === 1 && <Badge text={'Archived'}/>}
         
         
       </div>
