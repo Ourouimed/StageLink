@@ -74,6 +74,7 @@ CREATE TABLE OFFRE_stage (
     nombre_profiles int default 0,
     demarage timestamp default null ,
     created_at timestamp default current_timestamp ,
+    archived tinyint default 0 ,
     disponibilite ENUM('Temps plein' , 'Temps partiel') ,
     FOREIGN KEY (entreprise) references entreprises(id) 
 );
@@ -113,7 +114,3 @@ CREATE TABLE STAGES (
     FOREIGN KEY (encadrant_id) references encadrants (id) ,
     FOREIGN KEY (candidature_id) references candidatures (id)
 );
-
-
-use stage;
-select * from utilisateurs;

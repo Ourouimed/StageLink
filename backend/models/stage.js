@@ -50,14 +50,14 @@ const Stage = {
                 s.description,
                 s.duree_months,
                 s.disponibilite, 
-                s.demarage > utc_timestamp() as archived ,
+                s.demarage < utc_timestamp() as archived ,
                 COUNT(c.id) AS nombre_candidatures
             FROM offre_stage s
             INNER JOIN entreprises e ON e.id = s.entreprise
             LEFT JOIN candidatures c ON c.stage_id = s.id
             WHERE e.id = ?
             GROUP BY s.id
-            ORDER BY demarage
+            ORDER BY s.demarage
         `, [id]);
 
         return rows;
@@ -84,7 +84,7 @@ const Stage = {
             LEFT JOIN candidatures c ON c.stage_id = s.id
             GROUP BY s.id 
             having s.demarage > utc_timestamp()
-            ORDER BY demarage
+            ORDER BY s.demarage
         `);
 
         return rows;
