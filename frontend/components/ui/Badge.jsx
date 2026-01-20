@@ -1,6 +1,6 @@
 
 export const Badge = ({ text, variant = 'default', icon: Icon, className = '' }) => {
-  const baseStyles = "inline-flex font-bold tems-center gap-1 px-2.5 py-0.5 rounded-full text-xs border";
+  const baseStyles = "inline-flex font-bold items-center gap-1 px-2.5 py-0.5 rounded-full text-xs border";
   
   const variants = {
     default: "bg-gray-100 text-gray-800 border-gray-800",

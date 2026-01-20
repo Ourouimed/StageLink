@@ -94,7 +94,7 @@ export default function EditStageComp({ stage }) {
                     <h3 className="text-lg font-bold text-gray-900">{stage.titre}</h3>
                     <p className="text-sm text-gray-500 capitalize">{stage.type_stage}</p>
                 </div>
-                <Badge text={stage.status}/>
+                <Badge text={stage.status} variant={stage.status == 'finished' ? 'success' : 'warning'}/>
             </div>
 
             {/* Details Grid */}

@@ -5,14 +5,14 @@ import { Button } from "../ui/Button";
 
 export default function Hero() {
   return (
-    <section id="hero" className="min-h-[calc(100vh-80px)] flex items-center bg-gradient-to-br from-blue-50/50 to-white overflow-hidden py-20">
+    <section id="hero" className="min-h-screen flex items-center bg-gradient-to-br from-blue-50/50 to-white overflow-hidden py-30 md:py-20">
       <div className="px-4 md:px-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
         
-        <div className="space-y-8 flex flex-col items-center md:items-start text-center md:text-left z-10">
-          <Badge text='Bienvenue sur StageLink' icon={Briefcase} className="animate-fade-in-up" />
+        <div className="space-y-4 flex flex-col items-center md:items-start text-center md:text-left z-10">
+          <Badge text='Bienvenue sur StageLink' icon={Briefcase} className="animate-fade-in-up" variant="info" />
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 leading-[1.15] tracking-tight">
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-[1.15] tracking-tight">
             Trouvez le stage qui <br className="hidden lg:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-main to-blue-400">
               lance votre carrière
@@ -23,7 +23,7 @@ export default function Hero() {
             La plateforme idéale pour connecter les étudiants ambitieux avec les meilleures entreprises. Démarrez votre avenir professionnel aujourd'hui.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+          <div className="flex items-center flex-wrap gap-2 w-full sm:w-auto">
             <Button  href="/register" variant='main'>
               Commencer maintenant
             </Button>

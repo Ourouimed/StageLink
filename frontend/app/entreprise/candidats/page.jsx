@@ -25,7 +25,7 @@ export default function CandidatsPage() {
 
     return (
         <DashboardLayout>
-            <div className="flex justify-between items-center mb-8">
+            <div className="flex justify-between items-center mb-8 flex-wrap">
                 <div>
                     <h1 className="text-3xl font-bold text-gray-900">Candidats</h1>
                     <p className="text-gray-500 mt-1">Gérez les demandes de stage pour vos offres.</p>
@@ -77,7 +77,7 @@ export default function CandidatsPage() {
                                             {c.titre}
                                         </td>
                                         <td className="px-6 py-4 text-gray-600 text-sm">
-                                            <div className="flex items-center gap-2">
+                                            <div className="flex items-center gap-2 ">
                                                 <Calendar size={14} />
                                                 {new Date(c.application_sent_at).toLocaleDateString('fr-FR')}
                                             </div>

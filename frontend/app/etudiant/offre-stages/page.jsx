@@ -145,7 +145,7 @@ export default function OffreDeStagesSearch() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           
           {/* List Section */}
-          <div className={`${showMobileDetails ? "hidden lg:block" : "block"} lg:col-span-4 space-y-4 lg:max-h-[calc(100vh-200px)] lg:overflow-y-auto lg:pr-2 custom-scrollbar`}>
+          <div className={`${showMobileDetails ? "hidden lg:block" : "block"} lg:col-span-4 space-y-4 h-screen lg:overflow-y-auto lg:pr-2 custom-scrollbar`}>
             {filteredStages.length === 0 ? (
               <div className="bg-white border border-dashed border-gray-300 rounded-2xl p-10 text-center text-gray-500">
                 Aucun stage trouvé
@@ -180,7 +180,7 @@ export default function OffreDeStagesSearch() {
             ) : (
               <div className="bg-white border border-gray-100 rounded-3xl shadow-sm overflow-hidden animate-in fade-in zoom-in-95 duration-300">
                 {/* Detailed Header */}
-                <div className="p-6 md:p-10 border-b border-gray-50">
+                <div className="md:p-6 border-b border-gray-50">
                   <div className="flex flex-col md:flex-row justify-between items-start gap-6 mb-8">
                     <div className="space-y-2">
                       <span className="bg-main/10 text-main px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
