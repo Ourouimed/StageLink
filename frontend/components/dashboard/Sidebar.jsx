@@ -18,7 +18,7 @@ export default function Sidebar({ user, onNavigate }) {
   };
 
   return (
-    <aside className="w-full h-full bg-white border-r border-gray-200 p-4 flex flex-col">
+    <aside className="w-full h-screen sticky top-0 bg-white border-r border-gray-200 p-4 flex flex-col">
       
       {/* ===== Profile Card ===== */}
       <div className="border border-gray-200 rounded-xl p-3 mb-6 divide-y divide-gray-300">

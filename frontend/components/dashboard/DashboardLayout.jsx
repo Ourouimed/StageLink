@@ -105,7 +105,7 @@ export default function DashboardLayout({ children }) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-[250px_1fr] gap-0 md:gap-6 px-0 md:px-10">
-        <aside
+        <div
           className={`
             fixed inset-y-0 left-0 z-[60] w-72
             transform transition-transform duration-300 ease-in-out
@@ -128,7 +128,7 @@ export default function DashboardLayout({ children }) {
             user={{ ...profile, role: user.role }}
             onNavigate={() => setIsSidebarOpen(false)}
           />
-        </aside>
+        </div>
 
         {/* Overlay */}
         {isSidebarOpen && (
